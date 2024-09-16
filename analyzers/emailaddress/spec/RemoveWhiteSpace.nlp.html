@@ -1,0 +1,18 @@
+<html><body style="background-color:black;color:white;"><pre>
+<span style="color:green;">###############################################</span>
+<span style="color:green;"># FILE: RemoveWhiteSpace.pat #</span>
+<span style="color:green;"># SUBJ: Remove white space #</span>
+<span style="color:green;"># AUTH: David de Hilster #</span>
+<span style="color:green;"># CREATED: 10/May/00 17:29:33 #</span>
+<span style="color:green;"># Date of this version: 31/Aug/01 #</span>
+<span style="color:green;"># Copyright 2000, Text Analysis International #</span>
+<span style="color:green;">###############################################</span>
+
+@NODES _ROOT
+
+<span style="color:blue;">@POST</span>
+<span style="color:rgb(255, 255, 150);">excise</span>(1,1);
+<span style="color:rgb(255, 255, 150);">noop</span>();
+
+@RULES _xNIL <- _xWHITE [s] ### (1) @@
+</pre></body></html>

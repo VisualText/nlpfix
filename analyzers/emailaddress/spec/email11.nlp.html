@@ -1,0 +1,38 @@
+<html><body style="background-color:black;color:white;"><pre>
+<span style="color:green;">###############################################</span>
+<span style="color:green;"># FILE: email11</span>
+<span style="color:green;"># SUBJ: comment</span>
+<span style="color:green;"># AUTH: Kruthika</span>
+<span style="color:green;"># CREATED: 2023-10-30 14:10:24</span>
+<span style="color:green;"># MODIFIED:</span>
+<span style="color:green;">###############################################</span>
+
+@PATH _ROOT <span style="color:yellow;">_LINE</span> 
+<span style="color:blue;">@PRE</span>
+<3,3> <span style="color:rgb(255, 255, 150);">var</span>(<span style="color:orange;">"nox"</span>);
+<span style="color:blue;">@POST</span>
+S(<span style="color:orange;">"local"</span>)=N(<span style="color:orange;">"$text"</span>,2);
+S(<span style="color:orange;">"dn"</span>)= N(<span style="color:orange;">"dn"</span>,3);
+S(<span style="color:orange;">"tld"</span>)=N(<span style="color:orange;">"tld"</span>,3);
+<span style="color:rgb(255, 255, 150);">single</span>();
+@RULES _emails <- _xWILD [one match=(_xWHITE _xSTART \-)] _xWILD [min =1 max=0 match=(_xALPHA _xNUM \. \- \_ \$ \* \' \+\+ \( \) )] _email ### (1) @@
+
+<span style="color:blue;">@PRE</span>
+<3,3> <span style="color:rgb(255, 255, 150);">var</span>(<span style="color:orange;">"nor"</span>);
+<span style="color:blue;">@POST</span>
+S(<span style="color:orange;">"local"</span>)=N(<span style="color:orange;">"$text"</span>,2);
+S(<span style="color:orange;">"domainname"</span>)=N(<span style="color:orange;">"domainname"</span>,3);
+<span style="color:rgb(255, 255, 150);">single</span>();
+@RULES _emails <- _xWILD [one match=(_xWHITE _xSTART \-)] _xWILD [min =1 max=0 match=(_xALPHA _xNUM \. \- \_ \$ \* \' \+\( \) )] _email ### (1) @@
+
+<span style="color:blue;">@PRE</span>
+<3,3> <span style="color:rgb(255, 255, 150);">var</span>(<span style="color:orange;">"nop"</span>);
+<span style="color:blue;">@POST</span>
+S(<span style="color:orange;">"local"</span>)=N(<span style="color:orange;">"$text"</span>,2);
+S(<span style="color:orange;">"domainname"</span>)=N(<span style="color:orange;">"domainname"</span>,3)
+S(<span style="color:orange;">"dn"</span>)= N(<span style="color:orange;">"dn"</span>,3);
+S(<span style="color:orange;">"tld"</span>)=N(<span style="color:orange;">"tld"</span>,3);
+S(<span style="color:orange;">"cd"</span>)=N(<span style="color:orange;">"cd"</span>,3);
+S(<span style="color:orange;">"country"</span>)=N(<span style="color:orange;">"country"</span>,3);
+<span style="color:rgb(255, 255, 150);">single</span>();
+@RULES _emails <- _xWILD [one match=(_xWHITE _xSTART \-)] _xWILD [min =1 max=0 match=(_xALPHA _xNUM \. \- \_ \$ \* \' \+\( \) )] _email ### (1) @@</pre></body></html>

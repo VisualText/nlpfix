@@ -1,0 +1,23 @@
+<html><body style="background-color:black;color:white;"><pre>
+<span style="color:green;">###############################################</span>
+<span style="color:green;"># FILE: email5</span>
+<span style="color:green;"># SUBJ: comment</span>
+<span style="color:green;"># AUTH: Kruthika</span>
+<span style="color:green;"># CREATED: 2023-10-28 20:11:2</span>
+<span style="color:green;"># MODIFIED:</span>
+<span style="color:green;">###############################################</span>
+
+@PATH _ROOT <span style="color:yellow;">_LINE</span> <span style="color:yellow;">_email</span>
+
+<span style="color:blue;">@POST</span>
+<span style="color:rgb(255, 255, 150);">excise</span>(1,1);
+<span style="color:rgb(255, 255, 150);">noop</span>();
+
+@RULES _xNIL <- _xWHITE [s] ### (1) @@
+
+<span style="color:blue;">@PRE</span>
+<4,4> <span style="color:rgb(255, 255, 150);">var</span>(<span style="color:orange;">"country"</span>);
+<span style="color:blue;">@POST</span>
+X(<span style="color:orange;">"country"</span>,3)= N(<span style="color:orange;">"country"</span>,4);
+
+@RULES _xNIL <- \. _xALPHA \. _xALPHA @@</pre></body></html>

@@ -1,0 +1,10 @@
+{
+    "visualText": [
+        {
+            "name": "Analyzer",
+            "type": "state",
+            "currentTextFile": "c:\\ssh\\analyzers\\address-parser\\input\\text.txt",
+            "currentPassFile": "\\"
+        }
+    ]
+}

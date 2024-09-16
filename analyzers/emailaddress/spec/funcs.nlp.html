@@ -1,0 +1,103 @@
+<html><body style="background-color:black;color:white;"><pre>
+<span style="color:green;">###############################################</span>
+<span style="color:green;"># FILE: funcs</span>
+<span style="color:green;"># SUBJ: comment</span>
+<span style="color:green;"># AUTH: Kruthika</span>
+<span style="color:green;"># CREATED: 2023-10-28 16:42:10</span>
+<span style="color:green;"># MODIFIED:</span>
+<span style="color:green;">###############################################</span>
+
+<span style="color:blue;">@DECL</span>
+
+<span style="color:rgb(255, 255, 150);">CheckMore</span>(L(<span style="color:orange;">"var"</span>)) {
+L(<span style="color:orange;">"bar"</span>)=1;
+ L(<span style="color:orange;">"val"</span>)=<span style="color:rgb(255, 255, 150);">pnnext</span>(L(<span style="color:orange;">"var"</span>));
+ L(<span style="color:orange;">"val1"</span>)=<span style="color:rgb(255, 255, 150);">pnnext</span>(L(<span style="color:orange;">"val"</span>));
+<span style="color:rgb(255, 255, 150);">while</span>(L(<span style="color:orange;">"bar"</span>))
+{
+ <span style="color:rgb(255, 255, 150);">if</span>(<span style="color:rgb(255, 255, 150);">strequal</span>(<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"val"</span>),<span style="color:orange;">"$text"</span>),<span style="color:orange;">"."</span>)&&<span style="color:rgb(255, 255, 150);">strisalpha</span>((<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"val1"</span>),<span style="color:orange;">"$text"</span>))))
+ {
+ L(<span style="color:orange;">"bar"</span>)=1;
+ <span style="color:rgb(255, 255, 150);">pnmakevar</span>(L(<span style="color:orange;">"val"</span>),<span style="color:orange;">"ispart"</span>,1);
+ <span style="color:rgb(255, 255, 150);">pnmakevar</span>(L(<span style="color:orange;">"val1"</span>),<span style="color:orange;">"ispart"</span>,1);
+ L(<span style="color:orange;">"val"</span>)=<span style="color:rgb(255, 255, 150);">pnnext</span>(L(<span style="color:orange;">"val1"</span>));
+ L(<span style="color:orange;">"val1"</span>)=<span style="color:rgb(255, 255, 150);">pnnext</span>(L(<span style="color:orange;">"val"</span>));
+
+ }
+ else
+ L(<span style="color:orange;">"bar"</span>)=0;
+ }
+
+}
+<span style="color:rgb(255, 255, 150);">AddAttrs</span>(L(<span style="color:orange;">"node"</span>))
+{
+ L(<span style="color:orange;">"concept"</span>)=<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"con"</span>);
+ <span style="color:rgb(255, 255, 150);">addstrval</span>(L(<span style="color:orange;">"concept"</span>),<span style="color:orange;">"local"</span>,<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"local"</span>));
+ <span style="color:rgb(255, 255, 150);">if</span>(<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"domainname"</span>))
+ <span style="color:rgb(255, 255, 150);">addstrval</span>(L(<span style="color:orange;">"concept"</span>),<span style="color:orange;">"domainname"</span>,<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"domainname"</span>));
+ <span style="color:rgb(255, 255, 150);">if</span>(<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"dn"</span>))
+ <span style="color:rgb(255, 255, 150);">addstrval</span>(L(<span style="color:orange;">"concept"</span>),<span style="color:orange;">"domainname"</span>,<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"dn"</span>));
+ <span style="color:rgb(255, 255, 150);">if</span>(<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"tld"</span>))
+ <span style="color:rgb(255, 255, 150);">addstrval</span>(L(<span style="color:orange;">"concept"</span>),<span style="color:orange;">"tld"</span>,<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"tld"</span>));
+ <span style="color:rgb(255, 255, 150);">if</span>(<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"cd"</span>))
+ <span style="color:rgb(255, 255, 150);">addstrval</span>(L(<span style="color:orange;">"concept"</span>),<span style="color:orange;">"cd"</span>,<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"cd"</span>));
+ <span style="color:rgb(255, 255, 150);">if</span>(<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"country"</span>))
+ <span style="color:rgb(255, 255, 150);">addstrval</span>(L(<span style="color:orange;">"concept"</span>),<span style="color:orange;">"country"</span>,<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"country"</span>));
+ 
+}
+<span style="color:rgb(255, 255, 150);">CheckPrev</span>(L(<span style="color:orange;">"node"</span>))
+{
+ L(<span style="color:orange;">"node"</span>)=<span style="color:rgb(255, 255, 150);">pnprev</span>(L(<span style="color:orange;">"node"</span>));
+ <span style="color:rgb(255, 255, 150);">while</span>(L(<span style="color:orange;">"node"</span>)&&(<span style="color:rgb(255, 255, 150);">strequal</span>(<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"$text"</span>),<span style="color:orange;">"dot"</span>)||<span style="color:rgb(255, 255, 150);">strequal</span>(<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"$text"</span>),<span style="color:orange;">"dot"</span>)||<span style="color:rgb(255, 255, 150);">strisalpha</span>((<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"$text"</span>)))||<span style="color:rgb(255, 255, 150);">strisdigit</span>((<span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"$text"</span>)))))
+ {
+ <span style="color:orange;">"output.txt"</span> << <span style="color:rgb(255, 255, 150);">pnvar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"$text"</span>) << <span style="color:orange;">"\n"</span>;
+ <span style="color:rgb(255, 255, 150);">pnmakevar</span>(L(<span style="color:orange;">"node"</span>),<span style="color:orange;">"isprev"</span>,1);
+ L(<span style="color:orange;">"node"</span>)=<span style="color:rgb(255, 255, 150);">pnprev</span>(L(<span style="color:orange;">"node"</span>));
+ }
+}
+<span style="color:rgb(255, 255, 150);">CheckName</span>(L(<span style="color:orange;">"con"</span>),L(<span style="color:orange;">"out"</span>))
+{
+ G(<span style="color:orange;">"attrList"</span>) = <span style="color:rgb(255, 255, 150);">findattrs</span>(L(<span style="color:orange;">"con"</span>));
+
+ <span style="color:rgb(255, 255, 150);">while</span>(<span style="color:rgb(255, 255, 150);">nextattr</span>(G(<span style="color:orange;">"attrList"</span>)))
+ {
+ G(<span style="color:orange;">"attrName"</span>) = <span style="color:rgb(255, 255, 150);">attrname</span>(G(<span style="color:orange;">"attrList"</span>));
+ L(<span style="color:orange;">"out"</span>) <<<span style="color:orange;">"\t\t\"</span><span style="color:orange;">"<<G("</span>attrName<span style="color:orange;">")<<"</span>\<span style="color:orange;">":"</span>;
+ G(<span style="color:orange;">"valList"</span>) = <span style="color:rgb(255, 255, 150);">attrvals</span>(G(<span style="color:orange;">"attrList"</span>));
+ G(<span style="color:orange;">"valName"</span>) = <span style="color:rgb(255, 255, 150);">getstrval</span>(G(<span style="color:orange;">"valList"</span>));
+ <span style="color:rgb(255, 255, 150);">if</span>(<span style="color:rgb(255, 255, 150);">getstrval</span>(G(<span style="color:orange;">"valList"</span>))){
+ L(<span style="color:orange;">"out"</span>) <<<span style="color:orange;">"\"</span><span style="color:orange;">"<<getstrval(G("</span>valList<span style="color:orange;">"))<<"</span>\<span style="color:orange;">",\n"</span>;
+ }
+ G(<span style="color:orange;">"attrList"</span>) = <span style="color:rgb(255, 255, 150);">nextattr</span>(G(<span style="color:orange;">"attrList"</span>));
+ L(<span style="color:orange;">"count"</span>)++;
+ }
+ G(<span style="color:orange;">"attrName"</span>) = <span style="color:rgb(255, 255, 150);">attrname</span>(G(<span style="color:orange;">"attrList"</span>));
+ L(<span style="color:orange;">"out"</span>) <<<span style="color:orange;">"\t\t\"</span><span style="color:orange;">"<<G("</span>attrName<span style="color:orange;">")<<"</span>\<span style="color:orange;">":"</span>;
+ G(<span style="color:orange;">"valList"</span>) = <span style="color:rgb(255, 255, 150);">attrvals</span>(G(<span style="color:orange;">"attrList"</span>));
+ G(<span style="color:orange;">"valName"</span>) = <span style="color:rgb(255, 255, 150);">getstrval</span>(G(<span style="color:orange;">"valList"</span>));
+ <span style="color:rgb(255, 255, 150);">if</span>(<span style="color:rgb(255, 255, 150);">getstrval</span>(G(<span style="color:orange;">"valList"</span>))){
+ L(<span style="color:orange;">"out"</span>) <<<span style="color:orange;">"\"</span><span style="color:orange;">"<<getstrval(G("</span>valList<span style="color:orange;">"))<<"</span>\<span style="color:orange;">"\n"</span>;
+}
+}
+<span style="color:rgb(255, 255, 150);">XMLOut</span>(L(<span style="color:orange;">"out"</span>)){
+ L(<span style="color:orange;">"out"</span>)<<<span style="color:orange;">"{\n\t\"</span>email<span style="color:yellow;">_address</span>\<span style="color:orange;">""</span><<<span style="color:orange;">": [\n"</span>;
+ L(<span style="color:orange;">"con"</span>) = <span style="color:rgb(255, 255, 150);">down</span>(G(<span style="color:orange;">"email"</span>));
+ L(<span style="color:orange;">"count"</span>)=0;
+ <span style="color:rgb(255, 255, 150);">while</span>(<span style="color:rgb(255, 255, 150);">next</span>(L(<span style="color:orange;">"con"</span>)))
+ { 
+ L(<span style="color:orange;">"out"</span>)<<<span style="color:orange;">"\t\t{"</span><<<span style="color:orange;">"\n"</span>;
+ L(<span style="color:orange;">"out"</span>) <<<span style="color:orange;">"\t\t\"</span><span style="color:orange;">"<<"</span>emailadd-id<span style="color:orange;">"<<"</span>\<span style="color:orange;">":"</span><<<span style="color:orange;">"\"</span><span style="color:orange;">"+str(L("</span>count<span style="color:orange;">"))+"</span>\<span style="color:orange;">""</span>+<span style="color:orange;">",\n"</span>;
+<span style="color:rgb(255, 255, 150);">CheckName</span>(L(<span style="color:orange;">"con"</span>),L(<span style="color:orange;">"out"</span>));
+ L(<span style="color:orange;">"out"</span>)<<<span style="color:orange;">"\t},"</span><<<span style="color:orange;">"\n"</span>;
+ L(<span style="color:orange;">"con"</span>) = <span style="color:rgb(255, 255, 150);">next</span>(L(<span style="color:orange;">"con"</span>));
+ L(<span style="color:orange;">"count"</span>)++;
+ }
+ L(<span style="color:orange;">"out"</span>)<<<span style="color:orange;">"\t\t{"</span><<<span style="color:orange;">"\n"</span>;
+ L(<span style="color:orange;">"out"</span>) <<<span style="color:orange;">"\t\t\"</span><span style="color:orange;">"<<"</span>emailadd-id<span style="color:orange;">"<<"</span>\<span style="color:orange;">":"</span><<<span style="color:orange;">"\"</span><span style="color:orange;">"+str(L("</span>count<span style="color:orange;">"))+"</span>\<span style="color:orange;">""</span>+<span style="color:orange;">",\n"</span>;
+<span style="color:rgb(255, 255, 150);">CheckName</span>(L(<span style="color:orange;">"con"</span>),L(<span style="color:orange;">"out"</span>));
+ L(<span style="color:orange;">"out"</span>)<<<span style="color:orange;">"\t}"</span><<<span style="color:orange;">"\n"</span>;
+ L(<span style="color:orange;">"con"</span>) = <span style="color:rgb(255, 255, 150);">next</span>(L(<span style="color:orange;">"con"</span>));
+ L(<span style="color:orange;">"out"</span>)<<<span style="color:orange;">"\t]\n}"</span>;
+
+}
+@@DECL</pre></body></html>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<vertice>
+  <id>1</id>
+  <label>_TEXTZONE</label>
+</vertice>
+<vertice>
+  <id>2</id>
+  <label>_sent</label>
+</vertice>
+<edge>
+  <source>1</source>
+  <target>2</target>
+</edge>
+<vertice voice="active">
+  <id>3</id>
+  <label>_clause</label>
+</vertice>
+<edge>
+  <source>2</source>
+  <target>3</target>
+</edge>
+<vertice stem="they">
+  <id>4</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>3</source>
+  <target>4</target>
+</edge>
+<vertice stem="they">
+  <id>5</id>
+  <label>_pro</label>
+</vertice>
+<edge>
+  <source>4</source>
+  <target>5</target>
+</edge>
+<vertice>
+  <id>6</id>
+  <label>_proSubj</label>
+</vertice>
+<edge>
+  <source>5</source>
+  <target>6</target>
+</edge>
+<vertice>
+  <id>7</id>
+  <label>They</label>
+</vertice>
+<edge>
+  <source>6</source>
+  <target>7</target>
+</edge>
+<vertice stem="fox">
+  <id>8</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>3</source>
+  <target>8</target>
+</edge>
+<vertice stem="lazy">
+  <id>9</id>
+  <label>_adj</label>
+</vertice>
+<edge>
+  <source>8</source>
+  <target>9</target>
+</edge>
+<vertice stem="lazy">
+  <id>10</id>
+  <label>lazy</label>
+</vertice>
+<edge>
+  <source>9</source>
+  <target>10</target>
+</edge>
+<vertice stem="fox">
+  <id>11</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>8</source>
+  <target>11</target>
+</edge>
+<vertice stem="fox">
+  <id>12</id>
+  <label>fox</label>
+</vertice>
+<edge>
+  <source>11</source>
+  <target>12</target>
+</edge>
+<vertice stem="jump" voice="active" tense="past">
+  <id>13</id>
+  <label>_vg</label>
+</vertice>
+<edge>
+  <source>3</source>
+  <target>13</target>
+</edge>
+<vertice stem="jump">
+  <id>14</id>
+  <label>_verb</label>
+</vertice>
+<edge>
+  <source>13</source>
+  <target>14</target>
+</edge>
+<vertice stem="jump">
+  <id>15</id>
+  <label>jumped</label>
+</vertice>
+<edge>
+  <source>14</source>
+  <target>15</target>
+</edge>
+<vertice stem="dog">
+  <id>16</id>
+  <label>_advl</label>
+</vertice>
+<edge>
+  <source>3</source>
+  <target>16</target>
+</edge>
+<vertice stem="over">
+  <id>17</id>
+  <label>_prep</label>
+</vertice>
+<edge>
+  <source>16</source>
+  <target>17</target>
+</edge>
+<vertice>
+  <id>18</id>
+  <label>over</label>
+</vertice>
+<edge>
+  <source>17</source>
+  <target>18</target>
+</edge>
+<vertice stem="dog">
+  <id>19</id>
+  <label>_np</label>
+</vertice>
+<edge>
+  <source>16</source>
+  <target>19</target>
+</edge>
+<vertice stem="the">
+  <id>20</id>
+  <label>_det</label>
+</vertice>
+<edge>
+  <source>19</source>
+  <target>20</target>
+</edge>
+<vertice>
+  <id>21</id>
+  <label>the</label>
+</vertice>
+<edge>
+  <source>20</source>
+  <target>21</target>
+</edge>
+<vertice stem="brown">
+  <id>22</id>
+  <label>_adj</label>
+</vertice>
+<edge>
+  <source>19</source>
+  <target>22</target>
+</edge>
+<vertice stem="brown">
+  <id>23</id>
+  <label>brown</label>
+</vertice>
+<edge>
+  <source>22</source>
+  <target>23</target>
+</edge>
+<vertice stem="dog">
+  <id>24</id>
+  <label>_noun</label>
+</vertice>
+<edge>
+  <source>19</source>
+  <target>24</target>
+</edge>
+<vertice stem="dog">
+  <id>25</id>
+  <label>dog</label>
+</vertice>
+<edge>
+  <source>24</source>
+  <target>25</target>
+</edge>
+<vertice>
+  <id>26</id>
+  <label>_qEOS</label>
+</vertice>
+<edge>
+  <source>1</source>
+  <target>26</target>
+</edge>

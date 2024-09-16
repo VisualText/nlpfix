@@ -1,0 +1,101 @@
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  background-color: #222;
+  color: #fff;
+}
+
+.status-bar {
+  background-color: #333;
+  padding: 10px;
+  text-align: center;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+}
+
+.sidebar {
+  background-color: #444;
+  width: 200px;
+  height: 500px;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.editor {
+  flex: 1;
+  padding: 10px;
+}
+
+.footer-bar {
+  background-color: #333;
+  padding: 10px;
+}
+
+ul.choose-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+li.seq-item {
+  list-style-type: none;
+}
+
+li.seq-item:hover {
+  background-color: #696969;
+}
+
+.selected {
+  background-color: #696969;
+}
+
+li.analyzer-item:hover {
+  background-color: hsl(0, 0%, 41%);
+}
+
+.title {
+  color: rgb(151, 151, 255);
+  font-weight: bold;
+}
+
+div.sidebar-ana {
+  width: 110px;
+  flex-shrink: 0;
+}
+
+div.sidebar-seq {
+  width: 250px;
+  height: 500px;
+  flex-shrink: 0;
+}
+
+div.list-seq {
+  height: 500px;
+  overflow-y: auto;
+}
+
+/* Tooltip styles */
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}

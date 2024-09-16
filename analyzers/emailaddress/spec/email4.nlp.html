@@ -1,0 +1,18 @@
+<html><body style="background-color:black;color:white;"><pre>
+<span style="color:green;">###############################################</span>
+<span style="color:green;"># FILE: email3</span>
+<span style="color:green;"># SUBJ: comment</span>
+<span style="color:green;"># AUTH: Kruthika</span>
+<span style="color:green;"># CREATED: 2023-10-28 19:59:31</span>
+<span style="color:green;"># MODIFIED:</span>
+<span style="color:green;">###############################################</span>
+
+
+@PATH _ROOT <span style="color:yellow;">_LINE</span> <span style="color:yellow;">_emailx</span>
+<span style="color:blue;">@POST</span>
+
+X(<span style="color:orange;">"local"</span>,3)= <span style="color:rgb(255, 255, 150);">pnvar</span>(N(1),<span style="color:orange;">"local"</span>);
+X(<span style="color:orange;">"domainname"</span>)=<span style="color:rgb(255, 255, 150);">pnvar</span>(N(1),<span style="color:orange;">"domainname"</span>);
+<span style="color:rgb(255, 255, 150);">splice</span>(1,1);
+@RULES _emailn <- _email _word @@
+</pre></body></html>

@@ -1,0 +1,17 @@
+<html><body style="background-color:black;color:white;"><pre>
+<span style="color:green;">###############################################</span>
+<span style="color:green;"># FILE: email7</span>
+<span style="color:green;"># SUBJ: comment</span>
+<span style="color:green;"># AUTH: Kruthika</span>
+<span style="color:green;"># CREATED: 2023-10-28 21:31:21</span>
+<span style="color:green;"># MODIFIED:</span>
+<span style="color:green;">###############################################</span>
+
+
+@PATH _ROOT <span style="color:yellow;">_LINE</span>
+<span style="color:blue;">@POST</span>
+N(<span style="color:orange;">"con"</span>,1) = <span style="color:rgb(255, 255, 150);">MakeCountCon</span>(G(<span style="color:orange;">"email"</span>),<span style="color:orange;">"email"</span>);
+<span style="color:rgb(255, 255, 150);">AddAttrs</span>(N(1));
+@RULES _xNIL <- _email @@
+
+</pre></body></html>

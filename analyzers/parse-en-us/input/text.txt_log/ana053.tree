@@ -1,0 +1,23 @@
+
+***************
+    PASS 53 (common)
+***************
+
+PAT OUTPUT TREE:
+
+_ROOT [0,39,0,39,0,0,node,un, ("TOT LINES" 1) ("TOT TABS" 0) ("TOT LOWERS" 7) ("TOT CAPS" 1) ("TOT UPPERS" 0) ("TOT NUMS" 0)]
+   _TEXTZONE [0,39,0,39,33,19,node,un, ("line count" 1) ("func words" 1)]
+      _pro [0,3,0,3,51,51,node, ("sem" "person") ("stem" "they") ("need-vconj" "inf") ("prosubj" 1) ("NOSP" 1) ("cap" 1) ("pro" 1) ("pos num" 1)]
+         _proSubj [0,3,0,3,51,51,node]
+            They [0,3,0,3,0,0,alpha, ("NOSP" 1) ("cap" 1) ("pro" 1) ("pos num" 1)]
+      lazy [5,8,5,8,0,0,alpha, ("SP" 1) ("lower" 1) ("adj" 1) ("pos num" 1)]
+      fox [10,12,10,12,0,0,alpha, ("SP" 1) ("lower" 1) ("noun" 1) ("verb" 1) ("pos num" 2)]
+      jumped [14,19,14,19,0,0,alpha, ("SP" 1) ("lower" 1) ("verb" 1) ("pos num" 1)]
+      _prep [21,24,21,24,51,1158,node, ("SP" 1) ("lower" 1) ("noun" 1) ("adj" 1) ("adv" 1) ("prep" 1) ("pos num" 4) ("stem" "over")]
+         over [21,24,21,24,0,0,alpha, ("SP" 1) ("lower" 1) ("noun" 1) ("adj" 1) ("adv" 1) ("prep" 1) ("pos num" 4)]
+      _det [26,28,26,28,51,280,node, ("SP" 1) ("lower" 1) ("det" 1) ("pos num" 1) ("number" "any") ("stem" "the") ("needs-np" 1)]
+         the [26,28,26,28,0,0,alpha, ("SP" 1) ("lower" 1) ("det" 1) ("pos num" 1)]
+      brown [30,34,30,34,0,0,alpha, ("SP" 1) ("lower" 1) ("noun" 1) ("verb" 1) ("adj" 1) ("pos num" 3)]
+      dog [36,38,36,38,0,0,alpha, ("SP" 1) ("lower" 1) ("noun" 1) ("verb" 1) ("pos num" 2)]
+      _qEOS [39,39,39,39,41,151,node]
+         . [39,39,39,39,0,0,punct, ("NOSP" 1)]

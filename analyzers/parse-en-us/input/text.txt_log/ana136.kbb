@@ -1,0 +1,12 @@
+currtext
+  objects
+  entities
+  ents
+  events
+  parse
+    sent1: 
+      type=[sent]
+      clause1: 
+        type=[clause]
+        zone=[0]
+

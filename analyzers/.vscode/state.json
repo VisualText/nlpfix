@@ -1,0 +1,9 @@
+{
+    "visualText": [
+        {
+            "name": "Analyzer",
+            "type": "state",
+            "currentAnalyzer": "c:\\ssh\\analyzers\\parse-en-us"
+        }
+    ]
+}
