@@ -1,39 +1,59 @@
-body {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+body, html {
   margin: 0;
-  background-color: #222;
-  color: #fff;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
 }
-
-.status-bar {
-  background-color: #333;
+.container {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 175px 1fr;
+  grid-template-areas: 
+      "header header"
+      "sidebar main"
+      "footer footer";
+  height: 100%;
+}
+header {
+  grid-area: header;
+  background: #333;
+  color: white;
   padding: 10px;
   text-align: center;
 }
-
-.main-content {
-  display: flex;
-  flex: 1;
-}
-
 .sidebar {
-  background-color: #444;
-  width: 200px;
-  height: 500px;
+  grid-area: sidebar;
+  color: white;
+  background: #414141;
   padding: 10px;
   overflow-y: auto;
 }
-
-.editor {
-  flex: 1;
+.main {
+  grid-area: main;
+  background: #222222;
+  color: white;
+  padding: 10px;
+  font-size: 12px;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+footer {
+  grid-area: footer;
+  background: #333;
+  color: white;
+  text-align: center;
   padding: 10px;
 }
-
-.footer-bar {
-  background-color: #333;
-  padding: 10px;
+@media (max-width: 175px) {
+  .container {
+      grid-template-rows: auto auto 1fr auto;
+      grid-template-columns: 1fr;
+      grid-template-areas: 
+          "header"
+          "sidebar"
+          "main"
+          "footer";
+  }
 }
 
 ul.choose-list {
@@ -60,22 +80,6 @@ li.analyzer-item:hover {
 .title {
   color: rgb(151, 151, 255);
   font-weight: bold;
-}
-
-div.sidebar-ana {
-  width: 110px;
-  flex-shrink: 0;
-}
-
-div.sidebar-seq {
-  width: 250px;
-  height: 500px;
-  flex-shrink: 0;
-}
-
-div.list-seq {
-  height: 500px;
-  overflow-y: auto;
 }
 
 /* Tooltip styles */

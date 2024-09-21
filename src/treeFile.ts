@@ -322,6 +322,11 @@ export class TreeFile extends TextFile {
 			if (tokens.length > 1) {
 				let fired: Fired = {str: '', from: 0, to: 0, ufrom: 0, uto: 0, rulenum: 0, ruleline: 0, built: false};
 				var tts = line.split(refire);
+				const firstChar = line.trim().charAt(0);
+				if (/^[\[\],]/i.test(firstChar)) {
+					tts[0] = firstChar;
+					tts.splice(1,1);
+				}
 				fired.built = (tts.length >= 9 && tts[9] === 'blt') ? true : false;
 				if (+tts[2] > lastTo) {
 					fired.str = tts[0].trim();
