@@ -1,26 +1,56 @@
 function handleLoad(): void {
   fetch('/api/analyzers')
   .then(response => response.json())
-  .then((folders: string[]) => {
+  .then((analyzers: {'name': string, 'folder': string, 'index': number}[] ) => {
     const analyzerList = document.getElementById('analyzer-list') as HTMLUListElement;
     analyzerList.innerHTML = '';
-    folders.forEach(folder => {
-      if (!folder.startsWith('.')) {
+    analyzers.forEach(analyzer => {
+      if (!analyzer.folder.startsWith('.')) {
         const li = document.createElement('li');
         li.classList.add('analyzer-item');
-        li.textContent = folder;
+        li.textContent = analyzer.name;
+        li.setAttribute('index', analyzer.index.toString());     
 
         li.addEventListener('click', () => {
-          console.log('Clicked:', folder);
-            fetch(`/api/sequence/${folder}`)
+          console.log('Clicked:', analyzer.name);
+            fetch(`/api/sequence/${analyzer.folder}`)
               .then(response => response.json())
               .then((files: {'name': string, 'index': number, 'highlight': boolean}[] ) => {
 
-                fetch(`/api/readme/firstline/${folder}`)
-                .then(response => response.json())
-                .then((firstLine: string) => {
-                  const tit = document.getElementById('sequenceTitle') as HTMLParagraphElement;
-                  tit.innerHTML = firstLine;
+                selectionLogic("analyzer-list",analyzer.index);   
+
+                fetch(`/api/readme/firstline/${analyzer.folder}`)
+                  .then(response => response.json())
+                  .then((firstLine: string) => {
+                    const tit = document.getElementById('sequenceTitle') as HTMLParagraphElement;
+                    tit.innerHTML = firstLine;
+                });
+
+                fetch(`/api/kb/${analyzer.folder}`)
+                  .then(response => response.json())
+                  .then((kbs: {'name': string, 'type': string}[]) => {
+                    const kbList = document.getElementById('kb-list') as HTMLUListElement;
+                    kbList.innerHTML = '';
+                    kbs.forEach(kb => {
+                      console.log("kb: ", kb);
+                      let kbLi = document.createElement('li');
+                      kbLi.classList.add('seq-item');
+
+                      let anchor = document.createElement('a');
+                      anchor.style.marginLeft = '10px';
+                      anchor.textContent = kb.name;
+                      anchor.addEventListener('click', () => {
+                        fetch(`/api/kbload/${analyzer.folder}/${kb.name}`)
+                          .then(response => response.text())
+                          .then(content => {
+                            const fileContent = document.getElementById('file-content') as HTMLDivElement;
+                            // selectionLogic("sequence-list",file.index);
+                            fileContent.innerHTML = `<pre>${content}</pre>`;
+                          });
+                      });
+                      kbLi.appendChild(anchor);
+                      kbList.append(kbLi);
+                    });
                 });
 
                 const seqList = document.getElementById('sequence-list') as HTMLUListElement;
@@ -33,11 +63,11 @@ function handleLoad(): void {
                   let anchor = document.createElement('a');
                   anchor.style.marginLeft = '10px';
                   anchor.addEventListener('click', () => {
-                    fetch(`/api/seqfile/${folder}/${file.name}`)
+                    fetch(`/api/seqfile/${analyzer.folder}/${file.name}`)
                       .then(response => response.text())
                       .then(content => {
                         const fileContent = document.getElementById('file-content') as HTMLDivElement;
-                        selectionLogic(file.index);
+                        selectionLogic("sequence-list",file.index);
                         fileContent.innerHTML = content;
                       });
                   })
@@ -51,11 +81,11 @@ function handleLoad(): void {
                   anchor.style.marginLeft = '10px';
                   anchor.setAttribute('index', file.index.toString());
                   anchor.addEventListener('click', () => {
-                    fetch(`/api/tree/${folder}/${file.name}/${file.index}`)
+                    fetch(`/api/tree/${analyzer.folder}/${file.name}/${file.index}`)
                       .then(response => response.text())
                       .then(content => {
                         const fileContent = document.getElementById('file-content') as HTMLDivElement;
-                        selectionLogic(file.index);
+                        selectionLogic("sequence-list",file.index);
                         fileContent.innerHTML = content;
                       });
                   })
@@ -70,11 +100,11 @@ function handleLoad(): void {
                   anchor.textContent = file.name;
                   if (file.highlight) {
                     anchor.addEventListener('click', () => {
-                      fetch(`/api/highlight/${folder}/${file.name}/${file.index}`)
+                      fetch(`/api/highlight/${analyzer.folder}/${file.name}/${file.index}`)
                         .then(response => response.text())
                         .then(content => {
                           const fileContent = document.getElementById('file-content') as HTMLDivElement;
-                          selectionLogic(file.index);
+                          selectionLogic("sequence-list",file.index);
                           fileContent.innerHTML = `<pre>${content}</pre>`;
                         });
                     })
@@ -94,8 +124,8 @@ function handleLoad(): void {
   });
 }
 
-function selectionLogic(index: number) {
-  const seq_list = document.getElementById('sequence-list') as HTMLUListElement;
+function selectionLogic(id: string, index: number) {
+  const seq_list = document.getElementById(id) as HTMLUListElement;
   Array.from(seq_list.getElementsByTagName('li')).forEach(li => {
     li.classList.remove('selected');
   });

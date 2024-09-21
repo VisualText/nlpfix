@@ -9,21 +9,29 @@
 
 </head>
 <body>
-  <div class="status-bar">Status Bar</div>
-  <div class="main-content">
-    <div class="sidebar-ana">
-      <div><p class="title" id="analyzerTitle">Analyzers</p></div>
-      <div class="list-ana"><ul class="choose-list" id="analyzer-list"></ul></div>
+  <div class="container">
+    <header>NLP Fix</header>
+    <div class="sidebar">
+      <div class="list-ana">
+        <p class="title" id="analyzerTitle">Analyzers</p>
+        <ul class="choose-list" id="analyzer-list"></ul>
+      </div>
+      <div class="list-kb">
+        <p class="title" id="kbTitle">Knowledge Base</p>
+        <ul class="choose-list" id="kb-list"></ul>
+      </div>
+      <div class="list-seq">
+        <p class="title" id="sequenceTitle">Sequence</p>
+        <div class="list-seq-scroll">
+          <ul class="choose-list" id="sequence-list"></ul>
+        </div>
+      </div>
     </div>
-    <div class="sidebar-seq">
-      <div><p class="title" id="sequenceTitle">Sequence</p></div>
-      <div class="list-seq"><ul class="choose-list" id="sequence-list"></ul></div>
-    </div>
-    <div class="editor">
+    <div class="main">
       <div id="file-content"></div>
     </div>
-  </div>
-  <div class="footer-bar">Footer Bar</div>
+    <footer>Footer Bar</footer>
+  </div> 
   <script src="script.js"></script>
 </body>
 </html>

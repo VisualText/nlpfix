@@ -1,1 +1,0 @@
-Hello <span style="color:blue;">world</span>

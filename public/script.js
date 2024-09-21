@@ -1,24 +1,51 @@
 function handleLoad() {
     fetch('/api/analyzers')
         .then(function (response) { return response.json(); })
-        .then(function (folders) {
+        .then(function (analyzers) {
         var analyzerList = document.getElementById('analyzer-list');
         analyzerList.innerHTML = '';
-        folders.forEach(function (folder) {
-            if (!folder.startsWith('.')) {
+        analyzers.forEach(function (analyzer) {
+            if (!analyzer.folder.startsWith('.')) {
                 var li = document.createElement('li');
                 li.classList.add('analyzer-item');
-                li.textContent = folder;
+                li.textContent = analyzer.name;
+                li.setAttribute('index', analyzer.index.toString());
                 li.addEventListener('click', function () {
-                    console.log('Clicked:', folder);
-                    fetch("/api/sequence/".concat(folder))
+                    console.log('Clicked:', analyzer.name);
+                    fetch("/api/sequence/".concat(analyzer.folder))
                         .then(function (response) { return response.json(); })
                         .then(function (files) {
-                        fetch("/api/readme/firstline/".concat(folder))
+                        selectionLogic("analyzer-list", analyzer.index);
+                        fetch("/api/readme/firstline/".concat(analyzer.folder))
                             .then(function (response) { return response.json(); })
                             .then(function (firstLine) {
                             var tit = document.getElementById('sequenceTitle');
                             tit.innerHTML = firstLine;
+                        });
+                        fetch("/api/kb/".concat(analyzer.folder))
+                            .then(function (response) { return response.json(); })
+                            .then(function (kbs) {
+                            var kbList = document.getElementById('kb-list');
+                            kbList.innerHTML = '';
+                            kbs.forEach(function (kb) {
+                                console.log("kb: ", kb);
+                                var kbLi = document.createElement('li');
+                                kbLi.classList.add('seq-item');
+                                var anchor = document.createElement('a');
+                                anchor.style.marginLeft = '10px';
+                                anchor.textContent = kb.name;
+                                anchor.addEventListener('click', function () {
+                                    fetch("/api/kbload/".concat(analyzer.folder, "/").concat(kb.name))
+                                        .then(function (response) { return response.text(); })
+                                        .then(function (content) {
+                                        var fileContent = document.getElementById('file-content');
+                                        // selectionLogic("sequence-list",file.index);
+                                        fileContent.innerHTML = "<pre>".concat(content, "</pre>");
+                                    });
+                                });
+                                kbLi.appendChild(anchor);
+                                kbList.append(kbLi);
+                            });
                         });
                         var seqList = document.getElementById('sequence-list');
                         seqList.innerHTML = '';
@@ -29,11 +56,11 @@ function handleLoad() {
                             var anchor = document.createElement('a');
                             anchor.style.marginLeft = '10px';
                             anchor.addEventListener('click', function () {
-                                fetch("/api/seqfile/".concat(folder, "/").concat(file.name))
+                                fetch("/api/seqfile/".concat(analyzer.folder, "/").concat(file.name))
                                     .then(function (response) { return response.text(); })
                                     .then(function (content) {
                                     var fileContent = document.getElementById('file-content');
-                                    selectionLogic(file.index);
+                                    selectionLogic("sequence-list", file.index);
                                     fileContent.innerHTML = content;
                                 });
                             });
@@ -46,11 +73,11 @@ function handleLoad() {
                             anchor.style.marginLeft = '10px';
                             anchor.setAttribute('index', file.index.toString());
                             anchor.addEventListener('click', function () {
-                                fetch("/api/tree/".concat(folder, "/").concat(file.name, "/").concat(file.index))
+                                fetch("/api/tree/".concat(analyzer.folder, "/").concat(file.name, "/").concat(file.index))
                                     .then(function (response) { return response.text(); })
                                     .then(function (content) {
                                     var fileContent = document.getElementById('file-content');
-                                    selectionLogic(file.index);
+                                    selectionLogic("sequence-list", file.index);
                                     fileContent.innerHTML = content;
                                 });
                             });
@@ -64,11 +91,11 @@ function handleLoad() {
                             anchor.textContent = file.name;
                             if (file.highlight) {
                                 anchor.addEventListener('click', function () {
-                                    fetch("/api/highlight/".concat(folder, "/").concat(file.name, "/").concat(file.index))
+                                    fetch("/api/highlight/".concat(analyzer.folder, "/").concat(file.name, "/").concat(file.index))
                                         .then(function (response) { return response.text(); })
                                         .then(function (content) {
                                         var fileContent = document.getElementById('file-content');
-                                        selectionLogic(file.index);
+                                        selectionLogic("sequence-list", file.index);
                                         fileContent.innerHTML = "<pre>".concat(content, "</pre>");
                                     });
                                 });
@@ -87,8 +114,8 @@ function handleLoad() {
         });
     });
 }
-function selectionLogic(index) {
-    var seq_list = document.getElementById('sequence-list');
+function selectionLogic(id, index) {
+    var seq_list = document.getElementById(id);
     Array.from(seq_list.getElementsByTagName('li')).forEach(function (li) {
         li.classList.remove('selected');
     });
