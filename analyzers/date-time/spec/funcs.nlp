@@ -1,0 +1,58 @@
+###############################################
+# FILE: funcs
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-5-31 21:26:46
+# MODIFIED:
+###############################################
+
+@DECL
+
+AddDate(L("node")) {
+    L("dates") = getconcept(G("datetimes"),"dates");
+    L("con") = MakeCountConPad(L("dates"),"date",3);
+    CopyPNAttrsToCon(L("node"),L("con"));
+}
+
+AddTime(L("node")) {
+    L("times") = getconcept(G("datetimes"),"times");
+    L("con") = MakeCountConPad(L("times"),"time",3);
+    CopyPNAttrsToCon(L("node"),L("con"));
+}
+
+CopyPNAttrsToCon(L("node"),L("con")) {
+    L("attrs") = pnvarnames(L("node"));
+    while (L("attrs")[L("i")++]) {
+        L("attr") = L("attrs")[ L("i") ];
+        if (L("attr")) {
+            L("val") = pnvar(L("node"),L("attr"));
+            if (L("val")) {
+                L("type") = pnvartype(L("node"),L("attr"));
+                if (L("type") == 0) {
+                    addstrval(L("con"),L("attr"),L("val"));
+                } else if (L("type") == 1) {
+                    addnumval(L("con"),L("attr"),L("val"));
+                } else if (L("type") == 2) {
+                    addconval(L("con"),L("attr"),L("val"));
+                }
+            }
+        }
+    }
+}
+
+NumberType(L("node"),L("num")) {
+    if (L("num") >= 1 && L("num") <= 12) {
+        pnmakevar(L("node"),"month",1);
+    }
+    if (L("num") >= 1 && L("num") <= 31) {
+        pnmakevar(L("node"),"day",1);
+    }
+    if (L("num") >= 1900 && L("num") <= 2050) {
+        pnmakevar(L("node"),"year",1);
+    }
+	if (L("num") >= 0 && L("num") <= 99) {
+        pnmakevar(L("node"),"year",1);
+    }
+}
+
+@@DECL

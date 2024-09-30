@@ -1,0 +1,17 @@
+###############################################
+# FILE: splice
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-25 14:40:47
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@POST
+splice(1,1);
+
+@RULES
+_xNIL <-
+	_LINE	### (1)
+	@@

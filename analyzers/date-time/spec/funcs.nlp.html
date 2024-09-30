@@ -1,0 +1,59 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: funcs</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-5-31 21:26:46</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@DECL</span>
+
+AddDate(<span class="variable">L</span>(<span class="string">"node"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"dates"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">G</span>(<span class="string">"datetimes"</span>),<span class="string">"dates"</span>);
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;MakeCountConPad(<span class="variable">L</span>(<span class="string">"dates"</span>),<span class="string">"date"</span>,3);
+&nbsp;&nbsp;CopyPNAttrsToCon(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="variable">L</span>(<span class="string">"con"</span>));
+}
+
+AddTime(<span class="variable">L</span>(<span class="string">"node"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"times"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">G</span>(<span class="string">"datetimes"</span>),<span class="string">"times"</span>);
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;MakeCountConPad(<span class="variable">L</span>(<span class="string">"times"</span>),<span class="string">"time"</span>,3);
+&nbsp;&nbsp;CopyPNAttrsToCon(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="variable">L</span>(<span class="string">"con"</span>));
+}
+
+CopyPNAttrsToCon(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="variable">L</span>(<span class="string">"con"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"attrs"</span>)&nbsp;=&nbsp;<span class="function">pnvarnames</span>(<span class="variable">L</span>(<span class="string">"node"</span>));
+&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"attrs"</span>)[<span class="variable">L</span>(<span class="string">"i"</span>)++])&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"attr"</span>)&nbsp;=&nbsp;<span class="variable">L</span>(<span class="string">"attrs"</span>)[&nbsp;<span class="variable">L</span>(<span class="string">"i"</span>)&nbsp;];
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"attr"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"val"</span>)&nbsp;=&nbsp;<span class="function">pnvar</span>(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="variable">L</span>(<span class="string">"attr"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"val"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;=&nbsp;pnvartype(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="variable">L</span>(<span class="string">"attr"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;==&nbsp;0)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">addstrval</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">L</span>(<span class="string">"attr"</span>),<span class="variable">L</span>(<span class="string">"val"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;==&nbsp;1)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">addnumval</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">L</span>(<span class="string">"attr"</span>),<span class="variable">L</span>(<span class="string">"val"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;==&nbsp;2)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">addconval</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">L</span>(<span class="string">"attr"</span>),<span class="variable">L</span>(<span class="string">"val"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;}
+}
+
+NumberType(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="variable">L</span>(<span class="string">"num"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"num"</span>)&nbsp;>=&nbsp;1&nbsp;&&&nbsp;<span class="variable">L</span>(<span class="string">"num"</span>)&nbsp;<=&nbsp;12)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">pnmakevar</span>(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="string">"month"</span>,1);
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"num"</span>)&nbsp;>=&nbsp;1&nbsp;&&&nbsp;<span class="variable">L</span>(<span class="string">"num"</span>)&nbsp;<=&nbsp;31)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">pnmakevar</span>(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="string">"day"</span>,1);
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"num"</span>)&nbsp;>=&nbsp;1900&nbsp;&&&nbsp;<span class="variable">L</span>(<span class="string">"num"</span>)&nbsp;<=&nbsp;2050)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">pnmakevar</span>(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="string">"year"</span>,1);
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"num"</span>)&nbsp;>=&nbsp;0&nbsp;&&&nbsp;<span class="variable">L</span>(<span class="string">"num"</span>)&nbsp;<=&nbsp;99)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">pnmakevar</span>(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="string">"year"</span>,1);
+&nbsp;&nbsp;}
+}
+
+@@DECL</pre>

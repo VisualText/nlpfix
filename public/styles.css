@@ -7,7 +7,7 @@ body, html {
 .container {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  grid-template-columns: 175px 1fr;
+  grid-template-columns: 200px 1fr;
   grid-template-areas: 
       "header header"
       "sidebar main"
@@ -44,7 +44,7 @@ footer {
   text-align: center;
   padding: 10px;
 }
-@media (max-width: 175px) {
+@media (max-width: 200px) {
   .container {
       grid-template-rows: auto auto 1fr auto;
       grid-template-columns: 1fr;
@@ -56,13 +56,42 @@ footer {
   }
 }
 
+p.explanation {
+  color: rgb(238, 235, 88);
+  font-style: italic;
+}
+
+.header-title {
+  font-weight: bold;
+  color:rgb(253, 255, 147)
+}
+
+.header-descr {
+  color:rgb(156, 156, 156)
+}
+
+div.sidebar p {
+  padding: 0!;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
 ul.choose-list {
   list-style-type: none;
+  margin: 0;
   padding: 0;
 }
 
 li.seq-item {
   list-style-type: none;
+}
+
+li.kb-item {
+  list-style-type: none;
+  display: block; /* Ensures the anchor behaves like a block element */
+  overflow-wrap: break-word; /* Allows the text to wrap if it's too long */
+  text-indent: -20px; /* Indents the second line */
+  padding-left: 20px; /* Adds padding to the left to align the first line */
 }
 
 li.seq-item:hover {

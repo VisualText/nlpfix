@@ -5,29 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NLP Fix</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="http://nluglob.org/nlpfix/highlight.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 </head>
 <body>
   <div class="container">
-    <header>NLP Fix</header>
+    <header><span class="header-title">NLP Fix</span> - <span class="header-descr">Fixing NLP with Rules - Regex for NLP</span></header>
     <div class="sidebar">
       <div class="list-ana">
         <p class="title" id="analyzerTitle">Analyzers</p>
         <ul class="choose-list" id="analyzer-list"></ul>
       </div>
       <div class="list-kb">
-        <p class="title" id="kbTitle">Knowledge Base</p>
+        <p class="title" id="kbTitle">Dictionaries</p>
         <ul class="choose-list" id="kb-list"></ul>
       </div>
+      <div class="list-output">
+        <p class="title" id="outputTitle">Output Files</p>
+        <ul class="choose-list" id="output-list"></ul>
+      </div>
       <div class="list-seq">
-        <p class="title" id="sequenceTitle">Sequence</p>
+        <p class="title" id="sequenceTitle">Analyzer Sequence</p>
         <div class="list-seq-scroll">
           <ul class="choose-list" id="sequence-list"></ul>
         </div>
       </div>
     </div>
     <div class="main">
+      <p class="explanation" id="explanation">Explanation area...</p>
       <div id="file-content"></div>
     </div>
     <footer>Footer Bar</footer>

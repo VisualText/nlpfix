@@ -1,0 +1,31 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: zulu</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-6-2 18:48:29</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@NODES</span>&nbsp;<span class="concept">_LINE</span>
+
+<span class="region">@POST</span>
+<span class="variable">L</span>(<span class="string">"num"</span>)&nbsp;=&nbsp;<span class="function">num</span>(<span class="variable">N</span>(<span class="string">"$text"</span>,1));
+<span class="variable">S</span>(<span class="string">"zulu"</span>)&nbsp;=&nbsp;<span class="variable">L</span>(<span class="string">"num"</span>);
+<span class="function">single</span>();
+
+<span class="region">@RULES</span>
+<span class="concept">_zulu</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xNUM</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;z&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+<span class="region">@POST</span>
+<span class="variable">S</span>(<span class="string">"zulu"</span>)&nbsp;=&nbsp;0;
+<span class="keyword">group</span>(2,2,<span class="string">"_zulu"</span>);
+
+<span class="region">@RULES</span>
+<span class="concept">_zulu</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_time</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;z
+&nbsp;&nbsp;<span class="region">@@</span></pre>

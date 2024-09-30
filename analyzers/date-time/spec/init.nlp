@@ -1,0 +1,13 @@
+###############################################
+# FILE: init
+# SUBJ: Initialize the knowledge base to use for dates
+# AUTH: David de Hilster
+# CREATED: 2024-9-25 14:57:38
+# MODIFIED:
+###############################################
+
+@CODE
+
+G("datetimes") = getconcept(findroot(),"datetimes");
+
+@@CODE

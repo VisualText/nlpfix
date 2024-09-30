@@ -21,6 +21,7 @@ export class PassItem {
 	public empty: boolean = true;
 	public active: boolean = true;
 	public highlightFile: boolean = false;
+	public hasTree: boolean = false;
 
 	public tokenizers: string[] = ['tokenize','tok','token','cmltokenize','cmltok','dicttok','dicttokz','chartok'];
 
@@ -76,6 +77,7 @@ export class PassItem {
 		this.empty = true;
 		this.active = true;
 		this.highlightFile = false;
+		this.hasTree = false;
 	}
 }
 
@@ -797,6 +799,8 @@ export class SequenceFile extends TextFile {
 		if (fs.existsSync(treeFile)) {
 			const content = fs.readFileSync(treeFile, 'utf8');
 			passItem.highlightFile = content.includes('fired');
+			const numLines = content.split('\n').length;
+			passItem.hasTree = numLines > 5;
 		} else {
 			passItem.highlightFile = false;
 		}

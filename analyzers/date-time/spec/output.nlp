@@ -1,0 +1,14 @@
+###############################################
+# FILE: output
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-25 14:36:49
+# MODIFIED:
+###############################################
+
+@CODE
+
+SaveKB("datetimes.kbb",G("datetimes"),2);
+JsonKB("output.json",G("datetimes"));
+
+@@CODE
