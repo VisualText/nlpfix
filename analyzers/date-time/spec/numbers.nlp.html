@@ -1,0 +1,21 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: numbers</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-6-1 15:14:37</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@NODES</span>&nbsp;<span class="concept">_LINE</span>
+
+<span class="region">@POST</span>
+<span class="variable">L</span>(<span class="string">"num"</span>)&nbsp;=&nbsp;<span class="function">num</span>(<span class="variable">N</span>(<span class="string">"$text"</span>,1));
+NumberType(<span class="variable">N</span>(1),<span class="variable">L</span>(<span class="string">"num"</span>));
+
+<span class="region">@RULES</span>
+<span class="constant">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xNUM</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+</pre>

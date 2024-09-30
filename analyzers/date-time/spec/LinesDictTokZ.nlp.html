@@ -1,0 +1,29 @@
+<pre>
+<span class="comment">###################################################</span>
+<span class="comment"># FILE: lines.pat</span>
+<span class="comment"># SUBJ: Gather Lines when using dicttokz</span>
+<span class="comment"># CREATED: 4/29/2023 Dd.</span>
+<span class="comment"># Date of this version: 4/29/2023</span>
+<span class="comment">###################################################</span>
+
+<span class="region">@NODES</span>&nbsp;<span class="region">_ROOT</span>
+
+<span class="region">@PRE</span>
+<2,2>&nbsp;<span class="function">varz</span>(<span class="string">"NL"</span>);
+
+<span class="region">@RULES</span>
+<span class="concept">_LINE</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xSTART</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="attr">plus</span>]&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+<span class="region">@PRE</span>
+<1,1>&nbsp;<span class="function">var</span>(<span class="string">"NL"</span>);
+<2,2>&nbsp;<span class="function">varz</span>(<span class="string">"NL"</span>);
+
+<span class="region">@RULES</span>
+<span class="concept">_LINE</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="attr">one</span>]&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="attr">star</span>]&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+</pre>

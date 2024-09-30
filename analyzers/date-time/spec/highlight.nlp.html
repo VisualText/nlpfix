@@ -1,0 +1,19 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: highlight</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-6-2 8:8:22</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@NODES</span>&nbsp;<span class="region">_ROOT</span>
+
+<span class="region">@POST</span>
+<span class="function">noop</span>();
+
+<span class="region">@RULES</span>
+<span class="suggest">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="attr">one</span>&nbsp;<span class="attr">match</span>=(<span class="concept">_date</span>&nbsp;<span class="concept">_time</span>)]&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+</pre>

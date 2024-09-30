@@ -1,18 +1,15 @@
 import express from 'express';
-import https from 'https';
 import path from 'path';
 import fs from 'fs';
 import { genFileType } from './treeFile';
 import { VisualText } from './visualText';
 import { TextFile } from './textFile';
-import { TreeFile } from './treeFile'
 
 const app = express();
 const PORT = 3000;
 
 export const visualText = new VisualText();
 export const textFile = new TextFile();
-export const treeFile = new TreeFile();
 
 app.use(express.static('public'));
 
@@ -59,14 +56,15 @@ app.get('/api/sequence/:analyzer', (req, res) => {
   let i = 1;
   for (let passItem of sequenceFile.getPassItems()) {
     if (passItem.typeStr == 'nlp') {
-      let data = {'name': passItem.name, 'index': i, 'highlight': passItem.highlightFile};
+      let data = {'name': passItem.name, 'index': i, 'highlight': passItem.highlightFile, 'tree': passItem.hasTree};
       files.push(data);
     } else if (i == 1) {
-      let data = {'name': passItem.typeStr, 'index': i, 'highlight': passItem.highlightFile};
+      let data = {'name': passItem.typeStr, 'index': i, 'highlight': passItem.highlightFile, 'tree': passItem.hasTree};
       files.push(data);
     }
     i++;
   }
+  files.push({'name': 'final.tree', 'index': i, 'highlight': false, 'tree': true});
   res.json(files);
 });
 
@@ -77,6 +75,7 @@ app.get('/api/kb/:analyzer', (req, res) => {
       return res.status(500).send('Unable to scan files');
     }
     let data = [];
+    let i = 1;
     for (let file of files) {
       let type = 'none';
       if (file.endsWith('.dict')) {
@@ -85,7 +84,34 @@ app.get('/api/kb/:analyzer', (req, res) => {
         type = 'kbb';
       }
       if (type != 'none') { 
-        data.push({'name': file, 'type': type});
+        data.push({'name': file, 'type': type, 'index': i++});
+      }
+    }
+    res.json(data);
+  });
+});
+
+app.get('/api/output/:analyzer', (req, res) => {
+  const anaDir = path.join('analyzers', req.params.analyzer, 'input', "text.txt_log");
+  fs.readdir(anaDir, (err, files) => {
+    if (err) {
+      return res.status(500).send('Unable to scan files');
+    }
+    let data = [];
+    let i = 1;
+    for (let file of files) {
+      let type = 'none';
+      if (file.endsWith('.dict')) {
+        type = 'dict';
+      } else if (file.endsWith('.kbb')) {
+        type = 'kbb';
+      } else if (file.endsWith('.json')) {
+        type = 'json';
+      } else if (file == 'final.tree') {
+        type = 'finaltree';
+      }
+      if (type != 'none') { 
+        data.push({'name': file, 'type': type, 'index': i++});
       }
     }
     res.json(data);
@@ -94,6 +120,40 @@ app.get('/api/kb/:analyzer', (req, res) => {
 
 app.get('/api/kbload/:analyzer/:filename', (req, res) => {
   let filePath = path.join('analyzers', req.params.analyzer, 'kb', 'user', req.params.filename);
+  let html = false;
+  if (fs.existsSync(filePath+'.html')) {
+    filePath = filePath + '.html';
+    html = true;
+  }
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      return res.status(500).send(`Unable to read file : ${filePath}`);
+    }
+    if (html)
+      data = `<pre>${data}</pre>`;
+    res.send(data);
+  });
+});
+
+app.get('/api/outputload/:analyzer/:filename', (req, res) => {
+  let filePath = path.join('analyzers', req.params.analyzer, 'input', 'text.txt_log', req.params.filename);
+  let html = false;
+  if (fs.existsSync(filePath+'.html')) {
+    filePath = filePath + '.html';
+    html = true;
+  }
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      return res.status(500).send(`Unable to read file : ${filePath}`);
+    }
+    if (html || req.params.filename == 'output.json')
+      data = `<pre>${data}</pre>`;
+    res.send(data);
+  });
+});
+
+app.get('/api/input/:analyzer/:filename', (req, res) => {
+  let filePath = path.join('analyzers', req.params.analyzer, 'input', req.params.filename);
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
       return res.status(500).send(`Unable to read file : ${filePath}`);
@@ -117,7 +177,7 @@ app.get('/api/highlight/:analyzer/:filename/:index', (req, res) => {
             if (err) {
               return res.status(500).send(`Unable to read file : ${path.join (newFile)}`);
             }
-            res.send(data);
+            res.send(`<pre>${data}</pre>`);
           });
           break;
         }
@@ -140,7 +200,7 @@ app.get('/api/tree/:analyzer/:filename/:index', async (req, res) => {
       if (file.endsWith('.tree.html')) {
         const str = file.substring(3,6);
         const num = parseInt(str);
-        if (num == index) {
+        if (num == index || file.startsWith('final')) {
           let f = path.join(dirPath, file);
           const data = await fs.promises.readFile(f, 'utf8');
           treeContent = data;

@@ -1,0 +1,85 @@
+/* Highlighting styles for NLP files */
+
+span.concept {
+  color: #9393e5;
+  font-weight: bold;
+}
+
+span.suggest {
+    color: #967fc2;
+    font-weight: bold;
+}
+
+span.variable {
+    color: #c54545;
+    font-weight: bold;
+}
+
+span.keyword {
+    color: #3399ff;
+}
+
+span.node,
+span.string {
+    color: #d2b48c;
+}
+
+span.function {
+    color: #ffffcc;
+}
+
+span.region {
+    color: #6e6eec;
+}
+
+span.attr {
+    color: #dc53ee;
+}
+
+span.comment {
+    color: #1f9e30;
+}
+
+span.constant {
+    color: #ffff77;
+}
+
+/* Highlighting styles for tree files */
+
+span.word {
+    color: #11a149;
+}
+
+span.type {
+    color: #436ebe;
+}
+
+span.fired {
+    color: #d83c3c;
+}
+
+span.number {
+    color: #9690e9;
+}
+
+/* Highlighting styles for dict and kbb files */
+
+span.value {
+    color: #f0ea9b;
+}
+
+span.kb0 {
+    color: #846bdb;
+}
+
+span.kb1 {
+    color: #f0ea9b;
+}
+
+span.kb2 {
+    color: #65a85f;
+}
+
+span.kb3 {
+    color: #f864f1;
+}

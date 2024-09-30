@@ -1,0 +1,18 @@
+Sequence file is:
+dicttokz
+NOHASH rule: _LINE [] [] <- _xSTART [1,1] [] _xWILD [1,0 pre] [] @@
+NOHASH rule: _LINE [] [] <- _xWILD [1,1 pre] [] _xWILD [0,0 pre] [] @@
+NOHASH rule: _xNIL [] [] <- _xNUM [1,1] [] @@
+NOHASH rule: _ordinal [] [] <- _xNUM [1,1] [] _xWILD [1,1 matches=(st nd rd th)] [] @@
+NOHASH rule: _time [] [] <- _xNUM [1,1] [] : [1,1] [] _xNUM [1,1] [] : [1,1] [] _xNUM [1,1] [] _xWILD [0,0 matches=(_am _pm)] [] @@
+NOHASH rule: _time [] [] <- _xNUM [1,1] [] : [1,1] [] _xNUM [1,1] [] _xWILD [0,0 matches=(_am _pm)] [] @@
+NOHASH rule: _zulu [] [] <- _xNUM [1,1] [] z [1,1] [] @@
+NOHASH rule: _date [] [] <- _xNUM [1,1] [] _xWILD [0,0 matches=(/ ' - .)] [] _xNUM [1,1] [] _xWILD [0,0 matches=(/ ' - .)] [] _xNUM [1,1] [] @@
+NOHASH rule: _date [] [] <- _xNUM [1,1 pre] [] _xALPHA [1,1 pre] [] _xNUM [1,1 pre] [] @@
+NOHASH rule: _date [] [] <- _xALPHA [1,1 pre] [] . [0,1] [] _xNUM [1,1 pre] [] , [0,1] [] _xNUM [1,1 pre] [] @@
+NOHASH rule: _date [] [] <- _xALPHA [1,1 pre] [] _ordinal [1,1] [] , [0,1] [] _xNUM [1,1 pre] [] @@
+NOHASH rule: _xNIL [] [] <- _xALPHA [1,1 pre] [] , [0,1] [] _date [1,1] [] @@
+NOHASH rule: _date [] [] <- _xNUM [1,1 pre] [] @@
+
+Passes: (dicttok,nil) (nlp,init) (nlp,KBFuncs) (nlp,funcs) (nlp,LinesDictTokZ) (nlp,numbers) (nlp,ordinals) (nlp,times) (nlp,zulu) (nlp,times1) (nlp,dates) (nlp,datesDay) (nlp,splice) (nlp,kb) (nlp,output) 
+

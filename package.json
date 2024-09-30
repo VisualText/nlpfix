@@ -12,7 +12,8 @@
     "server": "pm2 start dist/server.js",
     "status": "ps aux | grep PM2",
     "dev": "ts-node src/server.ts",
-    "build:public": "tsc public/script.ts --outDir public"
+    "build:public": "tsc public/script.ts --outDir public",
+    "kill:pm2": "pkill -f .pm2"
   },
   "keywords": [],
   "author": "",

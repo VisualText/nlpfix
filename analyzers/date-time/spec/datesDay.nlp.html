@@ -1,0 +1,45 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: datesDay</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-6-2 8:1:56</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@NODES</span>&nbsp;<span class="concept">_LINE</span>
+
+<span class="comment">###############################################</span>
+<span class="comment"># Fri, 12 Dec 2014</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@PRE</span>
+<1,1>&nbsp;<span class="function">var</span>(<span class="string">"day"</span>);
+
+<span class="region">@POST</span>
+<span class="variable">N</span>(<span class="string">"weekday"</span>)&nbsp;=&nbsp;<span class="variable">N</span>(<span class="string">"$text"</span>,1);
+<span class="function">listadd</span>(3,1);
+
+<span class="region">@RULES</span>
+<span class="suggest">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xALPHA</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;\,&nbsp;[<span class="attr">opt</span>]&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="concept">_date</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (3)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+&nbsp;
+<span class="comment">###############################################</span>
+<span class="comment"># 2005</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@PRE</span>
+<1,1>&nbsp;<span class="function">var</span>(<span class="string">"year"</span>);
+<1,1>&nbsp;<span class="function">length</span>(4);
+
+<span class="region">@POST</span>
+<span class="variable">S</span>(<span class="string">"year"</span>)&nbsp;=&nbsp;<span class="function">num</span>(<span class="variable">N</span>(<span class="string">"$text"</span>,1));
+<span class="function">single</span>();
+
+<span class="region">@RULES</span>
+<span class="concept">_date</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xNUM</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="region">@@</span></pre>

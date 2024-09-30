@@ -345,4 +345,8 @@ export class TextFile {
     replaceLineNumber(lineNum: number, text: string) {
         this.lines[lineNum] = text;
     }
+
+    getNumLions(): number {
+        return this.lines.length;
+    }
 }

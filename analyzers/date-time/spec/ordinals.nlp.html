@@ -1,0 +1,27 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: ORDINALS</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-6-1 11:44:34</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@NODES</span>&nbsp;<span class="concept">_LINE</span>
+
+<span class="region">@POST</span>
+<span class="variable">S</span>(<span class="string">"num"</span>)&nbsp;=&nbsp;<span class="function">num</span>(<span class="variable">N</span>(<span class="string">"$text"</span>,1));
+<span class="function">single</span>();
+
+<span class="region">@RULES</span>
+<span class="concept">_ordinal</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xNUM</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="attr">one</span>&nbsp;<span class="attr">match</span>=(st&nbsp;nd&nbsp;rd&nbsp;th)]&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+<span class="region">@RULES</span>
+<span class="concept">_am</span>&nbsp;<-&nbsp;am&nbsp;<span class="region">@@</span>
+<span class="concept">_pm</span>&nbsp;<-&nbsp;pm&nbsp;<span class="region">@@</span>
+<span class="concept">_am</span>&nbsp;<-&nbsp;a&nbsp;\.&nbsp;m&nbsp;\.&nbsp;<span class="region">@@</span>
+<span class="concept">_pm</span>&nbsp;<-&nbsp;p&nbsp;\.&nbsp;m&nbsp;\.&nbsp;<span class="region">@@</span>
+</pre>
