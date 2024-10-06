@@ -1,0 +1,24 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: numbered</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-9-30 12:15:22</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@NODES</span>&nbsp;<span class="concept">_LINE</span>
+
+<span class="region">@POST</span>
+<span class="variable">S</span>(<span class="string">"enum"</span>)&nbsp;=&nbsp;<span class="function">num</span>(<span class="variable">N</span>(<span class="string">"$text"</span>,3));
+<span class="variable">X</span>(<span class="string">"enum"</span>,2)&nbsp;=&nbsp;<span class="variable">S</span>(<span class="string">"enum"</span>);
+<span class="function">singler</span>(3,4);
+
+<span class="region">@RULES</span>
+<span class="concept">_enum</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xSTART</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="attr">min</span>=0&nbsp;<span class="attr">max</span>=3]&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="constant">_xNUM</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (3)</span>
+&nbsp;&nbsp;\.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (4)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+</pre>

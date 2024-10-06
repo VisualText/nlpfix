@@ -1,0 +1,37 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: pageHeader</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-10-3 6:25:31</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@NODES</span>&nbsp;<span class="region">_ROOT</span>
+
+<span class="region">@POST</span>
+<span class="variable">S</span>(<span class="string">"prose"</span>)&nbsp;=&nbsp;1;
+<span class="variable">S</span>(<span class="string">"page"</span>)&nbsp;=&nbsp;<span class="variable">N</span>(<span class="string">"page"</span>,1);
+<span class="variable">S</span>(<span class="string">"title"</span>)&nbsp;=&nbsp;<span class="variable">N</span>(<span class="string">"title"</span>,2);
+<span class="variable">S</span>(<span class="string">"description"</span>)&nbsp;=&nbsp;<span class="variable">N</span>(<span class="string">"description"</span>,2);
+<span class="function">single</span>();
+
+<span class="region">@RULES</span>
+<span class="concept">_pageHeader</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_page</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="concept">_pageTitle</span>&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+<span class="region">@POST</span>
+<span class="variable">S</span>(<span class="string">"prose"</span>)&nbsp;=&nbsp;1;
+<span class="variable">S</span>(<span class="string">"page"</span>)&nbsp;=&nbsp;<span class="variable">N</span>(<span class="string">"page"</span>,2);
+<span class="variable">S</span>(<span class="string">"title"</span>)&nbsp;=&nbsp;<span class="variable">N</span>(<span class="string">"title"</span>,1);
+<span class="variable">S</span>(<span class="string">"description"</span>)&nbsp;=&nbsp;<span class="variable">N</span>(<span class="string">"description"</span>,1);
+<span class="function">single</span>();
+
+<span class="region">@RULES</span>
+<span class="concept">_pageHeader</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_pageTitle</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="concept">_page</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+</pre>

@@ -1,0 +1,14 @@
+###############################################
+# FILE: init
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-8-7 18:15:8
+# MODIFIED:KWH
+###############################################
+
+@CODE
+
+G("sentences") = getconcept(findroot(),"sentences");
+G("document") = getconcept(findroot(),"document");
+
+@@CODE

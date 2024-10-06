@@ -1,0 +1,23 @@
+###############################################
+# FILE: stragglers
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-30 13:50:54
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@PRE
+<1,1> varz("prose");
+<1,1> varz("enum");
+<1,1> varz("page");
+
+@POST
+if (N("words",1) == N("lower",1))
+	N("prose",1) = 1;
+
+@RULES
+_xNIL <-
+	_LINE	### (1)
+	@@

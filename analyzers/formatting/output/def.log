@@ -1,0 +1,14 @@
+Sequence file is:
+dicttokz
+NOHASH rule: _LINE [] [] <- _xSTART [1,1] [] _xWILD [1,0 pre] [] @@
+NOHASH rule: _LINE [] [] <- _xWILD [1,1 pre] [] _xWILD [0,0 pre] [] @@
+NOHASH rule: _enum [] [] <- _xSTART [1,1] [] _xWILD [0,3] [] _xNUM [1,1] [] . [1,1] [] @@
+NOHASH rule: _xNIL [] [] <- _xSTART [1,1] [] _xWHITE [0,1] [] _xNUM [1,1] [] _xWHITE [0,1] [] _xEND [1,1] [] @@
+NOHASH rule: _xNIL [] [] <- _xSTART [1,1] [] _xWILD [0,0 fails=(&)] [] & [1,1] [] | [1,1] [] _xWILD [0,0 fails=(_xEND)] [] _xEND [1,1] [] @@
+NOHASH rule: _colonHeader [] [] <- _xSTART [1,1] [] _xALPHA [1,1 pre] [] _xWILD [0,0 fails=(:)] [] : [1,1] [] @@
+NOHASH rule: _sentence [] [] <- _xWILD [0,0 fails=(_endSent _BLANKLINE)] [] _xWILD [1,1 matches=(_endSent _BLANKLINE _xEND)] [] @@
+NOHASH rule: _xNIL [] [] <- _xSTART [1,1] [] _enum [1,1] [] _xWILD [0,0 fails=(_xEND)] [] _xEND [1,1] [] @@
+NOHASH rule: _xNIL [] [] <- _xSTART [1,1] [] _pageHeader [0,1] [] _colonHeader [1,1] [] _xWILD [0,0 fails=(_xEND)] [] _xEND [1,1] [] @@
+
+Passes: (dicttok,nil) (nlp,init) (nlp,KBFuncs) (nlp,funcs) (nlp,LinesDictTokZ) (nlp,numbered) (nlp,pageNumber) (nlp,pageTitle) (nlp,pageHeader) (nlp,lineAttrs) (nlp,headers) (nlp,colonHeaders) (nlp,prose) (nlp,stragglers) (nlp,paragraphBreaks) (nlp,enumerateBlock) (nlp,colonBlock) (nlp,proseBlock) (nlp,spliceLines) (nlp,sentenceEnders) (nlp,sentences) (nlp,sentEnum) (nlp,sentColon) (nlp,enumerate) (nlp,colon) (nlp,output) 
+

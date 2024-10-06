@@ -1,0 +1,28 @@
+###############################################
+# FILE: proseBlock
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-30 14:31:54
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@PRE
+<2,2> varz("para");
+
+@RULES
+_prose <-
+	_pageHeader
+	_xWILD [match=(_LINE _pageHeader)]		### (2)
+	@@
+
+@PRE
+<1,1> var("prose");
+<2,2> varz("para");
+
+@RULES
+_prose <-
+	_LINE
+	_xWILD [match=(_LINE _pageHeader)]		### (2)
+	@@

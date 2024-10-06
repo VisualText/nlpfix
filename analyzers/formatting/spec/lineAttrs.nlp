@@ -1,0 +1,17 @@
+###############################################
+# FILE: lineAttrs
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-30 12:17:26
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@POST
+LineAttrs(N(1),N(1));
+
+@RULES
+_xNIL <-
+	_LINE	### (1)
+	@@

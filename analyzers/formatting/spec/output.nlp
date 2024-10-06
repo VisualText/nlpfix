@@ -1,0 +1,69 @@
+###############################################
+# FILE: output
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-8-7 18:18:3
+# MODIFIED:KWH
+###############################################
+
+@CODE
+
+L("node") = pndown(pnroot());
+while (L("node")) {
+    L("name") = pnname(L("node"));
+    if (L("name") == "_prose") {
+        L("con") = MakeCountCon(G("document"),"paragraph");
+        L("sent") = pndown(L("node"));
+        while (L("sent")) {
+            L("c") = MakeCountCon(L("con"),"sentence");
+            addstrval(L("c"),"text",pnvar(L("sent"),"$text"));
+            L("sent") = pnnext(L("sent"));
+        }
+    } else if (L("name") == "_enumerateBlock") {
+        L("con") = MakeCountCon(G("document"),"enumeration");
+        L("enum") = pndown(L("node"));
+        while (L("enum")) {
+            L("econ") = MakeCountCon(L("con"),"enumerate");
+            L("sent") = pndown(L("enum"));
+            while (L("sent")) {
+                L("c") = MakeCountCon(L("econ"),"sentence");
+                L("n") = pnvar(L("sent"),"enum");
+                if (L("n")) {
+                    addnumval(L("econ"),"enum",L("n"));
+                    addstrval(L("c"),"text",pnvar(L("sent"),"text"));
+                } else {
+                    addstrval(L("c"),"text",pnvar(L("sent"),"$text"));
+                }
+
+                L("sent") = pnnext(L("sent"));
+            }            
+            L("enum") = pnnext(L("enum"));
+        }
+    } else if (L("name") == "_colonBlock") {
+        L("con") = MakeCountCon(G("document"),"colon");
+        L("colon") = pndown(L("node"));
+        while (L("colon")) {
+            L("col") = MakeCountCon(L("con"),"colon");
+            L("sent") = pndown(L("colon"));
+            while (L("sent")) {
+                L("c") = MakeCountCon(L("col"),"sentence");
+                L("n") = pnvar(L("sent"),"colon");
+                if (L("n")) {
+                    addstrval(L("col"),"colon",L("n"));
+                    addstrval(L("c"),"text",pnvar(L("sent"),"text"));
+                } else {
+                    addstrval(L("c"),"text",pnvar(L("sent"),"$text"));
+                }
+
+                L("sent") = pnnext(L("sent"));
+            }            
+            L("colon") = pnnext(L("colon"));
+        }
+    }
+    L("node") = pnnext(L("node"));
+}
+
+SaveKB("document.kbb",G("document"),2);
+SaveKB("sentences.kbb",G("sentences"),2);
+
+@@CODE

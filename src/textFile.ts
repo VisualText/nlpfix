@@ -342,6 +342,31 @@ export class TextFile {
         return line.toString().trim();
 	}
 
+	public readReadMe(filepath: string): {firstLine: string, description: string} {
+        if (!fs.existsSync(filepath))
+            return {firstLine: '', description: ''};
+        const lineByLine = require('n-readlines');
+        const liner = new lineByLine(filepath);
+         
+        let firstLine = '';
+        let line = '';
+        let description = '';
+         
+        while (line = liner.next()) {
+            if (firstLine.length == 0)
+                firstLine = line.toString().trim();
+            else
+                description = description.concat(line.toString().trim());
+        }
+
+        if (liner.next())
+            liner.close();
+
+        firstLine = firstLine.replace(/^#/, '').trim();
+            
+        return {'firstLine': firstLine, 'description': description};
+	}
+
     replaceLineNumber(lineNum: number, text: string) {
         this.lines[lineNum] = text;
     }

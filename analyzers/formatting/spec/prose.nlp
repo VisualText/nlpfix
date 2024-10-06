@@ -1,0 +1,21 @@
+###############################################
+# FILE: prose
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-30 13:29:36
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@POST
+if ((N("words") == N("lower") && N("words") > 2) ||
+	(N("words") >= 5 && N("lower") >= 5)) {
+
+	N("prose") = 1;
+}
+
+@RULES
+_xNIL <-
+	_LINE	### (1)
+	@@

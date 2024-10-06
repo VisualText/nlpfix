@@ -1,0 +1,26 @@
+###############################################
+# FILE: pageTitle
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-3 6:20:32
+# MODIFIED:
+###############################################
+
+@NODES _LINE
+
+@POST
+pnrename(X(2),"_pageTitle");
+X("title",2) = N("$text",2);
+X("description",2) = N("$text",5);
+group(2,2,"_title");
+group(5,5,"_description");
+
+@RULES
+_xNIL <-
+	_xSTART					### (1)
+	_xWILD [fail=(\&)]		### (2)
+	\&						### (3)
+	\|						### (4)
+	_xWILD [fail=(_xEND)]	### (5)
+	_xEND					### (6)
+	@@

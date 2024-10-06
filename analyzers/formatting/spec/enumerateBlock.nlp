@@ -1,0 +1,20 @@
+###############################################
+# FILE: enumerateBlock
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-3 6:37:8
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@PRE
+<1,1> var("enum");
+<2,2> var("prose");
+<2,2> varz("para");
+
+@RULES
+_enumerateBlock <-
+	_LINE								### (1)
+	_xWILD [match=(_LINE _pageHeader)]	### (2)
+	@@

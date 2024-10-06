@@ -1,0 +1,30 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: paragraphBreaks</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-10-3 9:20:11</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@NODES</span>&nbsp;<span class="region">_ROOT</span>
+
+<span class="region">@PRE</span>
+<1,1>&nbsp;<span class="function">var</span>(<span class="string">"prose"</span>);
+<2,2>&nbsp;<span class="function">var</span>(<span class="string">"prose"</span>);
+
+<span class="region">@POST</span>
+<span class="string">"para.txt"</span>&nbsp;<<&nbsp;<span class="string">"================================="</span>;
+<span class="keyword">if</span>&nbsp;(<span class="variable">N</span>(<span class="string">"first upper"</span>,2)&nbsp;&&&nbsp;AbsDiff(<span class="variable">N</span>(<span class="string">"length"</span>,2),<span class="variable">N</span>(<span class="string">"length"</span>,1))&nbsp;>&nbsp;10)&nbsp;{
+&nbsp;&nbsp;<span class="variable">N</span>(<span class="string">"para"</span>,2)&nbsp;=&nbsp;1;
+&nbsp;&nbsp;<span class="string">"para.txt"</span>&nbsp;<<&nbsp;<span class="string">" BREAK! ====> \n\t"</span>&nbsp;<<&nbsp;<span class="variable">N</span>(<span class="string">"$text"</span>,1)&nbsp;<<&nbsp;<span class="string">"\nand\n\t"</span>&nbsp;<<&nbsp;<span class="variable">N</span>(<span class="string">"$text"</span>,2)&nbsp;<<&nbsp;<span class="string">"\n"</span>;
+}&nbsp;<span class="keyword">else</span>&nbsp;{
+&nbsp;&nbsp;<span class="string">"para.txt"</span>&nbsp;<<&nbsp;<span class="string">"\n\t"</span>&nbsp;<<&nbsp;<span class="variable">N</span>(<span class="string">"$text"</span>,1)&nbsp;<<&nbsp;<span class="string">"\nand\n\t"</span>&nbsp;<<&nbsp;<span class="variable">N</span>(<span class="string">"$text"</span>,2)&nbsp;<<&nbsp;<span class="string">"\n"</span>;
+}
+
+<span class="region">@RULES</span>
+<span class="suggest">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_LINE</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="concept">_LINE</span>&nbsp;[<span class="attr">look</span>]&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+</pre>

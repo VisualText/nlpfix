@@ -1,0 +1,23 @@
+###############################################
+# FILE: enumerate
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-4 9:4:59
+# MODIFIED:
+###############################################
+
+@PATH _ROOT _enumerateBlock
+
+@PRE
+<1,1> var("enum");
+<2,2> varz("enum");
+
+@POST
+S("enum") = N("enum",1);
+single();
+
+@RULES
+_enumerate <-
+	_sentence					### (1)
+	_xWILD [match=(_sentence)]	### (2)
+	@@

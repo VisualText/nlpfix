@@ -1,0 +1,23 @@
+<pre>
+<span class="comment">###################################################</span>
+<span class="comment"># FILE: lines.pat</span>
+<span class="comment"># SUBJ: Gather Lines</span>
+<span class="comment"># CREATED: 10/Mar/99 13:35:22</span>
+<span class="comment"># Date of this version: 31/Aug/01</span>
+<span class="comment"># Copyright 1999-2004, Text Analysis International</span>
+<span class="comment">###################################################</span>
+
+<span class="region">@NODES</span>&nbsp;<span class="region">_ROOT</span>
+
+<span class="region">@RULES</span>
+
+<span class="concept">_BLANKLINE</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="attr">min</span>=0&nbsp;<span class="attr">max</span>=0&nbsp;<span class="attr">matches</span>=(\&nbsp;\t&nbsp;\r)]&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;\n&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+<span class="concept">_LINE</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="attr">min</span>=0&nbsp;<span class="attr">max</span>=0&nbsp;<span class="attr">fails</span>=(\r&nbsp;\n)]&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="attr">one</span>&nbsp;<span class="attr">match</span>=(\n&nbsp;<span class="constant">_xEND</span>)]&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+</pre>

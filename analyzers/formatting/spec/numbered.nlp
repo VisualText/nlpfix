@@ -1,0 +1,22 @@
+###############################################
+# FILE: numbered
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-30 12:15:22
+# MODIFIED:
+###############################################
+
+@NODES _LINE
+
+@POST
+S("enum") = num(N("$text",3));
+X("enum",2) = S("enum");
+singler(3,4);
+
+@RULES
+_enum <-
+	_xSTART					### (1)
+	_xWILD [min=0 max=3]	### (2)
+	_xNUM					### (3)
+	\.						### (4)
+	@@

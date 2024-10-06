@@ -1,0 +1,24 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: pageNumber</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-9-30 14:14:4</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@NODES</span>&nbsp;<span class="concept">_LINE</span>
+
+<span class="region">@POST</span>
+<span class="variable">X</span>(<span class="string">"page"</span>,2)&nbsp;=&nbsp;<span class="variable">N</span>(<span class="string">"$text"</span>,3);
+<span class="function">pnrename</span>(<span class="variable">X</span>(2),<span class="string">"_page"</span>);
+
+<span class="region">@RULES</span>
+<span class="constant">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xSTART</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="constant">_xWHITE</span>&nbsp;[opt]&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="constant">_xNUM</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (3)</span>
+&nbsp;&nbsp;<span class="constant">_xWHITE</span>&nbsp;[opt]&nbsp;&nbsp;<span class="comment">### (4)</span>
+&nbsp;&nbsp;<span class="constant">_xEND</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (5)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+</pre>
