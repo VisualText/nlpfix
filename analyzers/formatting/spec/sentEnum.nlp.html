@@ -1,0 +1,24 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: sentEnum</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-10-4 9:11:54</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@PATH</span>&nbsp;<span class="region">_ROOT</span>&nbsp;<span class="concept">_enumerateBlock</span>&nbsp;<span class="concept">_sentence</span>
+
+<span class="region">@POST</span>
+<span class="variable">X</span>(<span class="string">"enum"</span>,3)&nbsp;=&nbsp;<span class="variable">N</span>(<span class="string">"enum"</span>,2);
+<span class="variable">X</span>(<span class="string">"text"</span>,3)&nbsp;=&nbsp;<span class="variable">N</span>(<span class="string">"$text"</span>,3);
+<span class="keyword">group</span>(3,3,<span class="string">"_text"</span>);
+
+<span class="region">@RULES</span>
+<span class="suggest">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xSTART</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="concept">_enum</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="attr">fail</span>=(<span class="constant">_xEND</span>)]&nbsp;&nbsp;<span class="comment">### (3)</span>
+&nbsp;&nbsp;<span class="constant">_xEND</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (4)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+</pre>

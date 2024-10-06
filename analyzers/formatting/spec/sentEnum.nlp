@@ -1,0 +1,22 @@
+###############################################
+# FILE: sentEnum
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-4 9:11:54
+# MODIFIED:
+###############################################
+
+@PATH _ROOT _enumerateBlock _sentence
+
+@POST
+X("enum",3) = N("enum",2);
+X("text",3) = N("$text",3);
+group(3,3,"_text");
+
+@RULES
+_xNIL <-
+	_xSTART					### (1)
+	_enum					### (2)
+	_xWILD [fail=(_xEND)]	### (3)
+	_xEND					### (4)
+	@@

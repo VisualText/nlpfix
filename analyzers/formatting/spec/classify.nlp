@@ -1,0 +1,118 @@
+###############################################
+# FILE: classify
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-8-7 18:19:42
+# MODIFIED:KWH
+###############################################
+
+@PATH _ROOT _prose _sentence
+
+
+@POST
+
+L("subject") = strval(X("con",3),"subject");
+if (L("subject")) {
+	L("con") = getconcept(G("classify"),"engage");
+	L("subcategories") = getconcept(G("classify"),"subcategories");
+	L("score") = getconcept(L("con"),N("$text",1));
+
+	IncrementCount(L("con"),"score");
+	IncrementCount(L("con"),"subcategories");
+	IncrementCount(L("score"),"count");
+	"engage.txt" << "Accepted: " << conceptname(X("con",3)) << "\n";
+
+} else {
+	"engage.txt" << "Skipped: " << conceptname(X("con",3)) << "\n";
+}
+
+@RULES
+_xNIL <-
+	_engage	### (1)
+	@@
+
+@POST
+L("con") = getconcept(G("classify"),"focus");
+L("score") = getconcept(L("con"),N("$text",1));
+IncrementCount(L("con"),"score");
+IncrementCount(L("score"),"count");
+
+@RULES
+_xNIL <-
+	_focus	### (1)
+	@@
+
+@POST
+L("con") = getconcept(G("classify"),"subject");
+L("score") = getconcept(L("con"),N("$text",1));
+IncrementCount(L("con"),"score");
+IncrementCount(L("score"),"count");
+
+@RULES
+_xNIL <-
+	_subject	### (1)
+	@@
+
+@POST
+L("con") = getconcept(G("classify"),"recommend");
+L("score") = getconcept(L("con"),N("$text",1));
+IncrementCount(L("con"),"score");
+IncrementCount(L("score"),"count");
+
+@RULES
+_xNIL <-
+	_recommend	### (1)
+	@@
+
+@POST
+L("con") = getconcept(G("classify"),"howto");
+L("score") = getconcept(L("con"),N("$text",1));
+IncrementCount(L("con"),"score");
+IncrementCount(L("score"),"count");
+
+@RULES
+_xNIL <-
+	_howto	### (1)
+	@@
+
+@POST
+L("con") = getconcept(G("classify"),"actions");
+L("score") = getconcept(L("con"),N("$text",1));
+IncrementCount(L("con"),"score");
+IncrementCount(L("score"),"count");
+
+@RULES
+_xNIL <-
+	_actions	### (1)
+	@@
+
+@POST
+L("con") = getconcept(G("classify"),"tools");
+L("score") = getconcept(L("con"),N("$text",1));
+IncrementCount(L("con"),"score");
+IncrementCount(L("score"),"count");
+
+@RULES
+_xNIL <-
+	_tools	### (1)
+	@@
+	
+@POST
+L("con") = getconcept(G("classify"),"insight");
+L("score") = getconcept(L("con"),N("$text",1));
+IncrementCount(L("con"),"score");
+IncrementCount(L("score"),"count");
+
+@RULES
+_xNIL <-
+	_insight	### (1)
+	@@
+
+@POST
+L("con") = getconcept(G("classify"),"input");
+L("filename") = getconcept(L("con"),G("$text",1));
+
+@RULES
+_xNIL <-
+	_input	### (1)
+	@@

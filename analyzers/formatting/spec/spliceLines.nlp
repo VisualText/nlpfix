@@ -1,0 +1,17 @@
+###############################################
+# FILE: spliceLines
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-30 14:33:5
+# MODIFIED:
+###############################################
+
+@NODES _prose _header _enumerateBlock _colonBlock
+
+@POST
+splice(1,1);
+
+@RULES
+_xNIL <-
+	_LINE	### (1)
+	@@

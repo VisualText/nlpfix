@@ -1,0 +1,84 @@
+###############################################
+# FILE: funcs
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-30 12:20:2
+# MODIFIED:
+###############################################
+
+@DECL
+
+ProcessPhrases(L("sent")) {
+    L("node") = pndown(L("sent"));
+    while (L("node")) {
+        L("name") = pnname(L("node"));
+        L("attr") = pnvar(L("node"),"phrase");
+        if (strstartswith(L("name"),"_") && L("attr")) {
+            L("trimmed") = strpiece(L("name"),1,strlength(L("name"))-1);
+            L("con") = pnvar(L("sent"),"con");
+            L("c") = MakeCountConPad(L("con"),L("trimmed"),3);
+            addstrval(L("c"),"text",pnvar(L("node"),"$text"));
+            IncrementPN(L("sent"),L("trimmed"));
+        }
+        L("node") = pnnext(L("node"));
+    }
+}
+
+LineAttrs(L("line"),L("node in")) {
+    L("len") = strlength(pnvar(L("line"),"$text"));
+    pnmakevar(L("line"),"length",L("len"));
+
+    L("node") = pndown(L("node in"));
+    L("first") = 1;
+    while (L("node")) {
+        L("name") = pnname(L("node"));
+        if (L("first")) {
+            if (strisupper(L("name"))) {
+                pnmakevar(L("line"),"first upper",1);
+            }
+            L("first") = 0;
+        }
+        if (L("name") != "_enum") {
+            if (strcontains(L("name"),",.:;!?")) {
+                IncrementPN(L("line"),"lower");
+            }
+            else if (pnvar(L("node"),"lower")) {
+                IncrementPN(L("line"),"lower");
+            } else if (strisupper(L("name"))) {
+                IncrementPN(L("line"),"upper");
+            }
+            IncrementPN(L("line"),"words");
+        }
+        if (!pnnext(L("node")) && IsCharPunct(L("name"))) {
+            pnmakevar(L("line"),"sent end",1);
+        }
+        L("node") = pnnext(L("node"));
+    }
+}
+
+IsCharPunct(L("char")) {
+    if (strcontains(L("char"),",.:;!?()")) {
+        return 1;
+    }
+    return 0;
+}
+
+AbsDiff(L("a"),L("b")) {
+    if (L("a") > L("b")) {
+        return L("a") - L("b");
+    }
+    return L("b") - L("a");
+}
+
+IncrementPN(L("node"),L("attr")) {
+    if (L("node")) {
+        L("at") = pnvar(L("node"),L("attr"));
+        if (!L("at")) {
+            pnmakevar(L("node"),L("attr"),1);
+        } else {
+            pnreplaceval(L("node"),L("attr"),L("at")+1);
+        }                   
+    }                
+}
+
+@@DECL

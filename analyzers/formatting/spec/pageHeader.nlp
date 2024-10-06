@@ -1,0 +1,35 @@
+###############################################
+# FILE: pageHeader
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-3 6:25:31
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@POST
+S("prose") = 1;
+S("page") = N("page",1);
+S("title") = N("title",2);
+S("description") = N("description",2);
+single();
+
+@RULES
+_pageHeader <-
+	_page		### (1)
+	_pageTitle	### (2)
+	@@
+
+@POST
+S("prose") = 1;
+S("page") = N("page",2);
+S("title") = N("title",1);
+S("description") = N("description",1);
+single();
+
+@RULES
+_pageHeader <-
+	_pageTitle	### (1)
+	_page		### (2)
+	@@

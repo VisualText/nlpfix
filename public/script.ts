@@ -1,5 +1,6 @@
 interface AnaFile {
   name: string;
+  description: string;
   folder: string;
   index: number;
 }
@@ -29,6 +30,16 @@ function handleLoad(): void {
   .then((analyzers: AnaFile[] ) => {
     const analyzerList = document.getElementById('analyzer-list') as HTMLUListElement;
     analyzerList.innerHTML = '';
+    
+    const main = document.getElementById('file-content') as HTMLDivElement;
+    let para = document.createElement('p');
+    para.setAttribute('class', 'ana-instructions');
+    const firstLine = "<instructions>Choose one of the following NLP++ text analyzers:</instructions><br>\n";
+    para.innerHTML = firstLine;
+    main.appendChild(para);
+    let ul = document.createElement('ul');
+    ul.setAttribute('class', 'analyzer-list');
+
     analyzers.forEach(analyzer => {
       if (!analyzer.folder.startsWith('.')) {
         const li = document.createElement('li');
@@ -36,155 +47,193 @@ function handleLoad(): void {
         li.textContent = analyzer.name;
         li.setAttribute('index', analyzer.index.toString());
 
-        li.addEventListener('click', () => {
-          fetch(`/api/sequence/${analyzer.folder}`)
-            .then(response => response.json())
-            .then((files: SeqFile[] ) => {
+        analyzerClick(li, analyzer);
+        analyzerList.appendChild(li);
+        if (analyzer.name.length > 0) {
+          let liana = document.createElement('li');
+          liana.setAttribute('class', 'analyzer-description');
+          analyzerClick(liana, analyzer);
+          liana.innerHTML = `<ananame>${analyzer.name}</ananame><br>\n${analyzer.description}`; 
+          ul.appendChild(liana);
+        }
+      }
+    });
 
-              selectionLogic("analyzer-list",analyzer.index);   
+    main.appendChild(ul);
+  });
+}
 
-              // fetch(`/api/readme/firstline/${analyzer.folder}`)
-              //   .then(response => response.json())
-              //   .then((firstLine: string) => {
-              //     const tit = document.getElementById('sequenceTitle') as HTMLParagraphElement;
-              //     tit.innerHTML = firstLine;
-              // });
+function analyzerClick(li: HTMLLIElement, analyzer: AnaFile) {
+  li.addEventListener('click', () => {
+    fetch(`/api/sequence/${analyzer.folder}`)
+      .then(response => response.json())
+      .then((files: SeqFile[] ) => {
 
-              fetch(`/api/input/${analyzer.folder}/text.txt`)
+        clearSelections("analyzer-list");
+        selectionLogic("analyzer-list",analyzer.index);   
+
+        // fetch(`/api/readme/firstline/${analyzer.folder}`)
+        //   .then(response => response.json())
+        //   .then((firstLine: string) => {
+        //     const tit = document.getElementById('sequenceTitle') as HTMLParagraphElement;
+        //     tit.innerHTML = firstLine;
+        // });
+
+        fetch(`/api/input/${analyzer.folder}/text.txt`)
+          .then(response => response.text())
+          .then((content: string) => {
+            console.log(content)
+            const fileContent = document.getElementById('file-content') as HTMLDivElement;
+            fileContent.innerHTML = content;
+            setPathText(`${analyzer.name} > text`);
+        });
+
+        fetch(`/api/kb/${analyzer.folder}`)
+          .then(response => response.json())
+          .then((kbs: {'name': string, 'type': string, 'index': number}[]) => {
+            const kbList = document.getElementById('kb-list') as HTMLUListElement;
+            kbList.innerHTML = '';
+            kbs.forEach(kb => {
+              let kbLi = document.createElement('li');
+              kbLi.classList.add('kb-item');
+              kbLi.setAttribute('index', kb.index.toString());
+
+              let anchor = document.createElement('a');
+              anchor.textContent = kb.name;
+              anchor.addEventListener('click', () => {
+                fetch(`/api/kbload/${analyzer.folder}/${kb.name}`)
+                  .then(response => response.text())
+                  .then((content: string) => {
+                    const fileContent = document.getElementById('file-content') as HTMLDivElement;
+                    selectionLogic("kb-list",kb.index);
+                    fileContent.innerHTML = content;
+                    addPath(analyzer.name, 'kb', kb.name);
+                  });
+              });
+              kbLi.appendChild(anchor);
+              kbList.append(kbLi);
+            });
+        });
+
+        fetch(`/api/output/${analyzer.folder}`)
+        .then(response => response.json())
+        .then((outputs: {'name': string, 'type': string, 'index': number}[]) => {
+          const outputList = document.getElementById('output-list') as HTMLUListElement;
+          outputList.innerHTML = '';
+          outputs.forEach(output => {
+            let outLi = document.createElement('li');
+            outLi.classList.add('output-item');
+            outLi.setAttribute('index', output.index.toString());
+
+            let anchor = document.createElement('a');
+            addToolHelp(anchor, 'output', output.name);
+            anchor.textContent = output.name;
+            anchor.addEventListener('click', () => {
+              fetch(`/api/outputload/${analyzer.folder}/${output.name}`)
                 .then(response => response.text())
                 .then((content: string) => {
-                  console.log(content)
                   const fileContent = document.getElementById('file-content') as HTMLDivElement;
+                  selectionLogic("output-list",output.index);
                   fileContent.innerHTML = content
-              });
-
-              fetch(`/api/kb/${analyzer.folder}`)
-                .then(response => response.json())
-                .then((kbs: {'name': string, 'type': string, 'index': number}[]) => {
-                  const kbList = document.getElementById('kb-list') as HTMLUListElement;
-                  kbList.innerHTML = '';
-                  kbs.forEach(kb => {
-                    let kbLi = document.createElement('li');
-                    kbLi.classList.add('kb-item');
-                    kbLi.setAttribute('index', kb.index.toString());
-
-                    let anchor = document.createElement('a');
-                    anchor.textContent = kb.name;
-                    anchor.addEventListener('click', () => {
-                      fetch(`/api/kbload/${analyzer.folder}/${kb.name}`)
-                        .then(response => response.text())
-                        .then((content: string) => {
-                          const fileContent = document.getElementById('file-content') as HTMLDivElement;
-                          selectionLogic("kb-list",kb.index);
-                          fileContent.innerHTML = content;
-                          addDescription(analyzer.folder, 'kb', kb.name);
-                        });
-                    });
-                    kbLi.appendChild(anchor);
-                    kbList.append(kbLi);
-                  });
-              });
-
-              fetch(`/api/output/${analyzer.folder}`)
-              .then(response => response.json())
-              .then((outputs: {'name': string, 'type': string, 'index': number}[]) => {
-                const outputList = document.getElementById('output-list') as HTMLUListElement;
-                outputList.innerHTML = '';
-                outputs.forEach(output => {
-                  let outLi = document.createElement('li');
-                  outLi.classList.add('output-item');
-                  outLi.setAttribute('index', output.index.toString());
-
-                  let anchor = document.createElement('a');
-                  addToolHelp(anchor, 'output', output.name);
-                  anchor.textContent = output.name;
-                  anchor.addEventListener('click', () => {
-                    fetch(`/api/outputload/${analyzer.folder}/${output.name}`)
-                      .then(response => response.text())
-                      .then((content: string) => {
-                        const fileContent = document.getElementById('file-content') as HTMLDivElement;
-                        selectionLogic("output-list",output.index);
-                        fileContent.innerHTML = content
-                        addDescription(analyzer.folder, 'output', output.name);
-                      });
-                  });
-                  outLi.appendChild(anchor);
-                  outputList.append(outLi);
+                  addPath(analyzer.name, 'output', output.name);
                 });
-              });
-
-              const seqList = document.getElementById('sequence-list') as HTMLUListElement;
-              seqList.innerHTML = '';
-              files.forEach(file => {
-                console.log(file);
-                const li = document.createElement('li');
-                li.classList.add('seq-item');
-                li.setAttribute('index', file.index.toString());
-                li.setAttribute('anchors', '');
-                let colorCode = file.name == 'final.tree' || file.name.includes('tok') ? 'gray' : 'yellow';
-                let anchor = document.createElement('a');
-                anchor.style.marginRight = '5px';
-                if (colorCode != 'gray') {
-                  handleClick(anchor, analyzer, file, clickType.CODE);
-                  li.setAttribute('anchors', clickType.CODE.toString());
-                }
-                let icon = document.createElement('i');
-                icon.className = 'fas fa-code';
-                icon.style.color = colorCode;
-                anchor.appendChild(icon);
-                li.appendChild(anchor);
-
-                anchor = document.createElement('a');
-                anchor.style.marginRight = '5px';
-                anchor.setAttribute('index', file.index.toString());
-                const colorTree = file.tree ? 'yellow' : 'gray';
-                if (colorTree != 'gray') {
-                  handleClick(anchor, analyzer, file, clickType.TREE);
-                  li.setAttribute('anchors', `${li.getAttribute('anchors')}${clickType.TREE.toString()}`);
-                }
-                icon = document.createElement('i');
-                icon.className = 'fas fa-sitemap';
-                icon.style.color = colorTree;
-                anchor.appendChild(icon);
-                li.appendChild(anchor);
-
-                anchor = document.createElement('a');
-                anchor.style.marginRight = '5px';
-                anchor.textContent = file.name;
-                if (file.highlight) {
-                  handleClick(anchor, analyzer, file, clickType.HIGHLIGHT);
-                  li.setAttribute('anchors', `${li.getAttribute('anchors')}${clickType.HIGHLIGHT.toString()}`);
-                } else if (file.tree) {
-                  handleClick(anchor, analyzer, file, clickType.TREE);
-                  anchor.style.color = 'gray';
-                } else if (colorCode != 'gray') {
-                  handleClick(anchor, analyzer, file, clickType.CODE);
-                  anchor.style.color = 'gray';
-                } else {
-                  anchor.style.color = 'gray';
-                }
-                li.appendChild(anchor);
-
-                li.appendChild(document.createElement('ul'));
-                seqList.appendChild(li);
-              });
+            });
+            outLi.appendChild(anchor);
+            outputList.append(outLi);
           });
         });
-        analyzerList.appendChild(li);
-      }
+
+        const seqList = document.getElementById('sequence-list') as HTMLUListElement;
+        seqList.innerHTML = '';
+        files.forEach(file => {
+          console.log(file);
+          const li = document.createElement('li');
+          li.classList.add('seq-item');
+          li.setAttribute('index', file.index.toString());
+          li.setAttribute('anchors', '');
+          let colorCode = file.name == 'final.tree' || file.name.includes('tok') ? 'gray' : 'yellow';
+          let anchor = document.createElement('a');
+          anchor.style.marginRight = '5px';
+          if (colorCode != 'gray') {
+            handleClick(anchor, analyzer, file, clickType.CODE);
+            li.setAttribute('anchors', clickType.CODE.toString());
+          }
+          let icon = document.createElement('i');
+          icon.className = 'fas fa-code';
+          icon.style.color = colorCode;
+          anchor.appendChild(icon);
+          li.appendChild(anchor);
+
+          anchor = document.createElement('a');
+          anchor.style.marginRight = '5px';
+          anchor.setAttribute('index', file.index.toString());
+          const colorTree = file.tree ? 'yellow' : 'gray';
+          if (colorTree != 'gray') {
+            handleClick(anchor, analyzer, file, clickType.TREE);
+            li.setAttribute('anchors', `${li.getAttribute('anchors')}${clickType.TREE.toString()}`);
+          }
+          icon = document.createElement('i');
+          icon.className = 'fas fa-sitemap';
+          icon.style.color = colorTree;
+          anchor.appendChild(icon);
+          li.appendChild(anchor);
+
+          anchor = document.createElement('a');
+          anchor.style.marginRight = '5px';
+          anchor.textContent = file.name;
+          if (file.highlight) {
+            handleClick(anchor, analyzer, file, clickType.HIGHLIGHT);
+            li.setAttribute('anchors', `${li.getAttribute('anchors')}${clickType.HIGHLIGHT.toString()}`);
+          } else if (file.tree) {
+            handleClick(anchor, analyzer, file, clickType.TREE);
+            anchor.style.color = 'gray';
+          } else if (colorCode != 'gray') {
+            handleClick(anchor, analyzer, file, clickType.CODE);
+            anchor.style.color = 'gray';
+          } else {
+            anchor.style.color = 'gray';
+          }
+          li.appendChild(anchor);
+
+          li.appendChild(document.createElement('ul'));
+          seqList.appendChild(li);
+        });
     });
   });
 }
 
-function addDescription(analyzer: string, list: string, file: string) {
+function addPath(analyzer: string, list: string, file: string) {
   const helpStr = helpInfo[list];
-  const paragraph = document.getElementById('explanation') as HTMLParagraphElement;
   if (helpStr && file === helpStr[0].file) {
-    paragraph.textContent = helpStr[0].description;
+    setPathText(helpStr[0].description);
   } else {
-    paragraph.textContent = `${analyzer} > ${list} > ${file}`;
+    setPathText(`${analyzer} > ${list} > ${file}`);
   }
 }
+
+function setPathText(text: string, html: boolean = false) {
+  const comment = document.getElementById('comment') as HTMLParagraphElement;
+  comment.style.display = 'none';
+  const path = document.getElementById('path') as HTMLParagraphElement;
+  path.style.display  = 'block';
+  if (html) {
+    path.innerHTML = text;
+  } else {
+    path.textContent = text;
+  }
+}
+
+function setCommentText(text: string, html: boolean = false) {
+  const path = document.getElementById('path') as HTMLParagraphElement;
+  path.style.display = 'none';
+  const comment = document.getElementById('comment') as HTMLParagraphElement;
+  comment.style.display  = 'block';
+  if (html) {
+    comment.innerHTML = text;
+  } else {
+    comment.textContent = text;
+  }
+} 
 
 function addToolHelp(anchor: HTMLAnchorElement, list: string, file: string) {
   const helpStr = helpInfo[list];
@@ -294,7 +343,7 @@ function fetchKB(analyzer: AnaFile, file: SeqFile) {
       const fileContent = document.getElementById('file-content') as HTMLDivElement;
       selectionLogic("kb-list",file.index);
       fileContent.innerHTML = content;
-      addDescription(analyzer.folder, 'kb', file.name);
+      addPath(analyzer.name, 'kb', file.name);
     });
 }
 
@@ -305,7 +354,7 @@ function fetchCode(analyzer: AnaFile, file: SeqFile) {
       const fileContent = document.getElementById('file-content') as HTMLDivElement;
       selectionLogic("sequence-list",file.index);
       fileContent.innerHTML = content;
-      addDescription(analyzer.folder, 'sequence', file.name);
+      addPath(analyzer.name, 'sequence', file.name);
     });
 }
 
@@ -316,7 +365,7 @@ function fetchTree(analyzer: AnaFile, file: SeqFile) {
       const fileContent = document.getElementById('file-content') as HTMLDivElement;
       selectionLogic("sequence-list",file.index);
       fileContent.innerHTML = content;
-      addDescription(analyzer.folder, 'sequence', file.name);
+      addPath(analyzer.name, 'sequence', file.name);
     });
 }
 
@@ -327,14 +376,14 @@ function fetchHighlight(analyzer: AnaFile, file: SeqFile) {
       const fileContent = document.getElementById('file-content') as HTMLDivElement;
       selectionLogic("sequence-list",file.index);
       fileContent.innerHTML = content;
-      addDescription(analyzer.folder, 'sequence', file.name);
+      addPath(analyzer.name, 'sequence', file.name);
     });
 }
 
 function selectionLogic(id: string, index: number) {
-  const seq_list = document.getElementById(id) as HTMLUListElement;
+  const the_list = document.getElementById(id) as HTMLUListElement;
   clearAllSelections();
-  const listItem = Array.from(seq_list.getElementsByTagName('li')).find(li => li.getAttribute('index') === index.toString());
+  const listItem = Array.from(the_list.getElementsByTagName('li')).find(li => li.getAttribute('index') === index.toString());
   if (listItem) {
     listItem.classList.add('selected');
   }

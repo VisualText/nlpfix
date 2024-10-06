@@ -1,0 +1,19 @@
+###############################################
+# FILE: headers
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-3 6:28:0
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@POST
+if (N("words") == N("upper") && N("words") > 2) {
+	single();
+}
+
+@RULES
+_header <-
+	_LINE	### (1)
+	@@

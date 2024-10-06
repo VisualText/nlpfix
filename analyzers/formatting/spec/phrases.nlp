@@ -1,0 +1,17 @@
+###############################################
+# FILE: phrases
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-30 16:25:18
+# MODIFIED:
+###############################################
+
+@PATH _ROOT _prose
+
+@POST
+ProcessPhrases(N(1));
+
+@RULES
+_xNIL <-
+	_sentence [s]	### (1)
+	@@

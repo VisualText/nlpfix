@@ -1,0 +1,119 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: classify</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-8-7 18:19:42</span>
+<span class="comment"># MODIFIED:KWH</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@PATH</span>&nbsp;<span class="region">_ROOT</span>&nbsp;<span class="concept">_prose</span>&nbsp;<span class="concept">_sentence</span>
+
+
+<span class="region">@POST</span>
+
+<span class="variable">L</span>(<span class="string">"subject"</span>)&nbsp;=&nbsp;<span class="function">strval</span>(<span class="variable">X</span>(<span class="string">"con"</span>,3),<span class="string">"subject"</span>);
+<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"subject"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">G</span>(<span class="string">"classify"</span>),<span class="string">"engage"</span>);
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"subcategories"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">G</span>(<span class="string">"classify"</span>),<span class="string">"subcategories"</span>);
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"score"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">N</span>(<span class="string">"$text"</span>,1));
+
+&nbsp;&nbsp;IncrementCount(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="string">"score"</span>);
+&nbsp;&nbsp;IncrementCount(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="string">"subcategories"</span>);
+&nbsp;&nbsp;IncrementCount(<span class="variable">L</span>(<span class="string">"score"</span>),<span class="string">"count"</span>);
+&nbsp;&nbsp;<span class="string">"engage.txt"</span>&nbsp;<<&nbsp;<span class="string">"Accepted: "</span>&nbsp;<<&nbsp;<span class="function">conceptname</span>(<span class="variable">X</span>(<span class="string">"con"</span>,3))&nbsp;<<&nbsp;<span class="string">"\n"</span>;
+
+}&nbsp;<span class="keyword">else</span>&nbsp;{
+&nbsp;&nbsp;<span class="string">"engage.txt"</span>&nbsp;<<&nbsp;<span class="string">"Skipped: "</span>&nbsp;<<&nbsp;<span class="function">conceptname</span>(<span class="variable">X</span>(<span class="string">"con"</span>,3))&nbsp;<<&nbsp;<span class="string">"\n"</span>;
+}
+
+<span class="region">@RULES</span>
+<span class="suggest">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_engage</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+<span class="region">@POST</span>
+<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">G</span>(<span class="string">"classify"</span>),<span class="string">"focus"</span>);
+<span class="variable">L</span>(<span class="string">"score"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">N</span>(<span class="string">"$text"</span>,1));
+IncrementCount(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="string">"score"</span>);
+IncrementCount(<span class="variable">L</span>(<span class="string">"score"</span>),<span class="string">"count"</span>);
+
+<span class="region">@RULES</span>
+<span class="constant">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_focus</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+<span class="region">@POST</span>
+<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">G</span>(<span class="string">"classify"</span>),<span class="string">"subject"</span>);
+<span class="variable">L</span>(<span class="string">"score"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">N</span>(<span class="string">"$text"</span>,1));
+IncrementCount(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="string">"score"</span>);
+IncrementCount(<span class="variable">L</span>(<span class="string">"score"</span>),<span class="string">"count"</span>);
+
+<span class="region">@RULES</span>
+<span class="constant">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_subject</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+<span class="region">@POST</span>
+<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">G</span>(<span class="string">"classify"</span>),<span class="string">"recommend"</span>);
+<span class="variable">L</span>(<span class="string">"score"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">N</span>(<span class="string">"$text"</span>,1));
+IncrementCount(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="string">"score"</span>);
+IncrementCount(<span class="variable">L</span>(<span class="string">"score"</span>),<span class="string">"count"</span>);
+
+<span class="region">@RULES</span>
+<span class="constant">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_recommend</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+<span class="region">@POST</span>
+<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">G</span>(<span class="string">"classify"</span>),<span class="string">"howto"</span>);
+<span class="variable">L</span>(<span class="string">"score"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">N</span>(<span class="string">"$text"</span>,1));
+IncrementCount(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="string">"score"</span>);
+IncrementCount(<span class="variable">L</span>(<span class="string">"score"</span>),<span class="string">"count"</span>);
+
+<span class="region">@RULES</span>
+<span class="constant">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_howto</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+<span class="region">@POST</span>
+<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">G</span>(<span class="string">"classify"</span>),<span class="string">"actions"</span>);
+<span class="variable">L</span>(<span class="string">"score"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">N</span>(<span class="string">"$text"</span>,1));
+IncrementCount(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="string">"score"</span>);
+IncrementCount(<span class="variable">L</span>(<span class="string">"score"</span>),<span class="string">"count"</span>);
+
+<span class="region">@RULES</span>
+<span class="constant">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_actions</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+<span class="region">@POST</span>
+<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">G</span>(<span class="string">"classify"</span>),<span class="string">"tools"</span>);
+<span class="variable">L</span>(<span class="string">"score"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">N</span>(<span class="string">"$text"</span>,1));
+IncrementCount(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="string">"score"</span>);
+IncrementCount(<span class="variable">L</span>(<span class="string">"score"</span>),<span class="string">"count"</span>);
+
+<span class="region">@RULES</span>
+<span class="constant">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_tools</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+&nbsp;&nbsp;
+<span class="region">@POST</span>
+<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">G</span>(<span class="string">"classify"</span>),<span class="string">"insight"</span>);
+<span class="variable">L</span>(<span class="string">"score"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">N</span>(<span class="string">"$text"</span>,1));
+IncrementCount(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="string">"score"</span>);
+IncrementCount(<span class="variable">L</span>(<span class="string">"score"</span>),<span class="string">"count"</span>);
+
+<span class="region">@RULES</span>
+<span class="constant">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_insight</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+<span class="region">@POST</span>
+<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">G</span>(<span class="string">"classify"</span>),<span class="string">"input"</span>);
+<span class="variable">L</span>(<span class="string">"filename"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">G</span>(<span class="string">"$text"</span>,1));
+
+<span class="region">@RULES</span>
+<span class="constant">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_input</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="region">@@</span></pre>

@@ -1,0 +1,20 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: headers</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-10-3 6:28:0</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@NODES</span>&nbsp;<span class="region">_ROOT</span>
+
+<span class="region">@POST</span>
+<span class="keyword">if</span>&nbsp;(<span class="variable">N</span>(<span class="string">"words"</span>)&nbsp;==&nbsp;<span class="variable">N</span>(<span class="string">"upper"</span>)&nbsp;&&&nbsp;<span class="variable">N</span>(<span class="string">"words"</span>)&nbsp;>&nbsp;2)&nbsp;{
+&nbsp;&nbsp;<span class="function">single</span>();
+}
+
+<span class="region">@RULES</span>
+<span class="concept">_header</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_LINE</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="region">@@</span></pre>

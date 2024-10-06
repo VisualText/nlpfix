@@ -36,10 +36,9 @@ app.get('/api/analyzers', (req, res) => {
     let fs = [];
     for (let folder of folders) {
       const readMePath = path.join('analyzers', folder, 'README.md');
-      let firstLine = textFile.readFirstLine(readMePath);
-      firstLine = firstLine.replace(/^#/, '').trim();
+      let readMe = textFile.readReadMe(readMePath);
     
-      let data = {'name': firstLine, 'folder': folder, 'index': i};
+      let data = {'name': readMe.firstLine, 'folder': folder, 'description': readMe.description, 'index': i};
       i++;
       fs.push(data);
     }

@@ -1,0 +1,28 @@
+###############################################
+# FILE: paragraphBreaks
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-3 9:20:11
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@PRE
+<1,1> var("prose");
+<2,2> var("prose");
+
+@POST
+"para.txt" << "=================================";
+if (N("first upper",2) && AbsDiff(N("length",2),N("length",1)) > 10) {
+	N("para",2) = 1;
+	"para.txt" << " BREAK! ====> \n\t" << N("$text",1) << "\nand\n\t" << N("$text",2) << "\n";
+} else {
+	"para.txt" << "\n\t" << N("$text",1) << "\nand\n\t" << N("$text",2) << "\n";
+}
+
+@RULES
+_xNIL <-
+	_LINE			### (1)
+	_LINE [look]	### (2)
+	@@

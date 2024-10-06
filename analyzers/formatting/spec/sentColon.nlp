@@ -1,0 +1,23 @@
+###############################################
+# FILE: sentEnum
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-4 9:11:54
+# MODIFIED:
+###############################################
+
+@PATH _ROOT _colonBlock _sentence
+
+@POST
+X("colon",3) = N("$text",3);
+X("text",3) = N("$text",4);
+group(4,4,"_text");
+
+@RULES
+_xNIL <-
+	_xSTART					### (1)
+	_pageHeader [opt]		### (2)
+	_colonHeader			### (3)
+	_xWILD [fail=(_xEND)]	### (4)
+	_xEND					### (5)
+	@@

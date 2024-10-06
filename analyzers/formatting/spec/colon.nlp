@@ -1,0 +1,24 @@
+###############################################
+# FILE: enumerate
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-4 9:4:59
+# MODIFIED:
+###############################################
+
+@PATH _ROOT _colonBlock
+
+@PRE
+<1,1> var("colon");
+<2,2> varz("colon");
+
+@POST
+S("colon") = N("colon",1);
+S("text") = N("text",1);
+single();
+
+@RULES
+_colon <-
+	_sentence					### (1)
+	_xWILD [match=(_sentence)]	### (2)
+	@@

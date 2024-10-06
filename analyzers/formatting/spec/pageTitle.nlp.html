@@ -1,0 +1,28 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: pageTitle</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-10-3 6:20:32</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@NODES</span>&nbsp;<span class="concept">_LINE</span>
+
+<span class="region">@POST</span>
+<span class="function">pnrename</span>(<span class="variable">X</span>(2),<span class="string">"_pageTitle"</span>);
+<span class="variable">X</span>(<span class="string">"title"</span>,2)&nbsp;=&nbsp;<span class="variable">N</span>(<span class="string">"$text"</span>,2);
+<span class="variable">X</span>(<span class="string">"description"</span>,2)&nbsp;=&nbsp;<span class="variable">N</span>(<span class="string">"$text"</span>,5);
+<span class="keyword">group</span>(2,2,<span class="string">"_title"</span>);
+<span class="keyword">group</span>(5,5,<span class="string">"_description"</span>);
+
+<span class="region">@RULES</span>
+<span class="constant">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xSTART</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="function">fail</span>=(\&)]&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;\&&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (3)</span>
+&nbsp;&nbsp;\|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (4)</span>
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="function">fail</span>=(<span class="constant">_xEND</span>)]&nbsp;&nbsp;<span class="comment">### (5)</span>
+&nbsp;&nbsp;<span class="constant">_xEND</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (6)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+</pre>

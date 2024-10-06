@@ -1,0 +1,70 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: output</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-8-7 18:18:3</span>
+<span class="comment"># MODIFIED:KWH</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@CODE</span>
+
+<span class="variable">L</span>(<span class="string">"node"</span>)&nbsp;=&nbsp;<span class="function">pndown</span>(<span class="function">pnroot</span>());
+<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"node"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"name"</span>)&nbsp;=&nbsp;<span class="function">pnname</span>(<span class="variable">L</span>(<span class="string">"node"</span>));
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"name"</span>)&nbsp;==&nbsp;<span class="string">"_prose"</span>)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;MakeCountCon(<span class="variable">G</span>(<span class="string">"document"</span>),<span class="string">"paragraph"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"sent"</span>)&nbsp;=&nbsp;<span class="function">pndown</span>(<span class="variable">L</span>(<span class="string">"node"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"sent"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"c"</span>)&nbsp;=&nbsp;MakeCountCon(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="string">"sentence"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">addstrval</span>(<span class="variable">L</span>(<span class="string">"c"</span>),<span class="string">"text"</span>,<span class="function">pnvar</span>(<span class="variable">L</span>(<span class="string">"sent"</span>),<span class="string">"$text"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"sent"</span>)&nbsp;=&nbsp;<span class="function">pnnext</span>(<span class="variable">L</span>(<span class="string">"sent"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"name"</span>)&nbsp;==&nbsp;<span class="string">"_enumerateBlock"</span>)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;MakeCountCon(<span class="variable">G</span>(<span class="string">"document"</span>),<span class="string">"enumeration"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"enum"</span>)&nbsp;=&nbsp;<span class="function">pndown</span>(<span class="variable">L</span>(<span class="string">"node"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"enum"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"econ"</span>)&nbsp;=&nbsp;MakeCountCon(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="string">"enumerate"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"sent"</span>)&nbsp;=&nbsp;<span class="function">pndown</span>(<span class="variable">L</span>(<span class="string">"enum"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"sent"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"c"</span>)&nbsp;=&nbsp;MakeCountCon(<span class="variable">L</span>(<span class="string">"econ"</span>),<span class="string">"sentence"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"n"</span>)&nbsp;=&nbsp;<span class="function">pnvar</span>(<span class="variable">L</span>(<span class="string">"sent"</span>),<span class="string">"enum"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"n"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">addnumval</span>(<span class="variable">L</span>(<span class="string">"econ"</span>),<span class="string">"enum"</span>,<span class="variable">L</span>(<span class="string">"n"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">addstrval</span>(<span class="variable">L</span>(<span class="string">"c"</span>),<span class="string">"text"</span>,<span class="function">pnvar</span>(<span class="variable">L</span>(<span class="string">"sent"</span>),<span class="string">"text"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">addstrval</span>(<span class="variable">L</span>(<span class="string">"c"</span>),<span class="string">"text"</span>,<span class="function">pnvar</span>(<span class="variable">L</span>(<span class="string">"sent"</span>),<span class="string">"$text"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"sent"</span>)&nbsp;=&nbsp;<span class="function">pnnext</span>(<span class="variable">L</span>(<span class="string">"sent"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"enum"</span>)&nbsp;=&nbsp;<span class="function">pnnext</span>(<span class="variable">L</span>(<span class="string">"enum"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"name"</span>)&nbsp;==&nbsp;<span class="string">"_colonBlock"</span>)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;MakeCountCon(<span class="variable">G</span>(<span class="string">"document"</span>),<span class="string">"colon"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"colon"</span>)&nbsp;=&nbsp;<span class="function">pndown</span>(<span class="variable">L</span>(<span class="string">"node"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"colon"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"col"</span>)&nbsp;=&nbsp;MakeCountCon(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="string">"colon"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"sent"</span>)&nbsp;=&nbsp;<span class="function">pndown</span>(<span class="variable">L</span>(<span class="string">"colon"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"sent"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"c"</span>)&nbsp;=&nbsp;MakeCountCon(<span class="variable">L</span>(<span class="string">"col"</span>),<span class="string">"sentence"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"n"</span>)&nbsp;=&nbsp;<span class="function">pnvar</span>(<span class="variable">L</span>(<span class="string">"sent"</span>),<span class="string">"colon"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"n"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">addstrval</span>(<span class="variable">L</span>(<span class="string">"col"</span>),<span class="string">"colon"</span>,<span class="variable">L</span>(<span class="string">"n"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">addstrval</span>(<span class="variable">L</span>(<span class="string">"c"</span>),<span class="string">"text"</span>,<span class="function">pnvar</span>(<span class="variable">L</span>(<span class="string">"sent"</span>),<span class="string">"text"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">addstrval</span>(<span class="variable">L</span>(<span class="string">"c"</span>),<span class="string">"text"</span>,<span class="function">pnvar</span>(<span class="variable">L</span>(<span class="string">"sent"</span>),<span class="string">"$text"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"sent"</span>)&nbsp;=&nbsp;<span class="function">pnnext</span>(<span class="variable">L</span>(<span class="string">"sent"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"colon"</span>)&nbsp;=&nbsp;<span class="function">pnnext</span>(<span class="variable">L</span>(<span class="string">"colon"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"node"</span>)&nbsp;=&nbsp;<span class="function">pnnext</span>(<span class="variable">L</span>(<span class="string">"node"</span>));
+}
+
+SaveKB(<span class="string">"document.kbb"</span>,<span class="variable">G</span>(<span class="string">"document"</span>),2);
+SaveKB(<span class="string">"sentences.kbb"</span>,<span class="variable">G</span>(<span class="string">"sentences"</span>),2);
+
+@@CODE</pre>

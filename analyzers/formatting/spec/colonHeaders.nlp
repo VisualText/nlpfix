@@ -1,0 +1,25 @@
+###############################################
+# FILE: colonHeaders
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-3 6:47:24
+# MODIFIED:
+###############################################
+
+@NODES _LINE
+
+@PRE
+<2,2> cap();
+
+@POST
+X("colon",2) = 1;
+group(2,3,"_colonText");
+single();
+
+@RULES
+_colonHeader <-
+	_xSTART					### (1)
+	_xALPHA					### (2)
+	_xWILD [fail=(\:)]		### (3)
+	\:						### (4)
+	@@

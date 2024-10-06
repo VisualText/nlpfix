@@ -1,0 +1,25 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: stragglers</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-9-30 13:50:54</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@NODES</span>&nbsp;<span class="region">_ROOT</span>
+
+<span class="region">@PRE</span>
+<1,1>&nbsp;<span class="function">varz</span>(<span class="string">"prose"</span>);
+<1,1>&nbsp;<span class="function">varz</span>(<span class="string">"enum"</span>);
+<1,1>&nbsp;<span class="function">varz</span>(<span class="string">"page"</span>);
+
+<span class="region">@POST</span>
+<span class="keyword">if</span>&nbsp;(<span class="variable">N</span>(<span class="string">"words"</span>,1)&nbsp;==&nbsp;<span class="variable">N</span>(<span class="string">"lower"</span>,1))
+&nbsp;&nbsp;<span class="variable">N</span>(<span class="string">"prose"</span>,1)&nbsp;=&nbsp;1;
+
+<span class="region">@RULES</span>
+<span class="suggest">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_LINE</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+</pre>

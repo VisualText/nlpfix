@@ -56,9 +56,37 @@ footer {
   }
 }
 
-p.explanation {
+p.path {
   color: rgb(238, 235, 88);
   font-style: italic;
+}
+
+p.ana-instructions {
+  color: rgb(74, 202, 96);
+  font-size: 1.3em;
+}
+
+ul.analyzer-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+li.analyzer-description ananame {
+  color: rgb(136, 143, 236);
+  font-size: 1.3em;
+}
+li.analyzer-description {
+  color: rgb(170, 170, 170);
+  margin-bottom: 15px;
+}
+li.analyzer-description strong {
+  color: rgb(167, 236, 128);
+  font-weight: bold;
+}
+li.analyzer-description instructions {
+  color: rgb(116, 202, 105);
+  font-size: 1.3em;
 }
 
 .header-title {
@@ -92,6 +120,10 @@ li.kb-item {
   overflow-wrap: break-word; /* Allows the text to wrap if it's too long */
   text-indent: -20px; /* Indents the second line */
   padding-left: 20px; /* Adds padding to the left to align the first line */
+}
+
+.list-ana {
+  color: rgb(228, 245, 130)
 }
 
 li.seq-item:hover {

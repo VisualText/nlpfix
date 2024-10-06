@@ -1,0 +1,26 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: enumerate</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-10-4 9:4:59</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@PATH</span>&nbsp;<span class="region">_ROOT</span>&nbsp;<span class="concept">_colonBlock</span>
+
+<span class="region">@PRE</span>
+<1,1>&nbsp;<span class="function">var</span>(<span class="string">"colon"</span>);
+<2,2>&nbsp;<span class="function">varz</span>(<span class="string">"colon"</span>);
+
+<span class="region">@POST</span>
+<span class="variable">S</span>(<span class="string">"colon"</span>)&nbsp;=&nbsp;<span class="variable">N</span>(<span class="string">"colon"</span>,1);
+<span class="variable">S</span>(<span class="string">"text"</span>)&nbsp;=&nbsp;<span class="variable">N</span>(<span class="string">"text"</span>,1);
+<span class="function">single</span>();
+
+<span class="region">@RULES</span>
+<span class="concept">_colon</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_sentence</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="attr">match</span>=(<span class="concept">_sentence</span>)]&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+</pre>

@@ -1,0 +1,22 @@
+###############################################
+# FILE: pageNumber
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-30 14:14:4
+# MODIFIED:
+###############################################
+
+@NODES _LINE
+
+@POST
+X("page",2) = N("$text",3);
+pnrename(X(2),"_page");
+
+@RULES
+_xNIL <-
+	_xSTART			### (1)
+	_xWHITE [opt]	### (2)
+	_xNUM			### (3)
+	_xWHITE [opt]	### (4)
+	_xEND			### (5)
+	@@
