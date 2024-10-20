@@ -1,0 +1,29 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: findReferences</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-10-7 21:8:55</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@CODE</span>
+
+<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">down</span>(<span class="variable">G</span>(<span class="string">"caps"</span>));
+<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"con"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"name"</span>)&nbsp;=&nbsp;<span class="function">strtolower</span>(<span class="function">conceptname</span>(<span class="variable">L</span>(<span class="string">"con"</span>)));
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"child"</span>)&nbsp;=&nbsp;<span class="function">down</span>(<span class="variable">G</span>(<span class="string">"caps"</span>));
+&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"child"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"n"</span>)&nbsp;=&nbsp;<span class="function">strtolower</span>(<span class="function">conceptname</span>(<span class="variable">L</span>(<span class="string">"child"</span>)));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"n"</span>)&nbsp;!=&nbsp;<span class="variable">L</span>(<span class="string">"name"</span>)&nbsp;&&&nbsp;<span class="function">strcontains</span>(<span class="variable">L</span>(<span class="string">"n"</span>),<span class="variable">L</span>(<span class="string">"name"</span>)))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MarkFired(<span class="variable">L</span>(<span class="string">"child"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MarkFired(<span class="variable">L</span>(<span class="string">"con"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"compare.txt"</span>&nbsp;<<&nbsp;<span class="string">"Found: "</span>&nbsp;<<&nbsp;<span class="variable">L</span>(<span class="string">"name"</span>)&nbsp;<<&nbsp;<span class="string">": "</span>&nbsp;<<&nbsp;<span class="variable">L</span>(<span class="string">"n"</span>)&nbsp;<<&nbsp;<span class="string">" "</span>&nbsp;<<&nbsp;<span class="variable">L</span>(<span class="string">"unique"</span>)&nbsp;<<&nbsp;<span class="string">"\n"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">addconval</span>(<span class="variable">L</span>(<span class="string">"child"</span>),<span class="string">"full"</span>,<span class="variable">L</span>(<span class="string">"con"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"child"</span>)&nbsp;=&nbsp;<span class="function">next</span>(<span class="variable">L</span>(<span class="string">"child"</span>));
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">next</span>(<span class="variable">L</span>(<span class="string">"con"</span>));
+}
+
+@@CODE</pre>

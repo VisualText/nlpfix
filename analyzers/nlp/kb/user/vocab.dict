@@ -1,0 +1,30 @@
+# This is for demo purposes only. It is not a complete dictionary
+
+and conjunction=1
+, conjunction=1
+or conjunction=1
+
+# Pronouns
+they s=pronoun person=3
+her s=pronoun gender=f person=3
+
+# Degrees
+bachelor ' s degree s=degree type=bachelor
+
+# Verbs
+is s=be person=3 tense=present root=be
+finishing s=verb person=3 tense=present root=finish
+mentored s=verb person=3 tense=past root=mentor
+
+# Organizations
+initiative organization=cause
+university organization=school
+
+brazil s=country
+co - author s=title
+founder s=title
+is s=be person=3 tense=present
+
+nlp + + computer=software
+programmers s=occupation count=plural root=programmer
+two s=number value=2

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1119.53 495.37">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        font-family: SegoeUIBlack, 'Segoe UI';
+        font-size: 194.72px;
+      }
+
+      .cls-2 {
+        fill: #425fac;
+      }
+    </style>
+  </defs>
+  <circle class="cls-2" cx="247.68" cy="247.68" r="247.68"/>
+  <text class="cls-1" transform="translate(52.11 257.34)"><tspan x="0" y="0">NLP</tspan><tspan x="56.38" y="136.3">++</tspan></text>
+  <rect class="cls-2" x="462.08" y="178.73" width="509.68" height="154.84"/>
+  <polyline class="cls-2" points="932.25 69.06 1119.53 256.34 935.26 440.62"/>
+</svg>

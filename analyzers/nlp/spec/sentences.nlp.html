@@ -1,0 +1,21 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: sentences.pat</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 22/Apr/20 18:24:07</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@NODES</span>&nbsp;<span class="region">_ROOT</span>
+
+<span class="region">@POST</span>
+<span class="variable">S</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;MakeCountCon(<span class="variable">G</span>(<span class="string">"article"</span>),<span class="string">"sentence"</span>);
+<span class="function">addstrval</span>(<span class="variable">S</span>(<span class="string">"con"</span>),<span class="string">"text"</span>,<span class="variable">N</span>(<span class="string">"$text"</span>,1));
+<span class="function">single</span>();
+
+<span class="region">@RULES</span>
+<span class="concept">_sentence</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="attr">fail</span>=(<span class="concept">_endSent</span>&nbsp;<span class="concept">_BLANKLINE</span>)]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="attr">one</span>&nbsp;<span class="attr">match</span>=(<span class="concept">_endSent</span>&nbsp;<span class="concept">_BLANKLINE</span>)]&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="region">@@</span></pre>

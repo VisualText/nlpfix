@@ -1,0 +1,63 @@
+9
+Looking for: _sentence 9
+  Node: _sentence 2
+  Node: _sentence 9
+  Found: _sentence 9
+8
+Looking for: _cap 8
+  Node: _cap 8
+  Found: _cap 8
+2
+Looking for: _sentence 2
+  Node: _sentence 2
+  Found: _sentence 2
+1
+Looking for: _cap 1
+  Node: _cap 1
+  Found: _cap 1
+16
+Looking for: _sentence 16
+  Node: _sentence 2
+  Node: _sentence 9
+  Node: _sentence 12
+  Node: _sentence 16
+  Found: _sentence 16
+15
+Looking for: _cap 15
+  Node: _cap 15
+  Found: _cap 15
+2
+Looking for: _sentence 2
+  Node: _sentence 2
+  Found: _sentence 2
+6
+Looking for: _cap 6
+  Node: _cap 1
+  Node: and 
+  Node: _cap 3
+  Node: , 
+  Node: _number 
+  Node: _occupation 
+  Node: from 
+  Node: _country 
+  Node: , 
+  Node: are 
+  Node: helping 
+  Node: create 
+  Node: the 
+  Node: first 
+  Node: comprehensive 
+  Node: digital 
+  Node: dictionary 
+  Node: for 
+  Node: _cap 4
+  Node: in 
+  Node: the 
+  Node: _cap 5
+  Node: framework 
+  Node: _phrase 
+  Node: . 
+  Node: _verb 
+  Node: by 
+  Node: _cap 6
+  Found: _cap 6

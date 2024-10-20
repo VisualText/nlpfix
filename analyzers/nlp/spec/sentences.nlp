@@ -1,0 +1,20 @@
+###############################################
+# FILE: sentences.pat
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 22/Apr/20 18:24:07
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@POST
+S("con") = MakeCountCon(G("article"),"sentence");
+addstrval(S("con"),"text",N("$text",1));
+single();
+
+@RULES
+_sentence <-
+    _xWILD [fail=(_endSent _BLANKLINE)]			### (1)
+    _xWILD [one match=(_endSent _BLANKLINE)]	### (2)
+    @@

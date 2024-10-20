@@ -1,0 +1,17 @@
+Sequence file is:
+dicttokz
+NOHASH rule: _sentence [] [] <- _xWILD [0,0 fails=(_endSent _BLANKLINE)] [] _xWILD [1,1 matches=(_endSent _BLANKLINE)] [] @@
+NOHASH rule: _cap [] [] <- _xCAP [1,0] [] _xWILD [0,0 matches=(de las los)] [] _xCAP [1,0] [] @@
+NOHASH rule: _cap [] [] <- _xCAP [1,0] [] @@
+NOHASH rule: _xNIL [] [] <- _xALPHA [1,1] [] @@
+NOHASH rule: _organization [] [] <-3- _xSTART [1,1] [] _xALPHA [1,0] [] _xALPHA [1,1 trigger pre] [] _xEND [1,1] [] @@
+NOHASH rule: _organization [] [] <-3- _xSTART [1,1] [] _xALPHA [1,0] [] _xALPHA [1,1 trigger pre] [] _xEND [1,1] [] @@
+NOHASH rule: _person [] [] <- _xSTART [1,1 pre] [] _xALPHA [1,1] [] _xALPHA [1,1 pre] [] _xALPHA [1,1] [] _xEND [1,1] [] @@
+NOHASH rule: _person [] [] <- _xSTART [1,1 pre] [] _xALPHA [1,1] [] _xALPHA [1,1] [] _xEND [1,1] [] @@
+NOHASH rule: _person [] [] <- _xSTART [1,1 pre] [] _xALPHA [1,1] [] _xEND [1,1] [] @@
+NOHASH rule: _xNIL [] [] <- _xALPHA [1,1 pre] [] @@
+NOHASH rule: _person [] [] <- _xWILD [1,0 pre matches=(_person _xALPHA)] [] @@
+NOHASH rule: _attribute [] [] <- _xALPHA [1,1 pre] [] _organization [1,1] [] @@
+
+Passes: (dicttok,nil) (nlp,init) (nlp,TreeFuncs) (nlp,KBFuncs) (nlp,funcs) (nlp,sentenceEnders) (nlp,sentences) (nlp,caps) (nlp,categorizeCaps) (nlp,findReferences) (nlp,labelCaps) (nlp,reduceCaps) (nlp,conjunctions) (nlp,conjoin) (nlp,attributes) (nlp,personAttributes) (nlp,output) 
+

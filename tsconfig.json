@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDirs": ["./src", "./public"],
     "module": "CommonJS",
     "strict": true,
     "esModuleInterop": true,
-    "target": "ES6"
+    "target": "ES6",
+    "sourceMap": true // Ensure this is set to true
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "public/*.ts"]
 }

@@ -1,0 +1,110 @@
+###############################################
+# FILE: attributes
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-6 10:41:22
+# MODIFIED:
+###############################################
+
+@NODES _sentence
+
+###############################################
+# be finishing degree
+###############################################
+@PRE
+<2,2> vareq("root","finish");
+
+@POST
+S("degree") = N("type",4);
+S("gender") = N("gender",3);
+single();
+
+@RULES
+_attribute <-
+	_be			### (1)
+	_verb		### (2)
+	_pronoun	### (3)
+	_degree		### (4)
+	@@
+
+###############################################
+# the founder of the Natural Language Understanding Global Initiative
+###############################################
+@PRE
+<1,1> vareq("organization","cause");
+
+@POST
+S("title") = N("$text",2);
+S("organization") = N("$text",4);
+single();
+
+@RULES
+_attribute <-
+	the [opt]						### (1)
+	_title							### (2)
+	_xWILD [plus match=(of the)]	### (3)
+	_organization					### (4)
+	@@
+
+###############################################
+# Co-Author of NLP++
+###############################################
+
+@PRE
+<3,3> vareq("computer","software");
+	
+@POST
+S("authorship") = N("$text",1);
+S("work") = N("$text",3);
+S("type") = "person";
+single();
+
+@RULES
+_attribute <-
+	_title					### (1)
+	_xWILD [match=(of the)]	### (2)
+	_phrase					### (3)
+	@@
+
+###############################################
+# from Brazil
+###############################################
+@POST
+S("country") = N("$text",2);
+single();
+
+@RULES
+_attribute <-
+	from		### (1)
+	_country	### (2)
+	@@
+
+###############################################
+# two programmers
+###############################################
+@POST
+S("number") = N("value",1);
+S("occupation") = N("root",2);
+single();
+
+@RULES
+_attribute <-
+	_number		### (1)
+	_occupation	### (2)
+	@@
+
+###############################################
+# at Santa Catarina University
+###############################################
+@PRE
+<1,1> var("prepositions");
+
+@POST
+S("organization") = N("$text",2);
+single();
+
+@RULES
+_attribute <-
+	_xALPHA			### (1)
+	_organization	### (2)
+	@@

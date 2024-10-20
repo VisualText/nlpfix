@@ -1,0 +1,15 @@
+###############################################
+# FILE: output
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-6 9:43:48
+# MODIFIED:
+###############################################
+
+@CODE
+
+SaveKB("output.kbb",G("people"),2);
+SaveKB("output.kbb",G("article"),2);
+SaveKB("output.kbb",G("caps"),2);
+
+@@CODE

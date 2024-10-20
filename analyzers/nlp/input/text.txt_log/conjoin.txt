@@ -1,0 +1,19 @@
+=========
+First: _person
+conj: and
+node: _person
+node: ,
+node: _number
+CONJUNCTION FOUND!
+=========
+First: _organization
+conj: and
+node: plans
+=========
+First: influence
+conj: and
+node: the
+=========
+First: collaboration
+conj: and
+node: mentorship

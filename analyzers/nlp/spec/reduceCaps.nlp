@@ -1,0 +1,20 @@
+###############################################
+# FILE: reduceCaps
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-11 17:59:36
+# MODIFIED:
+###############################################
+
+@PATH _ROOT _sentence
+
+@POST
+L("node") = pndown(N(1));
+PNCopyAttrsToCPn(N(1),L("node"));
+pnsetfired(L("node"),1);
+splice(1,1);
+
+@RULES
+_xNIL <-
+	_cap	### (1)
+	@@

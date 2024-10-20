@@ -1,0 +1,15 @@
+###############################################
+# FILE: init
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-6 9:40:7
+# MODIFIED:
+###############################################
+
+@CODE
+
+G("article") = getconcept(findroot(),"article");
+G("caps") = getconcept(findroot(),"caps");
+G("people") = getconcept(findroot(),"people");
+
+@@CODE
