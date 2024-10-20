@@ -1,0 +1,31 @@
+###############################################
+# FILE: personAttributes
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-11 13:59:19
+# MODIFIED:
+###############################################
+
+@NODES _sentence
+
+@POST
+PersonAttributes(N(1),N(4));
+single();
+
+@RULES
+_personAttrs <-
+	_person								### (1)
+	_be									### (2)
+	_xWILD [match=(\, also the)]		### (3)
+	_xWILD [plus match=(_attribute \,)]	### (4)
+	@@
+
+@POST
+PersonAttributes(N(1),N(2));
+single();
+
+@RULES
+_personAttrs <-
+	_person								### (1)
+	_xWILD [plus match=(_attribute \,)]	### (2)
+	@@

@@ -57,13 +57,18 @@ footer {
 }
 
 p.path {
-  color: rgb(238, 235, 88);
+  color: rgb(255, 254, 197);
   font-style: italic;
 }
 
 p.ana-instructions {
-  color: rgb(74, 202, 96);
-  font-size: 1.3em;
+  color: #4aca60;
+  font-size: 1.3em
+}
+
+p.ana-explainer-header {
+	color: #ff0033;
+	font-weight: bold:
 }
 
 ul.analyzer-list {
@@ -73,7 +78,7 @@ ul.analyzer-list {
   cursor: pointer;
 }
 li.analyzer-description ananame {
-  color: rgb(136, 143, 236);
+  color: #888fec;
   font-size: 1.3em;
 }
 li.analyzer-description {
@@ -143,6 +148,14 @@ li.analyzer-item:hover {
   font-weight: bold;
 }
 
+a.seq-item {
+  color: rgb(255, 255, 255);
+}
+
+a.seq-item-highlight {
+  color: rgb(22, 226, 90);
+}
+
 /* Tooltip styles */
 
 .tooltip {
@@ -163,4 +176,14 @@ li.analyzer-item:hover {
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
+}
+
+#look-here {
+  position: fixed;
+  top: 33px; /* Adjust as needed */
+  left: 47px; /* Adjust as needed */
+  width: 157px; /* Adjust as needed */
+  height: auto; /* Maintain aspect ratio */
+  z-index: 1000; /* Ensure it appears on top of other elements */
+  display: none;
 }

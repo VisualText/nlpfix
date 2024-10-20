@@ -1,0 +1,20 @@
+###############################################
+# FILE: conjunctions
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-7 16:3:30
+# MODIFIED:
+###############################################
+
+@NODES _sentence
+
+@PRE
+<1,1> var("conjunction");
+
+@POST
+MarkConjunctions(N(1));
+
+@RULES
+_xNIL <-
+	_xALPHA	### (1)
+	@@

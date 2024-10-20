@@ -1,0 +1,499 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: KBFuncs.pat</span>
+<span class="comment"># SUBJ: Call the DumpKB function</span>
+<span class="comment"># AUTH: Your Name</span>
+<span class="comment"># CREATED: 2020-11-19 8:40:53</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@DECL</span>
+
+<span class="comment">###############################################</span>
+<span class="comment"># General functions</span>
+<span class="comment">###############################################</span>
+
+AddUniqueCon(<span class="variable">L</span>(<span class="string">"concept"</span>),<span class="variable">L</span>(<span class="string">"name"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">findconcept</span>(<span class="variable">L</span>(<span class="string">"concept"</span>),<span class="variable">L</span>(<span class="string">"name"</span>));
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(!<span class="variable">L</span>(<span class="string">"con"</span>))&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">makeconcept</span>(<span class="variable">L</span>(<span class="string">"concept"</span>),<span class="variable">L</span>(<span class="string">"name"</span>));
+&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>);
+}
+
+AddUniqueStr(<span class="variable">L</span>(<span class="string">"concept"</span>),<span class="variable">L</span>(<span class="string">"attr"</span>),<span class="variable">L</span>(<span class="string">"value"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"value"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"val"</span>)&nbsp;=&nbsp;AttrValues(<span class="variable">L</span>(<span class="string">"concept"</span>),<span class="variable">L</span>(<span class="string">"attr"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"val"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"str"</span>)&nbsp;=&nbsp;<span class="function">getstrval</span>(<span class="variable">L</span>(<span class="string">"val"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"str"</span>)&nbsp;==&nbsp;<span class="variable">L</span>(<span class="string">"value"</span>))
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"val"</span>)&nbsp;=&nbsp;<span class="function">nextval</span>(<span class="variable">L</span>(<span class="string">"val"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">addstrval</span>(<span class="variable">L</span>(<span class="string">"concept"</span>),<span class="variable">L</span>(<span class="string">"attr"</span>),<span class="variable">L</span>(<span class="string">"value"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;1;
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;0;
+}
+
+AddUniqueNum(<span class="variable">L</span>(<span class="string">"concept"</span>),<span class="variable">L</span>(<span class="string">"attr"</span>),<span class="variable">L</span>(<span class="string">"value"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"value"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"val"</span>)&nbsp;=&nbsp;AttrValues(<span class="variable">L</span>(<span class="string">"concept"</span>),<span class="variable">L</span>(<span class="string">"attr"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"val"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"num"</span>)&nbsp;=&nbsp;<span class="function">getnumval</span>(<span class="variable">L</span>(<span class="string">"val"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"num"</span>)&nbsp;==&nbsp;<span class="variable">L</span>(<span class="string">"value"</span>))
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"val"</span>)&nbsp;=&nbsp;<span class="function">nextval</span>(<span class="variable">L</span>(<span class="string">"val"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">addnumval</span>(<span class="variable">L</span>(<span class="string">"concept"</span>),<span class="variable">L</span>(<span class="string">"attr"</span>),<span class="variable">L</span>(<span class="string">"value"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;1;
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;0;
+}
+
+AddUniqueConVal(<span class="variable">L</span>(<span class="string">"concept"</span>),<span class="variable">L</span>(<span class="string">"attr"</span>),<span class="variable">L</span>(<span class="string">"value"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="string">"unique.txt"</span>&nbsp;<<&nbsp;<span class="variable">L</span>(<span class="string">"attr"</span>)&nbsp;<<&nbsp;<span class="string">" "</span>&nbsp;<<&nbsp;<span class="function">conceptpath</span>(<span class="variable">L</span>(<span class="string">"concept"</span>))&nbsp;<<&nbsp;<span class="string">" ==> "</span>&nbsp;<<&nbsp;<span class="variable">L</span>(<span class="string">"attr"</span>)&nbsp;<<&nbsp;<span class="string">" -- "</span>&nbsp;<<&nbsp;<span class="function">conceptpath</span>(<span class="variable">L</span>(<span class="string">"value"</span>))&nbsp;<<&nbsp;<span class="string">"\n"</span>;
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"val"</span>)&nbsp;=&nbsp;AttrValues(<span class="variable">L</span>(<span class="string">"concept"</span>),<span class="variable">L</span>(<span class="string">"attr"</span>));
+&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"val"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">getconval</span>(<span class="variable">L</span>(<span class="string">"val"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"unique.txt"</span>&nbsp;<<&nbsp;<span class="function">conceptname</span>(<span class="variable">L</span>(<span class="string">"con"</span>))&nbsp;<<&nbsp;<span class="string">"\n"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="function">conceptpath</span>(<span class="variable">L</span>(<span class="string">"con"</span>))&nbsp;==&nbsp;<span class="function">conceptpath</span>(<span class="variable">L</span>(<span class="string">"value"</span>)))
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"val"</span>)&nbsp;=&nbsp;<span class="function">nextval</span>(<span class="variable">L</span>(<span class="string">"val"</span>));
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="function">addconval</span>(<span class="variable">L</span>(<span class="string">"concept"</span>),<span class="variable">L</span>(<span class="string">"attr"</span>),<span class="variable">L</span>(<span class="string">"value"</span>));
+&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;1;
+}
+
+PathToConcept(<span class="variable">L</span>(<span class="string">"parent"</span>),<span class="variable">L</span>(<span class="string">"hier"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"cons"</span>)&nbsp;=&nbsp;<span class="function">split</span>(<span class="variable">L</span>(<span class="string">"hier"</span>),<span class="string">" "</span>);
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"i"</span>)&nbsp;=&nbsp;0;
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="variable">L</span>(<span class="string">"parent"</span>);
+&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"cons"</span>)[<span class="variable">L</span>(<span class="string">"i"</span>)])&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"c"</span>)&nbsp;=&nbsp;<span class="variable">L</span>(<span class="string">"cons"</span>)[<span class="variable">L</span>(<span class="string">"i"</span>)];
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"name"</span>)&nbsp;=&nbsp;<span class="function">strsubst</span>(<span class="variable">L</span>(<span class="string">"c"</span>),<span class="string">"\"</span><span class="string">",0); if (L("</span>name<span class="string">") != "</span>concept<span class="string">") L("</span>con<span class="string">") = AddUniqueCon(L("</span>con<span class="string">"),L("</span>name<span class="string">")); L("</span>i<span class="string">")++; } return L("</span>con<span class="string">"); } CopyAttr(L("</span>from<span class="string">"),L("</span>to<span class="string">"),L("</span>attr<span class="string">")) { L("</span>from&nbsp;value<span class="string">") = strval(L("</span>from<span class="string">"),L("</span>attr<span class="string">")); if (L("</span>from&nbsp;value<span class="string">")) { L("</span>to&nbsp;value<span class="string">") = strval(L("</span>to<span class="string">"),L("</span>attr<span class="string">")); if (L("</span>from&nbsp;value<span class="string">") && !L("</span>to&nbsp;value<span class="string">")) addstrval(L("</span>to<span class="string">"),L("</span>attr<span class="string">"),L("</span>from&nbsp;value<span class="string">")); } } CopyAttrNew(L("</span>from<span class="string">"),L("</span>to<span class="string">"),L("</span>attr&nbsp;from<span class="string">"),L("</span>attr&nbsp;to<span class="string">")) { L("</span>from&nbsp;value<span class="string">") = strval(L("</span>from<span class="string">"),L("</span>attr&nbsp;from<span class="string">")); if (L("</span>from&nbsp;value<span class="string">")) { L("</span>to&nbsp;value<span class="string">") = strval(L("</span>to<span class="string">"),L("</span>attr&nbsp;to<span class="string">")); if (L("</span>from&nbsp;value<span class="string">") && !L("</span>to&nbsp;value<span class="string">")) addstrval(L("</span>to<span class="string">"),L("</span>attr&nbsp;to<span class="string">"),L("</span>from&nbsp;value<span class="string">")); } } CopyConAttr(L("</span>from<span class="string">"),L("</span>to<span class="string">"),L("</span>attr<span class="string">")) { L("</span>from&nbsp;value<span class="string">") = conval(L("</span>from<span class="string">"),L("</span>attr<span class="string">")); if (L("</span>from&nbsp;value<span class="string">")) { L("</span>to&nbsp;value<span class="string">") = conval(L("</span>to<span class="string">"),L("</span>attr<span class="string">")); if (L("</span>from&nbsp;value<span class="string">") && !L("</span>to&nbsp;value<span class="string">")) addconval(L("</span>to<span class="string">"),L("</span>attr<span class="string">"),L("</span>from&nbsp;value<span class="string">")); } } CopyConAttrs(L("</span>from<span class="string">"),L("</span>to<span class="string">")) { L("</span>attrs<span class="string">") = findattrs(L("</span>from<span class="string">")); while (L("</span>attrs<span class="string">")) { L("</span>vals<span class="string">") = attrvals(L("</span>attrs<span class="string">")); L("</span>name<span class="string">") = attrname(L("</span>attrs<span class="string">")); L("</span>type<span class="string">") = attrtype(L("</span>from<span class="string">"),L("</span>name<span class="string">")); while (L("</span>vals<span class="string">")) { if (L("</span>type<span class="string">") == 1) { addnumval(L("</span>to<span class="string">"),L("</span>name<span class="string">"),getnumval(L("</span>vals<span class="string">"))); } else if (L("</span>type<span class="string">") == 2) { addconval(L("</span>to<span class="string">"),L("</span>name<span class="string">"),getconval(L("</span>vals<span class="string">"))); } else if (L("</span>type<span class="string">") == 3) { addnumval(L("</span>to<span class="string">"),L("</span>name<span class="string">"),getfltval(L("</span>vals<span class="string">"))); } else { addstrval(L("</span>to<span class="string">"),L("</span>name<span class="string">"),getstrval(L("</span>vals<span class="string">"))); } L("</span>vals<span class="string">") = nextval(L("</span>vals<span class="string">")); } L("</span>attrs<span class="string">") = nextattr(L("</span>attrs<span class="string">")); } } AttrValues(L("</span>con<span class="string">"),L("</span>attr<span class="string">")) { L("</span>at<span class="string">") = findattr(L("</span>con<span class="string">"),L("</span>attr<span class="string">")); if (L("</span>at<span class="string">")) return attrvals(L("</span>at<span class="string">")); return 0; } ValCount(L("</span>vals<span class="string">")) { while (L("</span>vals<span class="string">")) { L("</span>count<span class="string">")++; L("</span>vals<span class="string">") = nextval(L("</span>vals<span class="string">")); } return L("</span>count<span class="string">"); } LastChild(L("</span>parent<span class="string">")) { L("</span>child<span class="string">") = down(L("</span>parent<span class="string">")); while (L("</span>child<span class="string">")) { L("</span>last<span class="string">") = L("</span>child<span class="string">"); L("</span>child<span class="string">") = next(L("</span>child<span class="string">")); } return L("</span>last<span class="string">"); } MakeCountCon(L("</span>con<span class="string">"),L("</span>count&nbsp;name<span class="string">")) { L("</span>count&nbsp;name<span class="string">") = CountName(L("</span>con<span class="string">"),L("</span>count&nbsp;name<span class="string">"),3); return makeconcept(L("</span>con<span class="string">"),L("</span>count&nbsp;name<span class="string">")); } MakeCountConPad(L("</span>con<span class="string">"),L("</span>count&nbsp;name<span class="string">"),L("</span>pad<span class="string">")) { L("</span>count&nbsp;name<span class="string">") = CountName(L("</span>con<span class="string">"),L("</span>count&nbsp;name<span class="string">"),L("</span>pad<span class="string">")); return makeconcept(L("</span>con<span class="string">"),L("</span>count&nbsp;name<span class="string">")); } IncrementCount(L("</span>con<span class="string">"),L("</span>countname<span class="string">")) { if (!L("</span>con<span class="string">")) { return 0; } L("</span>countname<span class="string">") = L("</span>countname<span class="string">") + "</span><span class="concept">_count</span><span class="string">"; L("</span>count<span class="string">") = numval(L("</span>con<span class="string">"),L("</span>countname<span class="string">")); if (L("</span>count<span class="string">")) { L("</span>count<span class="string">") = L("</span>count<span class="string">") + 1; replaceval(L("</span>con<span class="string">"),L("</span>countname<span class="string">"),L("</span>count<span class="string">")); } else { addnumval(L("</span>con<span class="string">"),L("</span>countname<span class="string">"),1); L("</span>count<span class="string">") = 1; } return L("</span>count<span class="string">"); } CountName(L("</span>con<span class="string">"),L("</span>root<span class="string">"),L("</span>pad<span class="string">")) { L("</span>count<span class="string">") = IncrementCount(L("</span>con<span class="string">"),L("</span>root<span class="string">")); if (L("</span>pad<span class="string">")) { L("</span>pad<span class="string">") = RepeatStr(L("</span>pad<span class="string">")-strlength(str(L("</span>count<span class="string">"))),"</span>0<span class="string">"); } else { L("</span>pad<span class="string">") = 0; } return L("</span>root<span class="string">") + L("</span>pad<span class="string">") + str(L("</span>count<span class="string">")); } StripEndDigits(L("</span>name<span class="string">")) { if (strisdigit(L("</span>name<span class="string">"))) return 0; L("</span>len<span class="string">") = strlength(L("</span>name<span class="string">")) - 1; L("</span>i<span class="string">") = L("</span>len<span class="string">") - 1; L("</span><span class="function">str</span><span class="string">") = strpiece(L("</span>name<span class="string">"),L("</span>i<span class="string">"),L("</span>len<span class="string">")); while (strisdigit(L("</span><span class="function">str</span><span class="string">")) && L("</span>i<span class="string">")) { L("</span>i<span class="string">")--; L("</span><span class="function">str</span><span class="string">") = strpiece(L("</span>name<span class="string">"),L("</span>i<span class="string">"),L("</span>len<span class="string">")); } return strpiece(L("</span>name<span class="string">"),0,L("</span>i<span class="string">")); } ############################################### # KB Dump Functipns ############################################### DumpKB(L("</span>con<span class="string">"),L("</span>file<span class="string">")) { L("</span>dir<span class="string">") = G("</span>$apppath<span class="string">") + "</span>/kb/<span class="string">"; L("</span>filename<span class="string">") = L("</span>dir<span class="string">") + L("</span>file<span class="string">") + "</span>.kb<span class="string">"; if (!kbdumptree(L("</span>con<span class="string">"),L("</span>filename<span class="string">"))) { "</span>kb.txt<span class="string">" << "</span>FAILED&nbsp;dump:&nbsp;<span class="string">" << L("</span>filename<span class="string">") << "</span>\n<span class="string">"; } else { "</span>kb.txt<span class="string">" << "</span>DUMPED:&nbsp;<span class="string">" << L("</span>filename<span class="string">") << "</span>\n<span class="string">"; } } TakeKB(L("</span>filename<span class="string">")) { L("</span>path<span class="string">") = G("</span>$apppath<span class="string">") + "</span>/kb/<span class="string">" + L("</span>filename<span class="string">") + "</span>.kb<span class="string">"; "</span>kb.txt<span class="string">" << "</span>Taking:&nbsp;<span class="string">" << L("</span>path<span class="string">") << "</span>\n<span class="string">"; if (take(L("</span>path<span class="string">"))) { "</span>kb.txt<span class="string">" << "</span>&nbsp;Taken&nbsp;successfully:&nbsp;<span class="string">" << L("</span>path<span class="string">") << "</span>\n<span class="string">"; } else { "</span>kb.txt<span class="string">" << "</span>&nbsp;Taken&nbsp;FAILED:&nbsp;<span class="string">" << L("</span>path<span class="string">") << "</span>\n<span class="string">"; } } ChildCount(L("</span>con<span class="string">")) { L("</span>count<span class="string">") = 0; L("</span>child<span class="string">") = down(L("</span>con<span class="string">")); while (L("</span>child<span class="string">")) { L("</span>count<span class="string">")++; L("</span>child<span class="string">") = next(L("</span>child<span class="string">")); } return L("</span>count<span class="string">"); } ############################################### # KBB DISPLAY FUNCTIONS ############################################### ############################################### # display type: # 0 compact with ellipses on long attr values # 1 full, more spread out # 2 compact without ellipses on long attr values ############################################### SaveToKB(L("</span>con<span class="string">"),L("</span>name<span class="string">")) { L("</span>filepath<span class="string">") = G("</span>$kbpath<span class="string">") + L("</span>name<span class="string">") + "</span>.kbb<span class="string">"; L("</span>file<span class="string">") = openfile(L("</span>filepath<span class="string">")); SaveKB(L("</span>file<span class="string">"),L("</span>con<span class="string">"),2); closefile(L("</span>file<span class="string">")); } SaveKB(L("</span>file<span class="string">"),L("</span>top&nbsp;con<span class="string">"),L("</span>display&nbsp;type<span class="string">")) { DisplayKBRecurse(L("</span>file<span class="string">"),L("</span>top&nbsp;con<span class="string">"),0,L("</span>display&nbsp;type<span class="string">")); L("</span>file<span class="string">") << "</span>\n<span class="string">"; return L("</span>top&nbsp;con<span class="string">"); } DisplayKB(L("</span>top&nbsp;con<span class="string">"),L("</span>display&nbsp;type<span class="string">")) { L("</span>file<span class="string">") = DisplayFileName(); DisplayKBRecurse(L("</span>file<span class="string">"),L("</span>top&nbsp;con<span class="string">"),0,L("</span>display&nbsp;type<span class="string">")); L("</span>file<span class="string">") << "</span>\n<span class="string">"; return L("</span>top&nbsp;con<span class="string">"); } KBHeader(L("</span>text<span class="string">")) { L("</span>file<span class="string">") = DisplayFileName(); L("</span>file<span class="string">") << "</span><span class="comment">#######################\n";</span>
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">"# " << L("text") << "\n"; L("</span>file<span class="string">") << "</span><span class="comment">#######################\n\n";</span>
+}
+
+DisplayFileName()&nbsp;{
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="function">num</span>(<span class="variable">G</span>(<span class="string">"$passnum"</span>))&nbsp;<&nbsp;10)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;=&nbsp;<span class="string">"ana00"</span>&nbsp;+&nbsp;<span class="function">str</span>(<span class="variable">G</span>(<span class="string">"$passnum"</span>));
+&nbsp;&nbsp;}<span class="keyword">else</span>&nbsp;<span class="keyword">if</span>&nbsp;(<span class="function">num</span>(<span class="variable">G</span>(<span class="string">"$passnum"</span>))&nbsp;<&nbsp;100)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;=&nbsp;<span class="string">"ana0"</span>&nbsp;+&nbsp;<span class="function">str</span>(<span class="variable">G</span>(<span class="string">"$passnum"</span>));
+&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;=&nbsp;<span class="string">"ana"</span>&nbsp;+&nbsp;<span class="function">str</span>(<span class="variable">G</span>(<span class="string">"$passnum"</span>));
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;=&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;+&nbsp;<span class="string">".kbb"</span>;
+&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>);
+}
+
+DisplayKBRecurse(<span class="variable">L</span>(<span class="string">"file"</span>),<span class="variable">L</span>(<span class="string">"parent"</span>),<span class="variable">L</span>(<span class="string">"level"</span>),<span class="variable">L</span>(<span class="string">"display type"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"level"</span>)&nbsp;==&nbsp;0)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="function">conceptname</span>(<span class="variable">L</span>(<span class="string">"parent"</span>))&nbsp;<<&nbsp;<span class="string">"\n"</span>;
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">down</span>(<span class="variable">L</span>(<span class="string">"parent"</span>));
+&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"con"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;SpacesStr(<span class="variable">L</span>(<span class="string">"level"</span>)+1)&nbsp;<<&nbsp;<span class="function">conceptname</span>(<span class="variable">L</span>(<span class="string">"con"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;DisplayAttributes(<span class="variable">L</span>(<span class="string">"file"</span>),<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">L</span>(<span class="string">"display type"</span>),<span class="variable">L</span>(<span class="string">"level"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">"\n"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="function">down</span>(<span class="variable">L</span>(<span class="string">"con"</span>)))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"lev"</span>)&nbsp;=&nbsp;1;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DisplayKBRecurse(<span class="variable">L</span>(<span class="string">"file"</span>),<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">L</span>(<span class="string">"level"</span>)+<span class="variable">L</span>(<span class="string">"lev"</span>),<span class="variable">L</span>(<span class="string">"display type"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">next</span>(<span class="variable">L</span>(<span class="string">"con"</span>));
+&nbsp;&nbsp;}
+}
+
+DisplayAttributes(<span class="variable">L</span>(<span class="string">"file"</span>),<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">L</span>(<span class="string">"display type"</span>),<span class="variable">L</span>(<span class="string">"level"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"attrs"</span>)&nbsp;=&nbsp;<span class="function">findattrs</span>(<span class="variable">L</span>(<span class="string">"con"</span>));
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"attrs"</span>))&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">": "</span>;
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"display type"</span>)&nbsp;==&nbsp;1&nbsp;&&&nbsp;<span class="variable">L</span>(<span class="string">"attrs"</span>))&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">"\n"</span>;
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"first attr"</span>)&nbsp;=&nbsp;1;
+&nbsp;&nbsp;
+&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"attrs"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"vals"</span>)&nbsp;=&nbsp;<span class="function">attrvals</span>(<span class="variable">L</span>(<span class="string">"attrs"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"count"</span>)&nbsp;=&nbsp;ValCount(<span class="variable">L</span>(<span class="string">"vals"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"display type"</span>)&nbsp;!=&nbsp;1&nbsp;&&&nbsp;!<span class="variable">L</span>(<span class="string">"first attr"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">", "</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"display type"</span>)&nbsp;==&nbsp;1)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(!<span class="variable">L</span>(<span class="string">"first attr"</span>))&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">"\n"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;SpacesStr(<span class="variable">L</span>(<span class="string">"level"</span>)+2);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"name"</span>)&nbsp;=&nbsp;<span class="function">attrname</span>(<span class="variable">L</span>(<span class="string">"attrs"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;QuoteIfNeeded(<span class="variable">L</span>(<span class="string">"name"</span>))&nbsp;<<&nbsp;<span class="string">"="</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"first"</span>)&nbsp;=&nbsp;1;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;=&nbsp;<span class="function">attrtype</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">L</span>(<span class="string">"name"</span>));
+
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"vals"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(!<span class="variable">L</span>(<span class="string">"first"</span>))
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">","</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;!=&nbsp;2&nbsp;&&&nbsp;<span class="variable">L</span>(<span class="string">"count"</span>)&nbsp;>&nbsp;1)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">"["</span>;
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;==&nbsp;1)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"num"</span>)&nbsp;=&nbsp;<span class="function">getnumval</span>(<span class="variable">L</span>(<span class="string">"vals"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="function">str</span>(<span class="variable">L</span>(<span class="string">"num"</span>));
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;==&nbsp;2)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"first"</span>))
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">"["</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"c"</span>)&nbsp;=&nbsp;<span class="function">getconval</span>(<span class="variable">L</span>(<span class="string">"vals"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="function">conceptpath</span>(<span class="variable">L</span>(<span class="string">"c"</span>));
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;==&nbsp;3)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"flt"</span>)&nbsp;=&nbsp;getfltval(<span class="variable">L</span>(<span class="string">"vals"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="function">str</span>(<span class="variable">L</span>(<span class="string">"flt"</span>));
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"val"</span>)&nbsp;=&nbsp;<span class="function">getstrval</span>(<span class="variable">L</span>(<span class="string">"vals"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"display type"</span>)&nbsp;==&nbsp;0&nbsp;&&&nbsp;<span class="function">strlength</span>(<span class="variable">L</span>(<span class="string">"val"</span>))&nbsp;>&nbsp;20)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"shorty"</span>)&nbsp;=&nbsp;<span class="function">strpiece</span>(<span class="variable">L</span>(<span class="string">"val"</span>),0,20);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"val"</span>)&nbsp;=&nbsp;<span class="variable">L</span>(<span class="string">"shorty"</span>)&nbsp;+&nbsp;<span class="string">"..."</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;QuoteIfNeeded(<span class="function">str</span>(<span class="variable">L</span>(<span class="string">"val"</span>)));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"first"</span>)&nbsp;=&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"vals"</span>)&nbsp;=&nbsp;<span class="function">nextval</span>(<span class="variable">L</span>(<span class="string">"vals"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;==&nbsp;2&nbsp;||&nbsp;<span class="variable">L</span>(<span class="string">"count"</span>)&nbsp;>&nbsp;1)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">"]"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"first attr"</span>)&nbsp;=&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"attrs"</span>)&nbsp;=&nbsp;<span class="function">nextattr</span>(<span class="variable">L</span>(<span class="string">"attrs"</span>));
+&nbsp;&nbsp;}
+}
+
+QuoteIfNeeded(<span class="variable">L</span>(<span class="string">"str"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(!<span class="variable">L</span>(<span class="string">"str"</span>))
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;0;
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"new"</span>)&nbsp;=&nbsp;<span class="function">strsubst</span>(<span class="variable">L</span>(<span class="string">"str"</span>),<span class="string">"\"</span><span class="string">","</span>\\\<span class="string">""</span>);
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="function">strcontains</span>(<span class="string">" "</span>,<span class="variable">L</span>(<span class="string">"str"</span>))&nbsp;||&nbsp;strhaspunct(<span class="variable">L</span>(<span class="string">"str"</span>)))
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"new"</span>)&nbsp;=&nbsp;<span class="string">"\"</span><span class="string">" + L("</span>new<span class="string">") + "</span>\<span class="string">""</span>;
+&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="variable">L</span>(<span class="string">"new"</span>);
+}
+
+<span class="comment"># Because NLP++ doesn't allow for empty strings,</span>
+<span class="comment"># this function can only be called with "num" >= 1</span>
+SpacesStr(<span class="variable">L</span>(<span class="string">"num"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;RepeatStr(<span class="variable">L</span>(<span class="string">"num"</span>),<span class="string">" "</span>);
+}
+
+RepeatStr(<span class="variable">L</span>(<span class="string">"num"</span>),<span class="variable">L</span>(<span class="string">"str"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"n"</span>)&nbsp;=&nbsp;1;
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"spaces"</span>)&nbsp;=&nbsp;<span class="variable">L</span>(<span class="string">"str"</span>);
+&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"n"</span>)&nbsp;<&nbsp;<span class="variable">L</span>(<span class="string">"num"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"spaces"</span>)&nbsp;=&nbsp;<span class="variable">L</span>(<span class="string">"spaces"</span>)&nbsp;+&nbsp;<span class="variable">L</span>(<span class="string">"str"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"n"</span>)++;
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="variable">L</span>(<span class="string">"spaces"</span>);
+}
+
+PadStr(<span class="variable">L</span>(<span class="string">"num str"</span>),<span class="variable">L</span>(<span class="string">"pad str"</span>),<span class="variable">L</span>(<span class="string">"pad len"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"len"</span>)&nbsp;=&nbsp;<span class="function">strlength</span>(<span class="variable">L</span>(<span class="string">"num str"</span>));
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"pad"</span>)&nbsp;=&nbsp;0;
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"to pad"</span>)&nbsp;=&nbsp;<span class="variable">L</span>(<span class="string">"pad len"</span>)&nbsp;-&nbsp;<span class="variable">L</span>(<span class="string">"len"</span>);
+&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"i"</span>)++&nbsp;<&nbsp;<span class="variable">L</span>(<span class="string">"to pad"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"pad"</span>)&nbsp;=&nbsp;<span class="variable">L</span>(<span class="string">"pad"</span>)&nbsp;+&nbsp;<span class="variable">L</span>(<span class="string">"pad str"</span>);
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"padded"</span>)&nbsp;=&nbsp;<span class="variable">L</span>(<span class="string">"pad"</span>)&nbsp;+&nbsp;<span class="variable">L</span>(<span class="string">"num str"</span>);
+&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="variable">L</span>(<span class="string">"padded"</span>);
+}
+
+<span class="comment">###############################################</span>
+<span class="comment"># JSON FUNCTIONS</span>
+<span class="comment">###############################################</span>
+
+JsonKB(<span class="variable">L</span>(<span class="string">"file"</span>),<span class="variable">L</span>(<span class="string">"con"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">"{\n"</span>&nbsp;<<&nbsp;SpacesStr(1)&nbsp;<<&nbsp;<span class="string">"\"</span><span class="string">" << conceptname(L("</span>con<span class="string">")) << "</span>\<span class="string">": {\n"</span>;
+&nbsp;&nbsp;JsonKBRecurse(<span class="variable">L</span>(<span class="string">"file"</span>),<span class="variable">L</span>(<span class="string">"con"</span>),1);
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">"\n}\n"</span>;
+}
+
+JsonKBRecurse(<span class="variable">L</span>(<span class="string">"file"</span>),<span class="variable">L</span>(<span class="string">"parent"</span>),<span class="variable">L</span>(<span class="string">"level"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">down</span>(<span class="variable">L</span>(<span class="string">"parent"</span>));
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"first"</span>)&nbsp;=&nbsp;1;
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"has concount"</span>)&nbsp;=&nbsp;0;
+&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"con"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"name"</span>)&nbsp;=&nbsp;<span class="function">conceptname</span>(<span class="variable">L</span>(<span class="string">"con"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"concount"</span>)&nbsp;=&nbsp;SeparateConCount(<span class="variable">L</span>(<span class="string">"name"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"connum"</span>)&nbsp;=&nbsp;<span class="variable">G</span>(<span class="string">"connum"</span>);
+
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"concount"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"hier.txt"</span>&nbsp;<<&nbsp;SpacesStr(<span class="variable">L</span>(<span class="string">"level"</span>)+1)&nbsp;<<&nbsp;<span class="string">" ====> "</span>&nbsp;<<&nbsp;<span class="variable">L</span>(<span class="string">"connum"</span>)&nbsp;<<&nbsp;<span class="string">"\n"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(!<span class="variable">L</span>(<span class="string">"has concount"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;SpacesStr(<span class="variable">L</span>(<span class="string">"level"</span>)+1)&nbsp;<<&nbsp;JsonStr(<span class="variable">L</span>(<span class="string">"concount"</span>))&nbsp;<<&nbsp;<span class="string">": [\n"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">"\n"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;SpacesStr(<span class="variable">L</span>(<span class="string">"level"</span>)+2)&nbsp;<<&nbsp;<span class="string">"{\n"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;SpacesStr(<span class="variable">L</span>(<span class="string">"level"</span>)+3)&nbsp;<<&nbsp;<span class="string">"\"</span>id\<span class="string">": \"</span><span class="string">" << L("</span>connum<span class="string">") << "</span>\<span class="string">",\n"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"first"</span>)&nbsp;=&nbsp;!JsonAttributes(<span class="variable">L</span>(<span class="string">"file"</span>),<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">L</span>(<span class="string">"level"</span>)+2);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"has concount"</span>)&nbsp;=&nbsp;1;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="function">down</span>(<span class="variable">L</span>(<span class="string">"con"</span>)))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(!<span class="variable">L</span>(<span class="string">"first"</span>))&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">",\n"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JsonKBRecurse(<span class="variable">L</span>(<span class="string">"file"</span>),<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">L</span>(<span class="string">"level"</span>)+2);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">"\n"</span>&nbsp;<<&nbsp;SpacesStr(<span class="variable">L</span>(<span class="string">"level"</span>)+2)&nbsp;<<&nbsp;<span class="string">"}"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"has concount"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">"\n"</span>&nbsp;<<&nbsp;SpacesStr(<span class="variable">L</span>(<span class="string">"level"</span>)+2)&nbsp;<<&nbsp;<span class="string">"}"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">"\n"</span>&nbsp;<<&nbsp;SpacesStr(<span class="variable">L</span>(<span class="string">"level"</span>)+1)&nbsp;<<&nbsp;<span class="string">"]"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"has concount"</span>)&nbsp;=&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(!<span class="variable">L</span>(<span class="string">"first"</span>))
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">"\n"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;SpacesStr(<span class="variable">L</span>(<span class="string">"level"</span>)+1)&nbsp;<<&nbsp;JsonStr(<span class="variable">L</span>(<span class="string">"name"</span>))&nbsp;<<&nbsp;<span class="string">": {\n"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"first"</span>)&nbsp;=&nbsp;!JsonAttributes(<span class="variable">L</span>(<span class="string">"file"</span>),<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">L</span>(<span class="string">"level"</span>)+1);
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="function">down</span>(<span class="variable">L</span>(<span class="string">"con"</span>)))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(!<span class="variable">L</span>(<span class="string">"first"</span>))&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">",\n"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JsonKBRecurse(<span class="variable">L</span>(<span class="string">"file"</span>),<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">L</span>(<span class="string">"level"</span>)+1);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">if</span>&nbsp;(!<span class="variable">L</span>(<span class="string">"has concount"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">"\n"</span>&nbsp;<<&nbsp;SpacesStr(<span class="variable">L</span>(<span class="string">"level"</span>)+1)&nbsp;<<&nbsp;<span class="string">"}"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">next</span>(<span class="variable">L</span>(<span class="string">"con"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"con"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">","</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"first"</span>)&nbsp;=&nbsp;0;
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"has concount"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">"\n"</span>&nbsp;<<&nbsp;SpacesStr(<span class="variable">L</span>(<span class="string">"level"</span>)+1)&nbsp;<<&nbsp;<span class="string">"]"</span>;
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">"\n"</span>&nbsp;<<&nbsp;SpacesStr(<span class="variable">L</span>(<span class="string">"level"</span>))&nbsp;<<&nbsp;<span class="string">"}"</span>;
+}
+
+JsonAttributes(<span class="variable">L</span>(<span class="string">"file"</span>),<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">L</span>(<span class="string">"level"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"attrs"</span>)&nbsp;=&nbsp;<span class="function">findattrs</span>(<span class="variable">L</span>(<span class="string">"con"</span>));
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(!<span class="variable">L</span>(<span class="string">"attrs"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;0;
+&nbsp;&nbsp;}
+
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"first attr"</span>)&nbsp;=&nbsp;1;
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"first"</span>)&nbsp;=&nbsp;1;
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"has attrs"</span>)&nbsp;=&nbsp;0;
+&nbsp;&nbsp;
+&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"attrs"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"name"</span>)&nbsp;=&nbsp;<span class="function">attrname</span>(<span class="variable">L</span>(<span class="string">"attrs"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(IsCountCon(<span class="variable">L</span>(<span class="string">"name"</span>),<span class="variable">L</span>(<span class="string">"con"</span>)))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"nothing"</span>)&nbsp;=&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"has attrs"</span>)&nbsp;=&nbsp;1;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"vals"</span>)&nbsp;=&nbsp;<span class="function">attrvals</span>(<span class="variable">L</span>(<span class="string">"attrs"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"count"</span>)&nbsp;=&nbsp;ValCount(<span class="variable">L</span>(<span class="string">"vals"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(!<span class="variable">L</span>(<span class="string">"first attr"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;<span class="string">",\n"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;SpacesStr(<span class="variable">L</span>(<span class="string">"level"</span>)+1)&nbsp;<<&nbsp;JsonStr(<span class="variable">L</span>(<span class="string">"name"</span>))&nbsp;<<&nbsp;<span class="string">": "</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;=&nbsp;<span class="function">attrtype</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">L</span>(<span class="string">"name"</span>));
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># NOTE: Only handling one value for now</span>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># while (L("vals")) {</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># if (L("type") != 2 && L("count") > 1)</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># L("file") << "[";</span>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;==&nbsp;1)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"num"</span>)&nbsp;=&nbsp;<span class="function">getnumval</span>(<span class="variable">L</span>(<span class="string">"vals"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;JsonStr(<span class="function">str</span>(<span class="variable">L</span>(<span class="string">"num"</span>)));
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;==&nbsp;2)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"c"</span>)&nbsp;=&nbsp;<span class="function">getconval</span>(<span class="variable">L</span>(<span class="string">"vals"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;JsonStr(<span class="function">conceptpath</span>(<span class="variable">L</span>(<span class="string">"c"</span>)));
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;==&nbsp;3)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"flt"</span>)&nbsp;=&nbsp;getfltval(<span class="variable">L</span>(<span class="string">"vals"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;JsonStr(<span class="function">str</span>(<span class="variable">L</span>(<span class="string">"flt"</span>)));
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"val"</span>)&nbsp;=&nbsp;<span class="function">getstrval</span>(<span class="variable">L</span>(<span class="string">"vals"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"file"</span>)&nbsp;<<&nbsp;JsonStr(<span class="function">str</span>(<span class="variable">L</span>(<span class="string">"val"</span>)));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"first"</span>)&nbsp;=&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"vals"</span>)&nbsp;=&nbsp;<span class="function">nextval</span>(<span class="variable">L</span>(<span class="string">"vals"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># }</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"first attr"</span>)&nbsp;=&nbsp;0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"attrs"</span>)&nbsp;=&nbsp;<span class="function">nextattr</span>(<span class="variable">L</span>(<span class="string">"attrs"</span>));
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="variable">L</span>(<span class="string">"has attrs"</span>);
+}
+
+JsonStr(<span class="variable">L</span>(<span class="string">"str"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"str"</span>)&nbsp;=&nbsp;<span class="function">strsubst</span>(<span class="variable">L</span>(<span class="string">"str"</span>),&nbsp;<span class="string">"\\"</span>,&nbsp;<span class="string">"\\\\"</span>);
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"str"</span>)&nbsp;=&nbsp;<span class="function">strsubst</span>(<span class="variable">L</span>(<span class="string">"str"</span>),&nbsp;<span class="string">"\"</span><span class="string">", "</span>\\\<span class="string">""</span>);
+&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="string">"\"</span><span class="string">" + L("</span><span class="function">str</span><span class="string">") + "</span>\<span class="string">""</span>;
+}
+
+SeparateConCount(<span class="variable">L</span>(<span class="string">"conname"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="function">strisdigit</span>(<span class="variable">L</span>(<span class="string">"conname"</span>)))&nbsp;<span class="keyword">return</span>&nbsp;0;
+
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"i"</span>)&nbsp;=&nbsp;<span class="function">strlength</span>(<span class="variable">L</span>(<span class="string">"conname"</span>))&nbsp;-&nbsp;1;
+&nbsp;&nbsp;<span class="variable">G</span>(<span class="string">"connum"</span>)&nbsp;=&nbsp;0;
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"stop"</span>)&nbsp;=&nbsp;0;
+&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(!<span class="variable">L</span>(<span class="string">"stop"</span>)&nbsp;&&&nbsp;<span class="variable">L</span>(<span class="string">"i"</span>)&nbsp;>&nbsp;0)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"c"</span>)&nbsp;=&nbsp;<span class="function">strpiece</span>(<span class="variable">L</span>(<span class="string">"conname"</span>),<span class="variable">L</span>(<span class="string">"i"</span>),<span class="variable">L</span>(<span class="string">"i"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="function">strisdigit</span>(<span class="variable">L</span>(<span class="string">"c"</span>)))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"num"</span>)&nbsp;=&nbsp;<span class="variable">L</span>(<span class="string">"c"</span>)&nbsp;+&nbsp;<span class="variable">L</span>(<span class="string">"num"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"stop"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"i"</span>)--;
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"num"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">G</span>(<span class="string">"connum"</span>)&nbsp;=&nbsp;<span class="variable">L</span>(<span class="string">"num"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"base"</span>)&nbsp;=&nbsp;<span class="function">strpiece</span>(<span class="variable">L</span>(<span class="string">"conname"</span>),0,<span class="function">strlength</span>(<span class="variable">L</span>(<span class="string">"conname"</span>))-<span class="function">strlength</span>(<span class="variable">L</span>(<span class="string">"num"</span>))-1);
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="variable">L</span>(<span class="string">"base"</span>);
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;0;
+}
+
+IsCountCon(<span class="variable">L</span>(<span class="string">"str"</span>),<span class="variable">L</span>(<span class="string">"con"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"child"</span>)&nbsp;=&nbsp;<span class="function">down</span>(<span class="variable">L</span>(<span class="string">"con"</span>));
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"first"</span>)&nbsp;=&nbsp;<span class="variable">L</span>(<span class="string">"str"</span>)&nbsp;+&nbsp;<span class="string">"1"</span>;
+&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"child"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"name"</span>)&nbsp;=&nbsp;<span class="function">conceptname</span>(<span class="variable">L</span>(<span class="string">"child"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"name"</span>)&nbsp;==&nbsp;<span class="variable">L</span>(<span class="string">"first"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;1;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"child"</span>)&nbsp;=&nbsp;<span class="function">next</span>(<span class="variable">L</span>(<span class="string">"child"</span>));
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;0;
+}
+
+<span class="comment">###############################################</span>
+<span class="comment"># Ambiguity Functions</span>
+<span class="comment">###############################################</span>
+
+AmbigTrimPOS(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="variable">L</span>(<span class="string">"pos"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"meaning"</span>)&nbsp;=&nbsp;<span class="function">pnvar</span>(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="string">"meaning"</span>);
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(!<span class="variable">L</span>(<span class="string">"meaning"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>;
+&nbsp;&nbsp;}
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">down</span>(<span class="variable">L</span>(<span class="string">"meaning"</span>));
+&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"con"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"p"</span>)&nbsp;=&nbsp;<span class="function">strval</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="string">"pos"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"p"</span>)&nbsp;==&nbsp;<span class="variable">L</span>(<span class="string">"pos"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AmbigCopyAttrs(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">L</span>(<span class="string">"node"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">pnreplaceval</span>(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="string">"pos num"</span>,1);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">pnreplaceval</span>(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="string">"meaning"</span>,<span class="variable">L</span>(<span class="string">"con"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">next</span>(<span class="variable">L</span>(<span class="string">"con"</span>));
+&nbsp;&nbsp;}
+
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"names"</span>)&nbsp;=&nbsp;<span class="function">pnvarnames</span>(<span class="variable">L</span>(<span class="string">"node"</span>));
+&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"names"</span>)[<span class="variable">L</span>(<span class="string">"ii"</span>)])&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"name"</span>)&nbsp;=&nbsp;<span class="variable">L</span>(<span class="string">"names"</span>)[&nbsp;<span class="variable">L</span>(<span class="string">"ii"</span>)&nbsp;];
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(IsPOS(<span class="variable">L</span>(<span class="string">"name"</span>))&nbsp;&&&nbsp;<span class="variable">L</span>(<span class="string">"name"</span>)&nbsp;!=&nbsp;<span class="variable">L</span>(<span class="string">"pos"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pnremoveval(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="variable">L</span>(<span class="string">"name"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"ii"</span>)++;
+&nbsp;&nbsp;}
+}
+
+AmbigCopyAttrs(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">L</span>(<span class="string">"node"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"attrs"</span>)&nbsp;=&nbsp;<span class="function">findattrs</span>(<span class="variable">L</span>(<span class="string">"con"</span>));
+&nbsp;&nbsp;
+&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"attrs"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"vals"</span>)&nbsp;=&nbsp;<span class="function">attrvals</span>(<span class="variable">L</span>(<span class="string">"attrs"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"name"</span>)&nbsp;=&nbsp;<span class="function">attrname</span>(<span class="variable">L</span>(<span class="string">"attrs"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;=&nbsp;<span class="function">attrtype</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="variable">L</span>(<span class="string">"name"</span>));
+
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"name"</span>)&nbsp;!=&nbsp;<span class="string">"pos"</span>)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"vals"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;==&nbsp;1)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">pnmakevar</span>(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="variable">L</span>(<span class="string">"name"</span>),<span class="function">getnumval</span>(<span class="variable">L</span>(<span class="string">"vals"</span>)));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;==&nbsp;2)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">pnmakevar</span>(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="variable">L</span>(<span class="string">"name"</span>),<span class="function">getconval</span>(<span class="variable">L</span>(<span class="string">"vals"</span>)));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;==&nbsp;3)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">pnmakevar</span>(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="variable">L</span>(<span class="string">"name"</span>),getfltval(<span class="variable">L</span>(<span class="string">"vals"</span>)));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span>&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">pnmakevar</span>(<span class="variable">L</span>(<span class="string">"node"</span>),<span class="variable">L</span>(<span class="string">"name"</span>),<span class="function">getstrval</span>(<span class="variable">L</span>(<span class="string">"vals"</span>)));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"vals"</span>)&nbsp;=&nbsp;<span class="function">nextval</span>(<span class="variable">L</span>(<span class="string">"vals"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"attrs"</span>)&nbsp;=&nbsp;<span class="function">nextattr</span>(<span class="variable">L</span>(<span class="string">"attrs"</span>));
+&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+}
+
+IsPOS(<span class="variable">L</span>(<span class="string">"pos"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"pos"</span>)&nbsp;==&nbsp;<span class="string">"noun"</span>&nbsp;||&nbsp;<span class="variable">L</span>(<span class="string">"pos"</span>)&nbsp;==&nbsp;<span class="string">"verb"</span>&nbsp;||&nbsp;<span class="variable">L</span>(<span class="string">"pos"</span>)&nbsp;==&nbsp;<span class="string">"adj"</span>&nbsp;||&nbsp;<span class="variable">L</span>(<span class="string">"pos"</span>)&nbsp;==&nbsp;<span class="string">"adv"</span>&nbsp;||&nbsp;<span class="variable">L</span>(<span class="string">"pos"</span>)&nbsp;==&nbsp;<span class="string">"prep"</span>&nbsp;||&nbsp;<span class="variable">L</span>(<span class="string">"pos"</span>)&nbsp;==&nbsp;<span class="string">"pron"</span>&nbsp;||&nbsp;<span class="variable">L</span>(<span class="string">"pos"</span>)&nbsp;==&nbsp;<span class="string">"conj"</span>&nbsp;||&nbsp;<span class="variable">L</span>(<span class="string">"pos"</span>)&nbsp;==&nbsp;<span class="string">"det"</span>&nbsp;||&nbsp;<span class="variable">L</span>(<span class="string">"pos"</span>)&nbsp;==&nbsp;<span class="string">"num"</span>&nbsp;||&nbsp;<span class="variable">L</span>(<span class="string">"pos"</span>)&nbsp;==&nbsp;<span class="string">"int"</span>&nbsp;||&nbsp;<span class="variable">L</span>(<span class="string">"pos"</span>)&nbsp;==&nbsp;<span class="string">"art"</span>&nbsp;||&nbsp;<span class="variable">L</span>(<span class="string">"pos"</span>)&nbsp;==&nbsp;<span class="string">"pro"</span>&nbsp;||&nbsp;<span class="variable">L</span>(<span class="string">"pos"</span>)&nbsp;==&nbsp;<span class="string">"punct"</span>)
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;1;
+&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;0;
+}
+
+<span class="comment">###############################################</span>
+<span class="comment"># DICTIONARY FUNCTIONS (These are no longer needed. Relics of the past.)</span>
+<span class="comment">###############################################</span>
+
+DictionaryStart()&nbsp;{
+&nbsp;&nbsp;<span class="variable">G</span>(<span class="string">"attrs path"</span>)&nbsp;=&nbsp;<span class="variable">G</span>(<span class="string">"$apppath"</span>)&nbsp;+&nbsp;<span class="string">"\\kb\\user\\attrs.kb"</span>;
+&nbsp;&nbsp;<span class="variable">G</span>(<span class="string">"attrs"</span>)&nbsp;=&nbsp;<span class="function">openfile</span>(<span class="variable">G</span>(<span class="string">"attrs path"</span>));
+}
+
+DictionaryWord(<span class="variable">L</span>(<span class="string">"word"</span>),<span class="variable">L</span>(<span class="string">"attrName"</span>),<span class="variable">L</span>(<span class="string">"value"</span>),<span class="variable">L</span>(<span class="string">"attrType"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="function">addword</span>(<span class="variable">L</span>(<span class="string">"word"</span>));
+&nbsp;&nbsp;<span class="function">addword</span>(<span class="variable">L</span>(<span class="string">"attrName"</span>));
+&nbsp;&nbsp;<span class="variable">G</span>(<span class="string">"attrs"</span>)&nbsp;<<&nbsp;<span class="string">"ind attr\n"</span>&nbsp;<<&nbsp;<span class="function">findwordpath</span>(<span class="variable">L</span>(<span class="string">"word"</span>))&nbsp;<<&nbsp;<span class="string">"\n0\n"</span>;
+&nbsp;&nbsp;<span class="variable">G</span>(<span class="string">"attrs"</span>)&nbsp;<<&nbsp;<span class="function">findwordpath</span>(<span class="variable">L</span>(<span class="string">"attrName"</span>))&nbsp;<<&nbsp;<span class="string">"\n"</span>;
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"attrType"</span>)&nbsp;==&nbsp;<span class="string">"str"</span>)
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">G</span>(<span class="string">"attrs"</span>)&nbsp;<<&nbsp;<span class="string">"pst\n"</span>&nbsp;<<&nbsp;<span class="string">"\"</span><span class="string">" << L("</span>value<span class="string">") << "</span>\<span class="string">""</span>;
+&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"attrType"</span>)&nbsp;==&nbsp;<span class="string">"num"</span>)
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">G</span>(<span class="string">"attrs"</span>)&nbsp;<<&nbsp;<span class="string">"pnum\n"</span>&nbsp;<<&nbsp;<span class="function">str</span>(<span class="variable">L</span>(<span class="string">"value"</span>));
+&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"attrType"</span>)&nbsp;==&nbsp;<span class="string">"con"</span>)
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">G</span>(<span class="string">"attrs"</span>)&nbsp;<<&nbsp;<span class="string">"pcon\n"</span>&nbsp;<<&nbsp;<span class="function">conceptpath</span>(<span class="variable">L</span>(<span class="string">"value"</span>));
+&nbsp;&nbsp;<span class="variable">G</span>(<span class="string">"attrs"</span>)&nbsp;<<&nbsp;<span class="string">"\nend ind\n\n"</span>;
+}
+
+DictionaryEnd()&nbsp;{
+&nbsp;&nbsp;<span class="variable">G</span>(<span class="string">"attrs"</span>)&nbsp;<<&nbsp;<span class="string">"\nquit\n\n"</span>;
+&nbsp;&nbsp;<span class="function">closefile</span>(<span class="variable">G</span>(<span class="string">"attrs"</span>));
+}
+
+OrderByCount(<span class="variable">L</span>(<span class="string">"words"</span>),<span class="variable">L</span>(<span class="string">"order"</span>))&nbsp;{
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"done"</span>)&nbsp;=&nbsp;0;
+&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"sanity"</span>)&nbsp;=&nbsp;0;
+&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(!<span class="variable">L</span>(<span class="string">"done"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"done"</span>)&nbsp;=&nbsp;1;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"conmax"</span>)&nbsp;=&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"max"</span>)&nbsp;=&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"word"</span>)&nbsp;=&nbsp;<span class="function">down</span>(<span class="variable">L</span>(<span class="string">"words"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span>&nbsp;(<span class="variable">L</span>(<span class="string">"word"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"check"</span>)&nbsp;=&nbsp;<span class="function">numval</span>(<span class="variable">L</span>(<span class="string">"word"</span>),<span class="string">"checked"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(!<span class="variable">L</span>(<span class="string">"check"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"done"</span>)&nbsp;=&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"count"</span>)&nbsp;=&nbsp;<span class="function">numval</span>(<span class="variable">L</span>(<span class="string">"word"</span>),<span class="string">"count"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"count"</span>)&nbsp;>&nbsp;<span class="variable">L</span>(<span class="string">"max"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"max.txt"</span>&nbsp;<<&nbsp;<span class="function">conceptname</span>(<span class="variable">L</span>(<span class="string">"word"</span>))&nbsp;<<&nbsp;<span class="string">" "</span>&nbsp;<<&nbsp;<span class="variable">L</span>(<span class="string">"count"</span>)&nbsp;<<&nbsp;<span class="string">"\n"</span>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"max"</span>)&nbsp;=&nbsp;<span class="variable">L</span>(<span class="string">"count"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"conmax"</span>)&nbsp;=&nbsp;<span class="variable">L</span>(<span class="string">"word"</span>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"word"</span>)&nbsp;=&nbsp;<span class="function">next</span>(<span class="variable">L</span>(<span class="string">"word"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(!<span class="variable">L</span>(<span class="string">"done"</span>)&nbsp;&&&nbsp;<span class="variable">L</span>(<span class="string">"conmax"</span>))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"word"</span>)&nbsp;=&nbsp;<span class="function">conceptname</span>(<span class="variable">L</span>(<span class="string">"conmax"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">makeconcept</span>(<span class="variable">L</span>(<span class="string">"order"</span>),<span class="variable">L</span>(<span class="string">"word"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(!<span class="function">spellword</span>(<span class="variable">L</span>(<span class="string">"word"</span>)))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">addnumval</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="string">"unknown"</span>,1);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">addnumval</span>(<span class="variable">L</span>(<span class="string">"con"</span>),<span class="string">"count"</span>,<span class="variable">L</span>(<span class="string">"max"</span>));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">addnumval</span>(<span class="variable">L</span>(<span class="string">"conmax"</span>),<span class="string">"checked"</span>,1);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(<span class="variable">L</span>(<span class="string">"safety"</span>)++&nbsp;>&nbsp;300)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">L</span>(<span class="string">"done"</span>)&nbsp;=&nbsp;1;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;}
+}
+
+@@DECL
+</pre>

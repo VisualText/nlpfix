@@ -11,7 +11,7 @@ const PORT = 3000;
 export const visualText = new VisualText();
 export const textFile = new TextFile();
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/api/readme/firstline/:analyzer', (req, res) => {
   const readMePath = path.join('analyzers', req.params.analyzer, 'README.md');
@@ -51,7 +51,8 @@ app.get('/api/sequence/:analyzer', (req, res) => {
   const dirPath = path.join(process.cwd(),anaDir);
   visualText.analyzer.setWorkingDir(dirPath);
   const sequenceFile = visualText.analyzer.seqFile;
-  sequenceFile.getPassFiles(anaDir,true);  let files = [];
+  sequenceFile.getPassFiles(anaDir,true);
+  let files = [];
   let i = 1;
   for (let passItem of sequenceFile.getPassItems()) {
     if (passItem.typeStr == 'nlp') {
@@ -244,6 +245,16 @@ app.get('/api/seqfile/:analyzer/:filename', (req, res) => {
       res.send(data);
     else
       res.send(`<pre>${data}</pre>`);
+  });
+});
+
+app.get('/api/popup/:filename', (req, res) => {
+  let filePath = path.join('help', req.params.filename + '.html');
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      return res.status(500).send(`Unable to read file : ${filePath}`);
+    }
+    res.send(data);
   });
 });
 

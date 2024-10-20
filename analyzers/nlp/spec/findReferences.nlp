@@ -1,0 +1,28 @@
+###############################################
+# FILE: findReferences
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-7 21:8:55
+# MODIFIED:
+###############################################
+
+@CODE
+
+L("con") = down(G("caps"));
+while (L("con")) {
+    L("name") = strtolower(conceptname(L("con")));
+    L("child") = down(G("caps"));
+    while (L("child")) {
+        L("n") = strtolower(conceptname(L("child")));
+        if (L("n") != L("name") && strcontains(L("n"),L("name"))) {
+            MarkFired(L("child"));
+            MarkFired(L("con"));
+            "compare.txt" << "Found: " << L("name") << ": " << L("n") << " " << L("unique") << "\n";
+            addconval(L("child"),"full",L("con"));
+        }
+        L("child") = next(L("child"));
+    }
+    L("con") = next(L("con"));
+}
+
+@@CODE

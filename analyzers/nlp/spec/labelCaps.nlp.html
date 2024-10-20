@@ -1,0 +1,105 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: labelCaps</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-10-6 10:17:37</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@PATH</span>&nbsp;<span class="region">_ROOT</span>&nbsp;<span class="concept">_sentence</span>&nbsp;<span class="concept">_cap</span>
+
+<span class="comment">###############################################</span>
+<span class="comment"># Natural Language Understanding Global Initiative</span>
+<span class="comment">###############################################</span>
+<span class="region">@PRE</span>
+<3,3>&nbsp;<span class="function">vareq</span>(<span class="string">"organization"</span>,<span class="string">"cause"</span>);
+
+<span class="region">@POST</span>
+<span class="variable">S</span>(<span class="string">"organization"</span>)&nbsp;=&nbsp;<span class="string">"cause"</span>;
+<span class="function">single</span>();
+
+<span class="region">@RULES</span>
+<span class="concept">_organization</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xSTART</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="constant">_xALPHA</span>&nbsp;[<span class="attr">plus</span>]&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="constant">_xALPHA</span>&nbsp;[<span class="attr">trig</span>]&nbsp;&nbsp;<span class="comment">### (3)</span>
+&nbsp;&nbsp;<span class="constant">_xEND</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (4)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+<span class="comment">###############################################</span>
+<span class="comment"># Santa Catarina University</span>
+<span class="comment">###############################################</span>
+<span class="region">@PRE</span>
+<3,3>&nbsp;<span class="function">vareq</span>(<span class="string">"organization"</span>,<span class="string">"school"</span>);
+
+<span class="region">@POST</span>
+<span class="variable">S</span>(<span class="string">"organization"</span>)&nbsp;=&nbsp;<span class="string">"school"</span>;
+<span class="function">single</span>();
+
+<span class="region">@RULES</span>
+<span class="concept">_organization</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xSTART</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="constant">_xALPHA</span>&nbsp;[<span class="attr">plus</span>]&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="constant">_xALPHA</span>&nbsp;[<span class="attr">trig</span>]&nbsp;&nbsp;<span class="comment">### (3)</span>
+&nbsp;&nbsp;<span class="constant">_xEND</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (4)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+<span class="comment">###############################################</span>
+<span class="comment"># David de Hilster</span>
+<span class="comment">###############################################</span>
+<span class="region">@PRE</span>
+<1,1>&nbsp;<span class="function">var</span>(<span class="string">"person"</span>);
+<3,3>&nbsp;<span class="function">lowercase</span>();
+<3,3>&nbsp;<span class="function">lengthr</span>(1,3);
+
+<span class="region">@POST</span>
+<span class="keyword">if</span>&nbsp;(AddPersonThree(<span class="variable">X</span>(3),<span class="variable">N</span>(2),<span class="variable">N</span>(3),<span class="variable">N</span>(4)))&nbsp;{
+&nbsp;&nbsp;<span class="function">single</span>();
+}
+
+<span class="region">@RULES</span>
+<span class="concept">_person</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xSTART</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="constant">_xALPHA</span>&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="constant">_xALPHA</span>&nbsp;&nbsp;<span class="comment">### (3)</span>
+&nbsp;&nbsp;<span class="constant">_xALPHA</span>&nbsp;&nbsp;<span class="comment">### (4)</span>
+&nbsp;&nbsp;<span class="constant">_xEND</span>&nbsp;&nbsp;<span class="comment">### (5)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+<span class="comment">###############################################</span>
+<span class="comment"># Eduardo Costa</span>
+<span class="comment">###############################################</span>
+<span class="region">@PRE</span>
+<1,1>&nbsp;<span class="function">var</span>(<span class="string">"person"</span>);
+
+<span class="region">@POST</span>
+<span class="keyword">if</span>&nbsp;(AddPersonTwo(<span class="variable">X</span>(3),<span class="variable">N</span>(2),<span class="variable">N</span>(3)))&nbsp;{
+&nbsp;&nbsp;<span class="function">single</span>();
+}
+
+<span class="region">@RULES</span>
+<span class="concept">_person</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xSTART</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="constant">_xALPHA</span>&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="constant">_xALPHA</span>&nbsp;&nbsp;<span class="comment">### (3)</span>
+&nbsp;&nbsp;<span class="constant">_xEND</span>&nbsp;&nbsp;<span class="comment">### (4)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+<span class="comment">###############################################</span>
+<span class="comment"># Nathalia</span>
+<span class="comment">###############################################</span>
+<span class="region">@PRE</span>
+<1,1>&nbsp;<span class="function">var</span>(<span class="string">"person"</span>);
+
+<span class="region">@POST</span>
+<span class="keyword">if</span>&nbsp;(AddPersonOne(<span class="variable">X</span>(3),<span class="variable">N</span>(2)))&nbsp;{
+&nbsp;&nbsp;<span class="function">single</span>();
+}
+
+<span class="region">@RULES</span>
+<span class="concept">_person</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xSTART</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="constant">_xALPHA</span>&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="constant">_xEND</span>&nbsp;&nbsp;<span class="comment">### (3)</span>
+&nbsp;&nbsp;<span class="region">@@</span></pre>

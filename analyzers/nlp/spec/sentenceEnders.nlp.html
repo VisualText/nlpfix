@@ -1,0 +1,21 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: sentenceEnders</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-5-31 14:34:15</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@NODES</span>&nbsp;<span class="region">_ROOT</span>
+
+<span class="region">@POST</span>
+<span class="function">singler</span>(2,2);
+
+<span class="region">@RULES</span>
+<span class="concept">_endSent</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="attr">s</span>&nbsp;<span class="attr">one</span>&nbsp;<span class="attr">match</span>=(<span class="constant">_xALPHA</span>&nbsp;<span class="constant">_xNUM</span>&nbsp;<span class="concept">_phrase</span>)]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="attr">one</span>&nbsp;<span class="attr">trig</span>&nbsp;<span class="attr">match</span>=(\.&nbsp;\?&nbsp;\!)]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="attr">one</span>&nbsp;<span class="attr">match</span>=(<span class="constant">_xWHITE</span>&nbsp;<span class="constant">_xALPHA</span>&nbsp;<span class="constant">_xNUM</span>&nbsp;<span class="constant">_xEND</span>&nbsp;<span class="concept">_xCTRL</span>)]&nbsp;&nbsp;<span class="comment">### (3)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+</pre>

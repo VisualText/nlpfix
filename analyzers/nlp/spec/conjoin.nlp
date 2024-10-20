@@ -1,0 +1,21 @@
+###############################################
+# FILE: conjoin
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-7 19:35:37
+# MODIFIED:
+###############################################
+
+@NODES _sentence
+
+@PRE
+<1,1> var("conjoin");
+
+@POST
+S("conjoined") = 1;
+single();
+
+@RULES
+_person <-
+	_xWILD [plus match=(_person _xALPHA)]	### (1)
+	@@

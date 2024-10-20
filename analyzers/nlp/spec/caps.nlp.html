@@ -1,0 +1,35 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: caps</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-10-6 9:41:40</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@NODES</span>&nbsp;<span class="concept">_sentence</span>
+
+<span class="comment">### David de Hilster #########################</span>
+<span class="region">@POST</span>
+<span class="variable">S</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">G</span>(<span class="string">"caps"</span>),<span class="function">phrasetext</span>());
+<span class="function">addconval</span>(<span class="variable">S</span>(<span class="string">"con"</span>),<span class="string">"sent"</span>,<span class="variable">X</span>(<span class="string">"con"</span>,2));
+<span class="function">single</span>();
+
+<span class="region">@RULES</span>
+<span class="concept">_cap</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_xCAP</span>&nbsp;[<span class="attr">plus</span>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="constant">_xWILD</span>&nbsp;[<span class="attr">match</span>=(de&nbsp;las&nbsp;los)]&nbsp;&nbsp;<span class="comment">### (2)</span>
+&nbsp;&nbsp;<span class="concept">_xCAP</span>&nbsp;[<span class="attr">plus</span>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">### (3)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+
+<span class="comment">###############################################</span>
+<span class="region">@POST</span>
+<span class="variable">S</span>(<span class="string">"con"</span>)&nbsp;=&nbsp;<span class="function">getconcept</span>(<span class="variable">G</span>(<span class="string">"caps"</span>),<span class="function">phrasetext</span>());
+<span class="function">addconval</span>(<span class="variable">S</span>(<span class="string">"con"</span>),<span class="string">"sent"</span>,<span class="variable">X</span>(<span class="string">"con"</span>,2));
+<span class="function">single</span>();
+
+<span class="region">@RULES</span>
+<span class="concept">_cap</span>&nbsp;<-
+&nbsp;&nbsp;<span class="concept">_xCAP</span>&nbsp;[<span class="attr">plus</span>]&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="region">@@</span>
+</pre>

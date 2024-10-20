@@ -1,0 +1,32 @@
+###############################################
+# FILE: categorizeCaps
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-6 10:3:53
+# MODIFIED:
+###############################################
+
+@PATH _ROOT _sentence _cap
+
+@POST
+L("cap con") = X("con",3);
+L("type") = "other";
+
+if (N("pessoa",1)) { 
+	IncrementCount(L("cap con"),"person");
+	PNIncrement(X(3),"person");
+}
+if (N("organization",1) == "school") {
+	IncrementCount(L("cap con"),"school");
+	PNIncrement(X(3),"school");
+}
+if (N("organization",1) == "cause") {
+	IncrementCount(L("cap con"),"cause");
+	PNIncrement(X(3),"cause");
+}
+AddTreeID(L("cap con"),X(3));
+
+@RULES
+_xNIL <-
+	_xALPHA	### (1)
+	@@

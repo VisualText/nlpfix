@@ -1,0 +1,33 @@
+<pre>
+<span class="comment">###############################################</span>
+<span class="comment"># FILE: categorizeCaps</span>
+<span class="comment"># SUBJ: comment</span>
+<span class="comment"># AUTH: David de Hilster</span>
+<span class="comment"># CREATED: 2024-10-6 10:3:53</span>
+<span class="comment"># MODIFIED:</span>
+<span class="comment">###############################################</span>
+
+<span class="region">@PATH</span>&nbsp;<span class="region">_ROOT</span>&nbsp;<span class="concept">_sentence</span>&nbsp;<span class="concept">_cap</span>
+
+<span class="region">@POST</span>
+<span class="variable">L</span>(<span class="string">"cap con"</span>)&nbsp;=&nbsp;<span class="variable">X</span>(<span class="string">"con"</span>,3);
+<span class="variable">L</span>(<span class="string">"type"</span>)&nbsp;=&nbsp;<span class="string">"other"</span>;
+
+<span class="keyword">if</span>&nbsp;(<span class="variable">N</span>(<span class="string">"pessoa"</span>,1))&nbsp;{&nbsp;
+&nbsp;&nbsp;IncrementCount(<span class="variable">L</span>(<span class="string">"cap con"</span>),<span class="string">"person"</span>);
+&nbsp;&nbsp;PNIncrement(<span class="variable">X</span>(3),<span class="string">"person"</span>);
+}
+<span class="keyword">if</span>&nbsp;(<span class="variable">N</span>(<span class="string">"organization"</span>,1)&nbsp;==&nbsp;<span class="string">"school"</span>)&nbsp;{
+&nbsp;&nbsp;IncrementCount(<span class="variable">L</span>(<span class="string">"cap con"</span>),<span class="string">"school"</span>);
+&nbsp;&nbsp;PNIncrement(<span class="variable">X</span>(3),<span class="string">"school"</span>);
+}
+<span class="keyword">if</span>&nbsp;(<span class="variable">N</span>(<span class="string">"organization"</span>,1)&nbsp;==&nbsp;<span class="string">"cause"</span>)&nbsp;{
+&nbsp;&nbsp;IncrementCount(<span class="variable">L</span>(<span class="string">"cap con"</span>),<span class="string">"cause"</span>);
+&nbsp;&nbsp;PNIncrement(<span class="variable">X</span>(3),<span class="string">"cause"</span>);
+}
+AddTreeID(<span class="variable">L</span>(<span class="string">"cap con"</span>),<span class="variable">X</span>(3));
+
+<span class="region">@RULES</span>
+<span class="constant">_xNIL</span>&nbsp;<-
+&nbsp;&nbsp;<span class="constant">_xALPHA</span>&nbsp;&nbsp;<span class="comment">### (1)</span>
+&nbsp;&nbsp;<span class="region">@@</span></pre>

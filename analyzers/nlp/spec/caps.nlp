@@ -1,0 +1,33 @@
+###############################################
+# FILE: caps
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-6 9:41:40
+# MODIFIED:
+###############################################
+
+@NODES _sentence
+
+### David de Hilster  #########################
+@POST
+S("con") = getconcept(G("caps"),phrasetext());
+addconval(S("con"),"sent",X("con",2));
+single();
+
+@RULES
+_cap <-
+	_xCAP [plus]				### (1)
+	_xWILD [match=(de las los)]	### (2)
+	_xCAP [plus]				### (3)
+	@@
+
+###############################################
+@POST
+S("con") = getconcept(G("caps"),phrasetext());
+addconval(S("con"),"sent",X("con",2));
+single();
+
+@RULES
+_cap <-
+	_xCAP [plus]	### (1)
+	@@
