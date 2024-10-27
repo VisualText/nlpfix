@@ -1,0 +1,17 @@
+###############################################
+# FILE: attrs
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-9 19:27:53
+# MODIFIED:
+###############################################
+
+@PATH _ROOT _rule _nodes _node _attrs
+
+@PRE
+<1,1> var("attr");
+
+@RULES
+_attr <-
+	_xALPHA	### (1)
+	@@

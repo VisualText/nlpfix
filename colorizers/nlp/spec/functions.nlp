@@ -1,0 +1,21 @@
+###############################################
+# FILE: functions
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-9 20:3:18
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@POST
+if (N("keyword")) {
+	group(1,1,"_keyword");
+} else if (N("function")) {
+	group(1,1,"_function");
+}
+
+@RULES
+_xNIL <-
+	_xALPHA	### (1)
+	@@

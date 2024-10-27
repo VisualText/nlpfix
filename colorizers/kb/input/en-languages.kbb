@@ -1,0 +1,33 @@
+# Human languages in English
+languages
+  abkhazian: iso2=ab, iso3=abk, synonym=abkhaz
+    third: moose="fred"
+      fouth: moose="fred"
+        fifth: moose="fred"
+  afar man here: iso2=aa, iso3=aar
+  afrikaans: iso2=af, iso3=afr
+  akan: iso2=ak, iso3=aka
+  albanian: iso2=sq, iso3=alb
+  amharic: iso2=am, iso3=amh
+  arabic: iso2=ar, iso3=ara
+  aragonese: iso2=an, iso3=arg
+  armenian: iso2=hy, iso3=arm
+  assamese: iso2=as, iso3=asm
+  avaric: iso2=av, iso3=ava, synonym=avar
+  avestan: iso2=ae, iso3=ave
+  aymara: iso2=ay, iso3=aym
+  azerbaijani: iso2=az, iso3=aze, synonym=azeri
+  bambara: iso2=bm, iso3=bam
+  bashkir: iso2=ba, iso3=bak
+  basque: iso2=eu, iso3=baq
+  belarusian: iso2=be, iso3=bel
+  bengali: iso2=bn, iso3=ben, synonym=bangla
+  bislama: iso2=bi, iso3=bis
+  bosnian: iso2=bs, iso3=bos
+  breton: iso2=br, iso3=bre
+  bulgarian: iso2=bg, iso3=bul
+  burmese: iso2=my, iso3=bur, synonym=myanmar
+  castilian: iso2=es, iso3=spa
+  catalan: iso2=ca, iso3=cat
+  central khmer: iso2=km, iso3=khm, synonym=[khmer,cambodian]
+  chamorro: iso2=ch, iso3=cha

@@ -1,0 +1,56 @@
+###############################################
+# FILE: output
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-10 8:6:39
+# MODIFIED:
+###############################################
+
+@CODE
+
+L("line") = pndown(pnroot());
+L("color") = "kb0";
+
+while (L("line")) {
+    L("node") = pndown(L("line"));
+    while (L("node")) {
+        L("name") = pnname(L("node"));
+        "nodes.txt" << L("name") << "\n";
+
+        if (L("name") == "_indent") {
+            L("indent") = num(pnvar(L("node"),"len"));
+            "debug.txt" << "Indent level: " << L("indent") << "\n";
+            if (L("indent") == 2) {
+                L("color") = "kb1";
+            } else if (L("indent") == 4) {
+                L("color") = "kb2";
+            } else if (L("indent") == 6) {
+                L("color") = "kb3";
+            } else {
+                L("color") = "white";
+            }
+            G("out") << RepeatStr(L("indent"), "&nbsp;");
+
+        } else if (L("name") == "_value" && pndown(L("node")) && pnname(pndown(L("node"))) == "_string") {
+            G("out") << AddTag(L("node"),"string");
+        } else if (L("name") == "_comment") {
+            G("out") << AddTag(L("node"),"comment");
+        } else if (L("name") == "_concept") {
+            G("out") << AddTag(L("node"),L("color"));
+        } else if (L("name") == "_string") {
+            G("out") << AddTag(L("node"),"string");
+        } else if (L("name") == "_attr") {
+            G("out") << AddTag(L("node"),"attr");
+        } else if (L("name") == "_value") {
+            G("out") << AddTag(L("node"),"value");
+        } else {
+            G("out") << pnvar(L("node"),"$text");
+        }
+        L("node") = pnnext(L("node"));
+    }
+    G("out") << "\n";
+
+    L("line") = pnnext(L("line"));
+}
+
+@@CODE

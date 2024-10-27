@@ -1,0 +1,33 @@
+###############################################
+# FILE: rest
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-8 20:39:17
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@RULES
+_rest <-
+	_xWILD [fail=(
+			_at
+			_atat
+			_attr
+			_comment 
+			_concept 
+			_constant
+			_context
+			_function
+			_keyword
+			_nl 
+			_rule
+			_rules
+			_space 
+			_string 
+			_suggest
+			_suggests
+			_tab
+			_variable
+		)]	### (1)
+	@@

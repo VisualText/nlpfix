@@ -1,0 +1,17 @@
+@NODES _LINE
+
+@CHECK
+fail();
+
+@POST
+"country.dict" << strtolower(N("$text",4)) << " country=1\n";
+
+@RULES
+_xNIL <-
+	_xSTART				### (1)
+	_xNUM				### (2)
+	\t					### (3)
+	\#					### (4)
+	_xWILD [fail=(\t)]	### (5)
+	_moose				### (6)
+	@@

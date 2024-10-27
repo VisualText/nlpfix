@@ -1,0 +1,18 @@
+###############################################
+# FILE: word
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-18 21:41:57
+# MODIFIED:
+###############################################
+
+@NODES _LINE
+
+@POST
+singler(2,2);
+
+@RULES
+_word <-
+	_xSTART												### (1)
+	_xWILD [plus fail=(_attrValue _xEND _comment \n)]	### (2)
+	@@

@@ -1,0 +1,15 @@
+###############################################
+# FILE: comments
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-8 20:40:55
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@RULES
+_comment <-
+	\#					### (1)
+	_xWILD [fail=(_nl)]	### (2)
+	@@

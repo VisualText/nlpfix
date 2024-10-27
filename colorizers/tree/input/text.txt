@@ -1,0 +1,27 @@
+***************
+    PASS 7 (spaces)
+***************
+
+PAT OUTPUT TREE:
+
+_ROOT [0,235,0,235,0,0,node,un, ("TOT LINES" 1) ("TOT TABS" 0) ("TOT LOWERS" 11) ("TOT CAPS" 10) ("TOT UPPERS" 6) ("TOT NUMS" 8)]
+   @ [0,0,0,0,0,0,punct, ("NOSP" 1)]
+   NODES [1,5,1,5,0,0,alpha, ("NOSP" 1) ("cap" 1) ("upper" 1) ("context" 1)]
+   _space [6,6,6,6,7,17,node,fired,blt]
+      \_ [6,6,6,6,0,0,white]
+   _ [7,7,7,7,0,0,punct, ("SP" 1)]
+   LINE [8,11,8,11,0,0,alpha, ("NOSP" 1) ("cap" 1) ("upper" 1)]
+   _nl [12,12,12,12,4,12,node]
+      \n [12,12,12,12,0,0,white]
+   _nl [13,13,13,13,4,12,node]
+      \n [13,13,13,13,0,0,white]
+   @ [14,14,14,14,0,0,punct, ("SP" 1) ("NL" 2)]
+   CHECK [15,19,15,19,0,0,alpha, ("NOSP" 1) ("cap" 1) ("upper" 1)]
+   _nl [20,20,20,20,4,12,node]
+      \n [20,20,20,20,0,0,white]
+   fail [21,24,21,24,0,0,alpha, ("SP" 1) ("NL" 1) ("lower" 1) ("function" 1) ("attr" 1)]
+   ( [25,25,25,25,0,0,punct, ("NOSP" 1)]
+   ) [26,26,26,26,0,0,punct, ("NOSP" 1)]
+   ; [27,27,27,27,0,0,punct, ("NOSP" 1)]
+   _nl [28,28,28,28,4,12,node]
+      \n [28,28,28,28,0,0,white]

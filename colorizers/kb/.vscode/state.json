@@ -1,0 +1,10 @@
+{
+    "visualText": [
+        {
+            "name": "Analyzer",
+            "type": "state",
+            "currentTextFile": "c:\\git\\dehilster-analyzers\\Colorizers\\kb\\input\\en-languages.kbb",
+            "currentPassFile": "c:\\git\\nlp-engine-windows\\colorizers\\kb\\spec\\preClose.nlp"
+        }
+    ]
+}

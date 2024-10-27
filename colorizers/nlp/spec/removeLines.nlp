@@ -1,0 +1,17 @@
+###############################################
+# FILE: removeLines
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-8 20:46:33
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@POST
+splice(1,1);
+
+@RULES
+_xNIL <-
+	_LINE	### (1)
+	@@

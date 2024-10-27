@@ -1,0 +1,44 @@
+###############################################
+# FILE: kb
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-6-2 8:8:22
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@POST
+AddDateTimeRange(N("datetimeone",1),N("datetimeone",1));
+@RULES
+_xNIL <-
+	_dateTimeRange
+	@@
+
+@POST
+AddDateRange(N("dateone",1),N("datetwo",1));
+@RULES
+_xNIL <-
+	_dateRange
+	@@
+
+@POST
+AddDateTime(N("date",1),N("time",1));
+@RULES
+_xNIL <-
+	_dateTime
+	@@
+
+@POST
+AddDate(N(1));
+@RULES
+_xNIL <-
+	_date
+	@@
+
+@POST
+AddTime(N(1));
+@RULES
+_xNIL <-
+	_time
+	@@

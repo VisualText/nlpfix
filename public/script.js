@@ -5,6 +5,7 @@ var clickType;
     clickType[clickType["HIGHLIGHT"] = 2] = "HIGHLIGHT";
     clickType[clickType["KB"] = 3] = "KB";
 })(clickType || (clickType = {}));
+var clickTypeFA = ['fas fa-code', 'fas fa-sitemap', 'fas fa-star', 'fas fa-file-alt'];
 var helpInfo = {
     analyzers: [
         {
@@ -82,6 +83,7 @@ function centerPopup(htmlFile) {
         closeButton.textContent = 'Close';
         closeButton.addEventListener('click', function () {
             document.body.removeChild(popup);
+            displayArrow(true, 'look-here-left');
         });
         buttonPanel.appendChild(closeButton);
         text.innerHTML = content;
@@ -96,8 +98,9 @@ function centerPopup(htmlFile) {
         document.body.appendChild(popup);
     });
 }
-function displayArrow(display) {
-    var arrow = document.getElementById('look-here');
+function displayArrow(display, id) {
+    if (id === void 0) { id = 'look-here'; }
+    var arrow = document.getElementById(id);
     if (arrow) {
         arrow.style.display = display ? 'inline' : 'none';
     }
@@ -107,6 +110,7 @@ function handleLoad() {
         .then(function (response) { return response.json(); })
         .then(function (analyzers) {
         displayArrow(false);
+        displayArrow(false), 'look-here-left';
         var analyzerList = document.getElementById('analyzer-list');
         analyzerList.innerHTML = '';
         var main = document.getElementById('file-content');
@@ -141,6 +145,7 @@ function clearAllSelections() {
     ['sequence-list', 'kb-list', 'output-list'].forEach(clearSelections);
     removePopup();
     displayArrow(false);
+    displayArrow(false, 'look-here-left');
     writeComment('');
 }
 function selectionLogic(id, index) {
@@ -161,30 +166,36 @@ function removePopup() {
     var popups = document.querySelectorAll('.popup');
     popups.forEach(function (popup) { return document.body.removeChild(popup); });
 }
-function setPathText(text, html) {
+function setPathText(type, text, html) {
     if (html === void 0) { html = false; }
     var comment = document.getElementById('comment');
     comment.style.display = 'none';
     var pathElement = document.getElementById('path');
     pathElement.style.display = 'block';
+    text = '  ' + text;
     if (html) {
         pathElement.innerHTML = text;
     }
     else {
         pathElement.textContent = text;
     }
+    var icon = document.createElement('i');
+    icon.className = clickTypeFA[type];
+    icon.style.color = '#add8e6';
+    icon.style.fontSize = '1.5em';
+    pathElement.insertBefore(icon, pathElement.firstChild);
 }
-function addPath(analyzer, list, file) {
+function addPath(type, analyzer, list, file) {
     var anaObj = helpInfo.analyzers.find(function (a) { return a.name === analyzer; });
     if (anaObj) {
         var fileObj = anaObj.files.find(function (f) { return f.name === file; });
         if (fileObj) {
             displayArrow(true);
-            setPathText(fileObj.description);
+            setPathText(type, fileObj.description);
             return;
         }
     }
-    setPathText("".concat(analyzer, " > ").concat(list, " > ").concat(file));
+    setPathText(type, "".concat(analyzer, " > ").concat(list, " > ").concat(file));
 }
 function addTooltip(anchor, text) {
     // Set the text content of the anchor
@@ -247,10 +258,9 @@ function analyzerClick(li, analyzer) {
             fetch("/api/input/".concat(analyzer.folder, "/text.txt"))
                 .then(function (response) { return response.text(); })
                 .then(function (content) {
-                console.log(content);
                 var fileContent = document.getElementById('file-content');
                 fileContent.innerHTML = content;
-                setPathText("".concat(analyzer.name, " > text"));
+                setPathText(clickType.CODE, "".concat(analyzer.name, " > text"));
             });
             fetch("/api/kb/".concat(analyzer.folder))
                 .then(function (response) { return response.json(); })
@@ -271,7 +281,7 @@ function analyzerClick(li, analyzer) {
                             var fileContent = document.getElementById('file-content');
                             selectionLogic("kb-list", kb.index);
                             fileContent.innerHTML = content;
-                            addPath(analyzer.name, 'kb', kb.name);
+                            addPath(clickType.KB, analyzer.name, 'kb', kb.name);
                         });
                     });
                     kbLi.appendChild(anchor);
@@ -298,7 +308,7 @@ function analyzerClick(li, analyzer) {
                             var fileContent = document.getElementById('file-content');
                             selectionLogic("output-list", output.index);
                             fileContent.innerHTML = content;
-                            addPath(analyzer.name, 'output', output.name);
+                            addPath(clickType.HIGHLIGHT, analyzer.name, 'output', output.name);
                         });
                     });
                     outLi.appendChild(anchor);
@@ -308,7 +318,6 @@ function analyzerClick(li, analyzer) {
             var seqList = document.getElementById('sequence-list');
             seqList.innerHTML = '';
             files.forEach(function (file) {
-                console.log(file);
                 var li = document.createElement('li');
                 li.classList.add('seq-item');
                 li.setAttribute('index', file.index.toString());
@@ -398,6 +407,7 @@ function rotateClick(anchor, analyzer, file, type) {
     var li = anchor.closest('li');
     var typeStr = type.toString();
     // This code handles the rotation of the anchor when clicked multiple times
+    var mark = 1;
     if (ul && li) {
         var index = ul.getAttribute('index');
         if (index) {
@@ -457,7 +467,7 @@ function fetchKB(analyzer, file) {
         var fileContent = document.getElementById('file-content');
         selectionLogic("kb-list", file.index);
         fileContent.innerHTML = content;
-        addPath(analyzer.name, 'kb', file.name);
+        addPath(clickType.KB, analyzer.name, 'kb', file.name);
     });
 }
 function fetchCode(analyzer, file) {
@@ -467,7 +477,7 @@ function fetchCode(analyzer, file) {
         var fileContent = document.getElementById('file-content');
         selectionLogic("sequence-list", file.index);
         fileContent.innerHTML = content;
-        addPath(analyzer.name, 'sequence', file.name);
+        addPath(clickType.CODE, analyzer.name, 'sequence', file.name);
     });
 }
 function fetchTree(analyzer, file) {
@@ -477,7 +487,7 @@ function fetchTree(analyzer, file) {
         var fileContent = document.getElementById('file-content');
         selectionLogic("sequence-list", file.index);
         fileContent.innerHTML = content;
-        addPath(analyzer.name, 'sequence', file.name);
+        addPath(clickType.TREE, analyzer.name, 'sequence', file.name);
     });
 }
 function fetchHighlight(analyzer, file) {
@@ -487,7 +497,7 @@ function fetchHighlight(analyzer, file) {
         var fileContent = document.getElementById('file-content');
         selectionLogic("sequence-list", file.index);
         fileContent.innerHTML = content;
-        addPath(analyzer.name, 'sequence', file.name);
+        addPath(clickType.CODE, analyzer.name, 'sequence', file.name);
     });
 }
 document.addEventListener('DOMContentLoaded', function () {

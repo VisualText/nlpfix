@@ -1,0 +1,28 @@
+dicttok	nil	# Gen:   Convert input to token list
+/folder	Init	# new folder
+nlp	init	# comment
+nlp	funcs	# comment
+end	Init	# new folder
+nlp	special	# comment
+nlp	comments	# comment
+nlp	strings	# comment
+nlp	spaces	# comment
+nlp	concepts	# comment
+nlp	ats	# comment
+nlp	variables	# comment
+/folder	Rules	# new folder
+rec	rules	# comment
+nlp	segment	# comment
+nlp	suggested	# comment
+nlp	nodes	# comment
+nlp	ruleAttrs	# comment
+nlp	attrs	# comment
+end	Rules	# new folder
+nlp	functions	# comment
+rec	splice	# comment
+nlp	rest	# comment
+/folder	Output	# new folder
+nlp	pre	# comment
+nlp	output	# comment
+nlp	preClose	# comment
+end	Output	# new folder

@@ -1,0 +1,41 @@
+###############################################
+# FILE: output
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-10 8:6:39
+# MODIFIED:
+###############################################
+
+@CODE
+
+L("line") = pndown(pnroot());
+L("color") = "#93bffb";
+
+while (L("line")) {
+    L("node") = pndown(L("line"));
+    while (L("node")) {
+        L("name") = pnname(L("node"));
+
+        if (L("name") == "_value" && pndown(L("node")) && pnname(pndown(L("node"))) == "_string") {
+            G("out") << AddTag(L("node"),"node");
+        } else if (L("name") == "_value") {
+            G("out") << AddTag(L("node"),"value");
+        } else if (L("name") == "_comment") {
+            G("out") << AddTag(L("node"),"comment");
+        } else if (L("name") == "_word") {
+            G("out") << AddTag(L("node"),"word") << "&nbsp;";
+        } else if (L("name") == "_string") {
+            G("out") << AddTag(L("node"),"string");
+        } else if (L("name") == "_attr") {
+            G("out") << AddTag(L("node"),"attr");
+        } else {
+            G("out") << pnvar(L("node"),"$text");
+        }
+        L("node") = pnnext(L("node"));
+    }
+    G("out") << "\n";
+
+    L("line") = pnnext(L("line"));
+}
+
+@@CODE

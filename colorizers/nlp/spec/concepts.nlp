@@ -1,0 +1,25 @@
+###############################################
+# FILE: concepts
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-8 22:0:13
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@RULES
+_context <- \_ root @@
+
+@POST
+if (N("constant",2)) {
+	group(1,2,"_constant");
+} else {
+	group(1,2,"_concept");
+}
+
+@RULES
+_xNIL <-
+	\_		### (1)
+	_xALPHA	### (2)
+	@@

@@ -1,0 +1,28 @@
+###############################################
+# FILE: attrs
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-10 7:58:40
+# MODIFIED:
+###############################################
+
+@PATH _ROOT _LINE _bracket
+
+@PRE
+<1,1> var("type");
+@RULES
+_type <-
+	_xALPHA	### (1)
+	@@
+
+@RULES
+_fired <-
+	fired	### (1)
+	@@
+
+@RULES
+_num <-
+	_xNUM	### (1)
+	@@
+
+

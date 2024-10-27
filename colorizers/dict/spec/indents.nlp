@@ -1,0 +1,19 @@
+###############################################
+# FILE: indents
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-18 21:21:59
+# MODIFIED:
+###############################################
+
+@NODES _LINE
+
+@POST
+single();
+S("len") = PnCount(N(2));
+
+@RULES
+_indent <-
+	_xSTART	### (1)
+	_xWILD [match=(_xWHITE)] ### (2)
+	@@

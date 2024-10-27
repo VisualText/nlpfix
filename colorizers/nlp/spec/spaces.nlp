@@ -1,0 +1,19 @@
+###############################################
+# FILE: spaces
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-8 21:32:34
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@RULES
+_special <- \\ _xLET 	@@
+_special <- \< \< 	@@
+_suggests <- \< \- 	@@
+
+@RULES
+_space <-
+	_xWILD [plus match=(_xWHITE)]	### (1)
+	@@

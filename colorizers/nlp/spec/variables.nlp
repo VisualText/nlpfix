@@ -1,0 +1,18 @@
+###############################################
+# FILE: variables
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-9 19:49:26
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@POST
+group(1,1,"_variable");
+
+@RULES
+_xNIL <-
+	_xLET	### (1)
+	\(		### (2)
+	@@

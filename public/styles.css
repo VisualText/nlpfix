@@ -56,6 +56,25 @@ footer {
   }
 }
 
+.indent3 {
+  text-indent: 2em;
+}
+.indent6 {
+  text-indent: 4em;
+}
+.indent9 {
+  text-indent: 6em;
+}
+.indent12 {
+  text-indent: 8em;
+}
+.indent15 {
+  text-indent: 10em;
+}
+.indent18 {
+  text-indent: 12em;
+}
+
 p.path {
   color: rgb(255, 254, 197);
   font-style: italic;
@@ -182,6 +201,16 @@ a.seq-item-highlight {
   position: fixed;
   top: 33px; /* Adjust as needed */
   left: 47px; /* Adjust as needed */
+  width: 157px; /* Adjust as needed */
+  height: auto; /* Maintain aspect ratio */
+  z-index: 1000; /* Ensure it appears on top of other elements */
+  display: none;
+}
+
+#look-here-left {
+  position: fixed;
+  top: 450px; /* Adjust as needed */
+  left: 160px; /* Adjust as needed */
   width: 157px; /* Adjust as needed */
   height: auto; /* Maintain aspect ratio */
   z-index: 1000; /* Ensure it appears on top of other elements */

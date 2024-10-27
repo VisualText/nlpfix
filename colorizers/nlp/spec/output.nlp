@@ -1,0 +1,65 @@
+###############################################
+# FILE: output
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-8 20:43:22
+# MODIFIED:
+###############################################
+
+@CODE
+
+L("node") = pndown(pnroot());
+
+while (L("node")) {
+	L("name") = pnname(L("node"));
+	if (L("name") == "_comment") {
+		AddTag(L("node"),"comment");
+	} else if (L("name") == "_variable") {
+		AddTag(L("node"),"variable");
+	} else if (L("name") == "_suggest") {
+		AddTag(L("node"),"suggest");
+	} else if (L("name") == "_string") {
+		AddTag(L("node"),"string");
+	} else if (L("name") == "_concept") {
+		AddTag(L("node"),"concept");
+	} else if (L("name") == "_at" || L("name") == "_atat" || L("name") == "_context" || L("name") == "_rules") {
+		AddTag(L("node"),"region");
+	} else if (L("name") == "_function") {
+		AddTag(L("node"),"function");
+	} else if (L("name") == "_keyword") {
+		AddTag(L("node"),"keyword");
+	} else if (L("name") == "_constant") {
+		AddTag(L("node"),"constant");
+	} else if (L("name") == "_attr") {
+		AddTag(L("node"),"attr");
+	} else if (L("name") == "_nl") {
+		G("out") << "\n";
+	} else if (L("name") == "_tab") {
+		G("out") << "&nbsp;&nbsp;";
+	} else if (L("name") == "_space") {
+		L("len") = PnCount(L("node")) / 2;
+		G("out") << RepeatStr(L("len"), "&nbsp;");
+	} else {
+		G("out") << pnvar(L("node"),"$text");
+	}
+	L("node") = pnnext(L("node"));
+}
+
+@@CODE
+
+# @NODES _ROOT
+
+# @POST G("out") << "\n"; @RULES _xNIL <- _nl @@
+# @POST G("out") << "    "; @RULES _xNIL <- _tab @@
+
+# @POST
+# G("out") << N("$text",1);
+# @RULES
+# _xNIL <-
+# 	_xWILD [match=(_rest _space)]	### (1)
+# 	@@
+
+# @POST AddTag(N(1),"yellow"); @RULES _xNIL <- _concept @@
+# @POST AddTag(N(1),"orange"); @RULES _xNIL <- _string @@
+# @POST AddTag(N(1),"green"); @RULES _xNIL <- _comment @@
+# @POST AddTag(N(1),"rgb(82, 72, 230)"); @RULES _xNIL <- _at @@

@@ -1,0 +1,49 @@
+{
+    "analyzers": [
+        {
+            "name": "date-time",
+            "files": [
+                {
+                    "name": "output.json",
+                    "tooltip": "NLP++ jason package output",
+                    "description": "This file is the output of the NLP++ jason package. It contains the output of the NLP++ date and time analyzer in JSON format."
+                }
+            ]
+        },
+        {
+            "name": "Formatted Text",
+            "files": [
+                {
+                    "name": "lineAttrs",
+                    "tooltip": "Categorize the line",
+                    "description": "Categorizing lines with attributes that can help distinguish prose (regular text) from headers etc."
+                },
+                {
+                    "name": "stragglers",
+                    "tooltip": "straggling end of sentence",
+                    "description": "A line with a few words can be a header or the straggling end of a sentence. NLP++ can encode exactly how a person determines this by looking at the capitalization and looking for a sentence ending punctuation."
+                }
+            ]
+        },
+        {
+            "name": "NLP Demo",
+            "files": [
+                {
+                    "name": "pt-nomes.dict",
+                    "tooltip": "Showing people and their attributes",
+                    "description": "There are dictionaries of human names, stop words, months, days, etc. available for many languages as a part of the NLP++ language extension for VSCode. This one is for Portuguese first names. These dictionary is a knowledge basis are being added to the system regularly."
+                  },
+                          {
+                    "name": "output.kbb",
+                    "tooltip": "Showing people and their attributes",
+                    "description": "The knowledge base not only holds the final results of the analysis but also the intermediate results."
+                          },
+                  {
+                    "name": "attributes",
+                    "tooltip": "Interesting people attributes",
+                    "description": "Depending on the purpose of the NLP analyzer, the attributes of interest can vary. These attributes include titles, country of origin, degrees, and university affiliation."
+                  }
+            ]
+        }
+    ]
+}
