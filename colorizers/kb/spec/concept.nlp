@@ -1,0 +1,18 @@
+###############################################
+# FILE: concept
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-18 21:41:57
+# MODIFIED:
+###############################################
+
+@NODES _LINE
+
+@POST
+singler(2,2);
+
+@RULES
+_concept <-
+	_xWILD [one match=(_xSTART _indent)]			### (1)
+	_xWILD [plus fail=(\: _attr _xEND _comment \n)]	### (2)
+	@@

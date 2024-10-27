@@ -1,0 +1,35 @@
+###############################################
+# FILE: funcs
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-18 21:23:32
+# MODIFIED:
+###############################################
+
+@DECL
+
+PnCount(L("node")) {
+    L("count") = 0;
+    while (L("node")) {
+        L("count")++;
+        L("node") = pnnext(L("node"));
+    }
+    return L("count");
+}
+
+AddTag(L("node"),L("class")) {
+    G("out") << "<span class=\"" << L("class") << "\">";
+    G("out") << pnvar(L("node"),"$text") << "</span>";
+}
+
+RepeatStr(L("num"),L("str")) {
+    L("n") = 1;
+	L("spaces") = L("str");
+	while (L("n") < L("num")) {
+		L("spaces") = L("spaces") + L("str");
+		L("n")++;
+	}
+	return L("spaces");
+}
+
+@@DECL

@@ -1,0 +1,18 @@
+###############################################
+# FILE: suggested
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-22 12:46:14
+# MODIFIED:
+###############################################
+
+@PATH _ROOT _rule _suggested
+
+@POST
+pnrename(N(2),"_suggest");
+
+@RULES
+_xNIL <-
+	_xSTART		### (1)
+	_constant	### (2)
+	@@

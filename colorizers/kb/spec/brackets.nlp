@@ -1,0 +1,16 @@
+###############################################
+# FILE: brackets
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-18 21:29:32
+# MODIFIED:
+###############################################
+
+@NODES _LINE
+
+@RULES
+_brackets <-
+	\[					### (1)
+	_xWILD [fail=(\])]	### (2)
+	\]					### (3)
+	@@

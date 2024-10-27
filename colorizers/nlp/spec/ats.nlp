@@ -1,0 +1,21 @@
+###############################################
+# FILE: ats
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-8 20:36:33
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@PRE
+<1,1> var("context");
+@RULES
+_context <- \@ _xALPHA @@
+
+@RULES
+_rules <- \@ rules @@
+_atEnd <- \@ \@ _xALPHA @@
+_at <- \@ _xALPHA @@
+_suggests <- \< \- @@
+_atat <- \@ \@ @@

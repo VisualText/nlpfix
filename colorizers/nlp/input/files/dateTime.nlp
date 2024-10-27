@@ -1,0 +1,33 @@
+###############################################
+# FILE: dateTime
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-21 9:44:12
+# MODIFIED:
+###############################################
+
+@NODES _LINE
+
+@POST
+S("date") = N(1);
+S("time") = N(3);
+single();
+
+@RULES
+_dateTime <-
+	_date						### (1)
+	_xWILD [match=(\, t at)]	### (2)
+	_time						### (3)
+	@@
+
+@POST
+S("date") = N(3);
+S("time") = N(1);
+single();
+
+@RULES
+_dateTime <-
+	_time				### (1)
+	_xWILD [match=(\,)]	### (2)
+	_date				### (3)
+	@@

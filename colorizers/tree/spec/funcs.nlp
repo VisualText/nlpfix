@@ -1,0 +1,16 @@
+###############################################
+# FILE: funcs
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-8 20:56:27
+# MODIFIED:
+###############################################
+
+@DECL
+
+AddTag(L("node"),L("color")) {
+    G("out") << "<span class=\"" << L("color") << "\">";
+    G("out") << pnvar(L("node"),"$text") << "</span>";
+}
+
+@@DECL

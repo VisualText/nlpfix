@@ -1,0 +1,16 @@
+###############################################
+# FILE: strings
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-8 20:37:31
+# MODIFIED:
+###############################################
+
+@NODES _LINE
+
+@RULES
+_string <-
+	\"					### (1)
+	_xWILD [fail=(\")]	### (2)
+	\"					### (3)
+	@@

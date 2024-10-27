@@ -1,0 +1,21 @@
+###############################################
+# FILE: attrs
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-18 21:31:2
+# MODIFIED:
+###############################################
+
+@NODES _LINE
+
+@POST
+group(1,1,"_attr");
+group(3,3,"_value");
+single();
+
+@RULES
+_attrValue <-
+	_xWILD [match=(_xALPHA _xNUM _string)]					### (1)
+	\=														### (2)
+	_xWILD [one match=(_string _brackets _xALPHA _xNUM)]	### (3)
+	@@

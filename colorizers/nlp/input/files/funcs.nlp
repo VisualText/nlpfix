@@ -1,0 +1,87 @@
+###############################################
+# FILE: funcs
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-5-31 21:26:46
+# MODIFIED:
+###############################################
+
+@DECL
+
+AddDateTimeRange(L("one node"),L("two node")) {
+    L("dates") = getconcept(G("datetimes"),"dateranges");
+    L("range con") = MakeCountCon(L("dates"),"daterange");
+    AddDateTimeCon(L("range con"),pnvar(L("one node"),"date"),pnvar(L("one node"),"time"));
+    AddDateTimeCon(L("range con"),pnvar(L("two node"),"date"),pnvar(L("two node"),"time"));
+}
+
+AddDateRange(L("one node"),L("two node")) {
+    L("dates") = getconcept(G("datetimes"),"dateranges");
+    L("range con") = MakeCountCon(L("dates"),"daterange");
+    L("con") = MakeCountCon(L("range con"),"date");
+    CopyPNAttrsToCon(L("one node"),L("con"));
+    L("con") = MakeCountCon(L("range con"),"date");
+    CopyPNAttrsToCon(L("two node"),L("con"));
+}
+
+AddDateTime(L("date node"),L("time node")) {
+    L("dates") = getconcept(G("datetimes"),"dates");
+    AddDateTimeCon(L("dates"),L("date node"),L("time node"));
+}
+
+AddDateTimeCon(L("con"),L("date node"),L("time node")) {
+    L("con") = MakeCountCon(L("con"),"date");
+    CopyPNAttrsToCon(L("date node"),L("con"));
+    L("con") = MakeCountCon(L("con"),"time");
+    CopyPNAttrsToCon(L("time node"),L("con"));
+}
+
+AddDate(L("node")) {
+    L("dates") = getconcept(G("datetimes"),"dates");
+    L("con") = MakeCountCon(L("dates"),"date");
+    CopyPNAttrsToCon(L("node"),L("con"));
+}
+
+AddTime(L("node")) {
+    L("times") = getconcept(G("datetimes"),"times");
+    L("con") = MakeCountCon(L("times"),"time");
+    CopyPNAttrsToCon(L("node"),L("con"));
+}
+
+CopyPNAttrsToCon(L("node"),L("con")) {
+    L("attrs") = pnvarnames(L("node"));
+    while (L("attrs")[L("i")]) {
+        L("attr") = L("attrs")[ L("i") ];
+        if (L("attr")) {
+            L("val") = pnvar(L("node"),L("attr"));
+            if (L("val")) {
+                L("type") = pnvartype(L("node"),L("attr"));
+                if (L("type") == 0) {
+                    addstrval(L("con"),L("attr"),L("val"));
+                } else if (L("type") == 1) {
+                    addnumval(L("con"),L("attr"),L("val"));
+                } else if (L("type") == 2) {
+                    addconval(L("con"),L("attr"),L("val"));
+                }
+            }
+        }
+        L("i")++;
+    }
+}
+
+NumberType(L("node"),L("num")) {
+    if (L("num") >= 1 && L("num") <= 12) {
+        pnmakevar(L("node"),"month",1);
+    }
+    if (L("num") >= 1 && L("num") <= 31) {
+        pnmakevar(L("node"),"day",1);
+    }
+    if (L("num") >= 1900 && L("num") <= 2050) {
+        pnmakevar(L("node"),"year",1);
+    }
+	if (L("num") >= 0 && L("num") <= 99) {
+        pnmakevar(L("node"),"year",1);
+    }
+}
+
+@@DECL

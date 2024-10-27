@@ -20,8 +20,9 @@ def deleteFileExtensions(folder, fileExtension):
             if file.endswith(fileExtension):
                 os.remove(os.path.join(root, file))
 
-nlp = NLPEngine(os.getcwd(),os.path.join(os.getcwd(),"analyzers"))
-nlp2 = NLPEngine(os.getcwd(),os.path.join(os.getcwd(),"colorizers"))
+engineDir = os.getcwd()
+nlp = NLPEngine(engineDir,os.path.join(engineDir,"analyzers"))
+nlp2 = NLPEngine(engineDir,os.path.join(engineDir,"colorizers"))
 
 analyzer_folders = [name for name in os.listdir(nlp.analyzersDir) if os.path.isdir(os.path.join(nlp.analyzersDir, name))]
 for analyzer in analyzer_folders:
@@ -29,6 +30,9 @@ for analyzer in analyzer_folders:
     if not nlp.isAnalyzerFolder(os.path.join(nlp.analyzersDir, analyzer)):
         continue
 
+    if analyzer != "date-time":
+        continue
+    
     deleteHightlightFiles(analyzerPath)
     print(f"Processing {analyzer}...")
     nlp.analyzeInput(analyzer, "text.txt", True)
@@ -57,7 +61,14 @@ for analyzer in analyzer_folders:
             nlp2.analyzeInput(colorizer, "files", True)
             moveFiles(htmlPath, ".html", sourcePath)
         elif colorizer == "kb":
+            # KBB files in the KB folder
             sourcePath = nlp.kbPath(analyzer)
+            moveFiles(sourcePath, ".kbb", filesPath)
+            nlp2.analyzeInput(colorizer, "files", True)
+            moveFiles(htmlPath, ".html", sourcePath)
+
+            # KBB files text.txt_log folder
+            sourcePath = nlp.inputTextLog(analyzer, "text.txt")
             moveFiles(sourcePath, ".kbb", filesPath)
             nlp2.analyzeInput(colorizer, "files", True)
             moveFiles(htmlPath, ".html", sourcePath)

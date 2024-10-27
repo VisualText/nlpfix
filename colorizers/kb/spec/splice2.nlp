@@ -1,0 +1,16 @@
+###############################################
+# FILE: splice2
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-18 21:52:38
+# MODIFIED:
+###############################################
+
+@PATH _ROOT _LINE _value
+
+@POST
+splice(1,1);
+
+@RULES
+_xNIL <- _string @@
+_xNIL <- _bracket @@

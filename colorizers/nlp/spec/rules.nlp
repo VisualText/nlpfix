@@ -1,0 +1,30 @@
+###############################################
+# FILE: rules
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-9 14:21:0
+# MODIFIED:
+###############################################
+
+@NODES _ROOT
+
+@RULES
+_rule <-
+	_rules						### (1)
+	_xWILD [fail=(_concept)]	### (2)
+	_concept					### (3)
+	_xWILD [fail=(_atat)]		### (4)
+	_atat						### (5)
+	@@
+
+@POST
+singler(3,5);
+
+@RULES
+_rule <-
+	_rule						### (1)
+	_xWILD [fail=(_concept)]	### (2)
+	_concept					### (3)
+	_xWILD [fail=(_atat)]		### (4)
+	_atat						### (5)
+	@@

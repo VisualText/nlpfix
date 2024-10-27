@@ -1,0 +1,24 @@
+###############################################
+# FILE: indents
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-10 7:33:18
+# MODIFIED:
+###############################################
+
+@NODES _LINE
+
+@POST
+single();
+L("sugg") = pnup(N(2));
+L("node") = pndown(L("sugg"));
+while (L("node")) {
+	S("indent")++;
+	L("node") = pnnext(L("node"));
+}
+
+@RULES
+_indent <-
+	_xSTART						### (1)
+	_xWILD [match=(_xWHITE)]	### (2)
+	@@

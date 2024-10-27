@@ -1,0 +1,14 @@
+###############################################
+# FILE: init
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-10 8:7:37
+# MODIFIED:
+###############################################
+
+@CODE
+
+L("path") = G("$apppath") + "\\input\\html\\" + G("$inputname") + ".html";
+G("out") = openfile(L("path"));
+
+@@CODE

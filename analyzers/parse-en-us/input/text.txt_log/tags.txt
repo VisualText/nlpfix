@@ -1,8 +1,0 @@
-
-======================================
-
-[ They/PP ]
-[ lazy/JJ fox/NN ]
-jumped/VBD over/IN 
-[ the/DT brown/JJ dog/NN ]
-./. 

@@ -1,7 +1,0 @@
-
-# Automatically gen'd rule file.
-@PATH _ROOT _TEXTZONE _sent
-
-@RULES
-
-_clause <- _np _np _vg _advl @@

@@ -1,9 +1,0 @@
-
-[PASS sentsem: Register sentences in KB.]
-
-[sentregister: sent1]
-
-[PASS clausesem: Register clauses in KB.]
-
-[clausereg: sent1 clause1]
-[text= They lazy fox jumped over the brown dog]

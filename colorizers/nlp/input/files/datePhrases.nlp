@@ -1,0 +1,33 @@
+###############################################
+# FILE: datePhrases
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-10-21 9:43:6
+# MODIFIED:
+###############################################
+
+@NODES _LINE
+
+@POST
+S("datetimeone") = N(1);
+S("datetimetwo") = N(3);
+single();
+
+@RULES
+_dateTimeRange <-
+	_dateTime						### (1)
+	_xWILD [match=(\- \, \. to)]	### (2)
+	_dateTime						### (3)
+	@@
+
+@POST
+S("dateone") = N(1);
+S("datetwo") = N(3);
+single();
+
+@RULES
+_dateRange <-
+	_date							### (1)
+	_xWILD [match=(\- \, \. to)]	### (2)
+	_date							### (3)
+	@@

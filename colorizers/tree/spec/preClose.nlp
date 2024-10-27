@@ -1,0 +1,14 @@
+###############################################
+# FILE: preClose
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-8 21:48:52
+# MODIFIED:
+###############################################
+
+@CODE
+
+G("out") << "</pre>\n";
+closefile(G("out"));
+
+@@CODE

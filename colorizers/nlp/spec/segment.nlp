@@ -1,0 +1,23 @@
+###############################################
+# FILE: segment
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-9 20:36:56
+# MODIFIED:
+###############################################
+
+@NODES _rule
+
+@POST
+group(3,3,"_suggested");
+group(5,5,"_nodes");
+
+@RULES
+_xNIL <-
+	_xSTART							### (1)
+	_xWILD [match=(_rules _nl _tl)]	### (2)
+	_xWILD [fail=(_suggests)]		### (3)
+	_suggests						### (4)
+	_xWILD [fail=(_xEND)]			### (5)
+	_xEND							### (6)
+	@@

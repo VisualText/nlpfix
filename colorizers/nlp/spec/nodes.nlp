@@ -1,0 +1,14 @@
+###############################################
+# FILE: nodes
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-9 20:49:52
+# MODIFIED:
+###############################################
+
+@PATH _ROOT _rule _nodes
+
+@RULES
+_node <-
+	_xWILD [fail=(_nl)]	### (1)
+	@@

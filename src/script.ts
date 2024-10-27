@@ -13,6 +13,7 @@ interface SeqFile {
 }
 
 enum clickType { CODE, TREE, HIGHLIGHT, KB }
+const clickTypeFA = ['fas fa-code', 'fas fa-sitemap', 'fas fa-star', 'fas fa-file-alt'];
 
 const helpInfo = {
   analyzers: [
@@ -96,6 +97,7 @@ function centerPopup(htmlFile: string) {
       closeButton.textContent = 'Close';
       closeButton.addEventListener('click', () => {
         document.body.removeChild(popup);
+        displayArrow(true,'look-here-left');
       });
       buttonPanel.appendChild(closeButton);
 
@@ -114,8 +116,8 @@ function centerPopup(htmlFile: string) {
   });
 }
 
-function displayArrow(display: boolean) {
-  const arrow = document.getElementById('look-here');
+function displayArrow(display: boolean, id: string = 'look-here') {
+  const arrow = document.getElementById(id);
   if (arrow) {
     arrow.style.display = display ? 'inline' : 'none';
   }
@@ -126,6 +128,7 @@ function handleLoad(): void {
   .then(response => response.json())
   .then((analyzers: AnaFile[] ) => {
     displayArrow(false);
+    displayArrow(false), 'look-here-left';
     const analyzerList = document.getElementById('analyzer-list') as HTMLUListElement;
     analyzerList.innerHTML = '';
     
@@ -165,6 +168,7 @@ function clearAllSelections() {
   ['sequence-list', 'kb-list', 'output-list'].forEach(clearSelections);
   removePopup();
   displayArrow(false);
+  displayArrow(false, 'look-here-left');
   writeComment('');
 } 
 
@@ -189,29 +193,35 @@ function removePopup() {
   popups.forEach(popup => document.body.removeChild(popup));
 }
 
-function setPathText(text: string, html: boolean = false) {
+function setPathText(type: clickType, text: string, html: boolean = false) {
   const comment = document.getElementById('comment') as HTMLParagraphElement;
   comment.style.display = 'none';
   const pathElement = document.getElementById('path') as HTMLParagraphElement;
   pathElement.style.display  = 'block';
+  text = '  ' + text;
   if (html) {
     pathElement.innerHTML = text;
   } else {
     pathElement.textContent = text;
   }
+  let icon = document.createElement('i');
+  icon.className = clickTypeFA[type];
+  icon.style.color = '#add8e6';
+  icon.style.fontSize = '1.5em';
+  pathElement.insertBefore(icon, pathElement.firstChild);
 }
 
-function addPath(analyzer: string, list: string, file: string) {
+function addPath(type: clickType, analyzer: string, list: string, file: string) {
   const anaObj = helpInfo.analyzers.find(a => a.name === analyzer);
   if (anaObj) {
     const fileObj = anaObj.files.find(f => f.name === file);
     if (fileObj) {
       displayArrow(true);
-      setPathText(fileObj.description);
+      setPathText(type,fileObj.description);
       return;
     }
   }
-  setPathText(`${analyzer} > ${list} > ${file}`);
+  setPathText(type, `${analyzer} > ${list} > ${file}`);
 }
 
 function addTooltip(anchor: HTMLAnchorElement, text: string) {
@@ -287,10 +297,9 @@ function analyzerClick(li: HTMLLIElement, analyzer: AnaFile) {
         fetch(`/api/input/${analyzer.folder}/text.txt`)
           .then(response => response.text())
           .then((content: string) => {
-            console.log(content)
             const fileContent = document.getElementById('file-content') as HTMLDivElement;
             fileContent.innerHTML = content;
-            setPathText(`${analyzer.name} > text`);
+            setPathText(clickType.CODE,`${analyzer.name} > text`);
         });
 
         fetch(`/api/kb/${analyzer.folder}`)
@@ -313,7 +322,7 @@ function analyzerClick(li: HTMLLIElement, analyzer: AnaFile) {
                     const fileContent = document.getElementById('file-content') as HTMLDivElement;
                     selectionLogic("kb-list",kb.index);
                     fileContent.innerHTML = content;
-                    addPath(analyzer.name, 'kb', kb.name);
+                    addPath(clickType.KB, analyzer.name, 'kb', kb.name);
                   });
               });
               kbLi.appendChild(anchor);
@@ -342,7 +351,7 @@ function analyzerClick(li: HTMLLIElement, analyzer: AnaFile) {
                   const fileContent = document.getElementById('file-content') as HTMLDivElement;
                   selectionLogic("output-list",output.index);
                   fileContent.innerHTML = content
-                  addPath(analyzer.name, 'output', output.name);
+                  addPath(clickType.HIGHLIGHT, analyzer.name, 'output', output.name);
                 });
             });
             outLi.appendChild(anchor);
@@ -353,7 +362,6 @@ function analyzerClick(li: HTMLLIElement, analyzer: AnaFile) {
         const seqList = document.getElementById('sequence-list') as HTMLUListElement;
         seqList.innerHTML = '';
         files.forEach(file => {
-          console.log(file);
           const li = document.createElement('li');
           li.classList.add('seq-item');
           li.setAttribute('index', file.index.toString());
@@ -445,6 +453,7 @@ function rotateClick(anchor: HTMLAnchorElement, analyzer: AnaFile, file: SeqFile
   const typeStr = type.toString();
 
   // This code handles the rotation of the anchor when clicked multiple times
+  let mark = 1;
   if (ul && li) {
     let index = ul.getAttribute('index');
     if (index) {
@@ -503,7 +512,7 @@ function fetchKB(analyzer: AnaFile, file: SeqFile) {
       const fileContent = document.getElementById('file-content') as HTMLDivElement;
       selectionLogic("kb-list",file.index);
       fileContent.innerHTML = content;
-      addPath(analyzer.name, 'kb', file.name);
+      addPath(clickType.KB, analyzer.name, 'kb', file.name);
     });
 }
 
@@ -514,7 +523,7 @@ function fetchCode(analyzer: AnaFile, file: SeqFile) {
       const fileContent = document.getElementById('file-content') as HTMLDivElement;
       selectionLogic("sequence-list",file.index);
       fileContent.innerHTML = content;
-      addPath(analyzer.name, 'sequence', file.name);
+      addPath(clickType.CODE, analyzer.name, 'sequence', file.name);
     });
 }
 
@@ -525,7 +534,7 @@ function fetchTree(analyzer: AnaFile, file: SeqFile) {
       const fileContent = document.getElementById('file-content') as HTMLDivElement;
       selectionLogic("sequence-list",file.index);
       fileContent.innerHTML = content;
-      addPath(analyzer.name, 'sequence', file.name);
+      addPath(clickType.TREE, analyzer.name, 'sequence', file.name);
     });
 }
 
@@ -536,7 +545,7 @@ function fetchHighlight(analyzer: AnaFile, file: SeqFile) {
       const fileContent = document.getElementById('file-content') as HTMLDivElement;
       selectionLogic("sequence-list",file.index);
       fileContent.innerHTML = content;
-      addPath(analyzer.name, 'sequence', file.name);
+      addPath(clickType.CODE, analyzer.name, 'sequence', file.name);
     });
 }
 

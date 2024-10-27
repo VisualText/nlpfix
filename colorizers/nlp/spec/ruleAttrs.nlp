@@ -1,0 +1,16 @@
+###############################################
+# FILE: ruleAttrs
+# SUBJ: comment
+# AUTH: David de Hilster
+# CREATED: 2024-9-9 14:37:3
+# MODIFIED:
+###############################################
+
+@PATH _ROOT _rule _nodes _node
+
+@RULES
+_attrs <-
+	\[					### (1)
+	_xWILD [fail=(\])]	### (2)
+	\]					### (3)
+	@@
