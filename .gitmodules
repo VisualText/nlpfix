@@ -1,0 +1,6 @@
+[submodule "nlp-engine-linux"]
+	path = nlp-engine-linux
+	url = https://github.com/VisualText/nlp-engine-linux.git
+[submodule "nlpfix"]
+	path = nlpfix
+	url = https://github.com/VisualText/nlpfix.git
