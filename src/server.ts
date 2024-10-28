@@ -14,7 +14,7 @@ export const textFile = new TextFile();
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/api/readme/firstline/:analyzer', (req, res) => {
-  const readMePath = path.join('analyzers', req.params.analyzer, 'README.md');
+  const readMePath = path.join('nlpfix-analyzers', req.params.analyzer, 'README.md');
   let firstLine = textFile.readFirstLine(readMePath);
   firstLine = firstLine.replace(/^#/, '').trim();
 
@@ -28,14 +28,14 @@ app.get('/api/readme/firstline/:analyzer', (req, res) => {
 });
 
 app.get('/api/analyzers', (req, res) => {
-  fs.readdir('analyzers', (err, folders) => {
+  fs.readdir('nlpfix-analyzers', (err, folders) => {
     if (err) {
       return res.status(500).send('Unable to scan files');
     }
     let i = 1;
     let fs = [];
     for (let folder of folders) {
-      const readMePath = path.join('analyzers', folder, 'README.md');
+      const readMePath = path.join('nlpfix-analyzers', folder, 'README.md');
       let readMe = textFile.readReadMe(readMePath);
     
       let data = {'name': readMe.firstLine, 'folder': folder, 'description': readMe.description, 'index': i};
@@ -47,7 +47,7 @@ app.get('/api/analyzers', (req, res) => {
 });
 
 app.get('/api/sequence/:analyzer', (req, res) => {
-  const anaDir = path.join('analyzers', req.params.analyzer);
+  const anaDir = path.join('nlpfix-analyzers', req.params.analyzer);
   const dirPath = path.join(process.cwd(),anaDir);
   visualText.analyzer.setWorkingDir(dirPath);
   const sequenceFile = visualText.analyzer.seqFile;
@@ -69,7 +69,7 @@ app.get('/api/sequence/:analyzer', (req, res) => {
 });
 
 app.get('/api/kb/:analyzer', (req, res) => {
-  const anaDir = path.join('analyzers', req.params.analyzer, 'kb', 'user');
+  const anaDir = path.join('nlpfix-analyzers', req.params.analyzer, 'kb', 'user');
   fs.readdir(anaDir, (err, files) => {
     if (err) {
       return res.status(500).send('Unable to scan files');
@@ -92,7 +92,7 @@ app.get('/api/kb/:analyzer', (req, res) => {
 });
 
 app.get('/api/output/:analyzer', (req, res) => {
-  const anaDir = path.join('analyzers', req.params.analyzer, 'input', "text.txt_log");
+  const anaDir = path.join('nlpfix-analyzers', req.params.analyzer, 'input', "text.txt_log");
   fs.readdir(anaDir, (err, files) => {
     if (err) {
       return res.status(500).send('Unable to scan files');
@@ -119,7 +119,7 @@ app.get('/api/output/:analyzer', (req, res) => {
 });
 
 app.get('/api/kbload/:analyzer/:filename', (req, res) => {
-  let filePath = path.join('analyzers', req.params.analyzer, 'kb', 'user', req.params.filename);
+  let filePath = path.join('nlpfix-analyzers', req.params.analyzer, 'kb', 'user', req.params.filename);
   let html = false;
   if (fs.existsSync(filePath+'.html')) {
     filePath = filePath + '.html';
@@ -136,7 +136,7 @@ app.get('/api/kbload/:analyzer/:filename', (req, res) => {
 });
 
 app.get('/api/outputload/:analyzer/:filename', (req, res) => {
-  let filePath = path.join('analyzers', req.params.analyzer, 'input', 'text.txt_log', req.params.filename);
+  let filePath = path.join('nlpfix-analyzers', req.params.analyzer, 'input', 'text.txt_log', req.params.filename);
   let html = false;
   if (fs.existsSync(filePath+'.html')) {
     filePath = filePath + '.html';
@@ -153,7 +153,7 @@ app.get('/api/outputload/:analyzer/:filename', (req, res) => {
 });
 
 app.get('/api/input/:analyzer/:filename', (req, res) => {
-  let filePath = path.join('analyzers', req.params.analyzer, 'input', req.params.filename);
+  let filePath = path.join('nlpfix-analyzers', req.params.analyzer, 'input', req.params.filename);
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
       return res.status(500).send(`Unable to read file : ${filePath}`);
@@ -165,7 +165,7 @@ app.get('/api/input/:analyzer/:filename', (req, res) => {
 app.get('/api/highlight/:analyzer/:filename/:index', (req, res) => {
   const index = parseInt(req.params.index);
   visualText.analyzer.setPassNum(index);
-  const dirPath = path.join('analyzers', req.params.analyzer, 'input', 'text.txt_log');
+  const dirPath = path.join('nlpfix-analyzers', req.params.analyzer, 'input', 'text.txt_log');
 
   fs.readdir(dirPath, (err, folders) => {
     for (let file of folders) {
@@ -187,7 +187,7 @@ app.get('/api/highlight/:analyzer/:filename/:index', (req, res) => {
 });
 
 app.get('/api/tree/:analyzer/:filename/:index', async (req, res) => {
-  const dirPath = path.join('analyzers', req.params.analyzer, 'input', 'text.txt_log');
+  const dirPath = path.join('nlpfix-analyzers', req.params.analyzer, 'input', 'text.txt_log');
   const index = parseInt(req.params.index);
   let found = false;
   let treeContent = 'No tree file found';
@@ -231,10 +231,10 @@ app.get('/api/tree/:analyzer/:filename/:index', async (req, res) => {
 });
 
 app.get('/api/seqfile/:analyzer/:filename', (req, res) => {
-  let filePath = path.join('analyzers', req.params.analyzer, 'spec', req.params.filename + '.nlp.html');
+  let filePath = path.join('nlpfix-analyzers', req.params.analyzer, 'spec', req.params.filename + '.nlp.html');
   let html = true;
   if (!fs.existsSync(filePath)) {
-    filePath = path.join('analyzers', req.params.analyzer, 'spec', req.params.filename + '.nlp');
+    filePath = path.join('nlpfix-analyzers', req.params.analyzer, 'spec', req.params.filename + '.nlp');
     html = false;
   }
   fs.readFile(filePath, 'utf8', (err, data) => {
