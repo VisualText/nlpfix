@@ -4,3 +4,6 @@
 [submodule "nlpfix"]
 	path = nlpfix
 	url = https://github.com/VisualText/nlpfix.git
+[submodule "nlpfix-analyzers"]
+	path = nlpfix-analyzers
+	url = https://github.com/VisualText/nlpfix-analyzers.git
