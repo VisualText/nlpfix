@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NLP Fix</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="http://nluglob.org/nlpfix/highlight.css">
+  <link rel="stylesheet" href="http://nluglob.org/nlpfix/public/highlight.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 </head>
@@ -14,18 +14,21 @@
     <header><span class="header-title">NLP Fix</span> - <span class="header-descr">Fixing NLP with Rules - Regex for NLP</span></header>
     <div class="sidebar">
       <div class="list-ana">
-        <p class="title" id="analyzerTitle">Analyzers</p>
+        <p class="title" id="analyzerTitle">Analyzers
+          <button class="button" onclick="location.reload()">Restart</button>
+          <button class="button" onclick="window.location.href='http://nlpfix.ai'">Try</button>
+        </p>
         <ul class="choose-list" id="analyzer-list"></ul>
       </div>
-      <div class="list-kb">
+      <div class="list-kb sublist" id="list-kb">
         <p class="title" id="kbTitle">Dictionaries</p>
         <ul class="choose-list" id="kb-list"></ul>
       </div>
-      <div class="list-output">
+      <div class="list-output sublist" id="list-output"">
         <p class="title" id="outputTitle">Output Files</p>
         <ul class="choose-list" id="output-list"></ul>
       </div>
-      <div class="list-seq">
+      <div class="list-seq sublist" id="list-seq">
         <p class="title" id="sequenceTitle">Analyzer Sequence</p>
         <div class="list-seq-scroll">
           <ul class="choose-list" id="sequence-list"></ul>
@@ -41,6 +44,7 @@
       <!-- Floating image -->
     <img src="resources/NLPppArrow.png" id="look-here" alt="Floating Image">
     <img src="resources/NLPppArrowLeft.png" id="look-here-left" alt="Floating Image">
+    <img src="resources/NLPppArrowUp.png" id="look-here-up" alt="Floating Image">
   </div> 
   <script src="script.js"></script>
 </body>

@@ -20,7 +20,7 @@ def deleteFileExtensions(folder, fileExtension):
             if file.endswith(fileExtension):
                 os.remove(os.path.join(root, file))
 
-engineDir = os.path.join(os.getcwd(),"nlp-engine-linux")
+engineDir = os.path.join(os.getcwd(),"nlp-engine-windows")
 nlp = NLPEngine(engineDir,os.path.join(os.getcwd(),"nlpfix-analyzers"))
 nlp2 = NLPEngine(engineDir,os.path.join(os.getcwd(),"colorizers"))
 
@@ -30,7 +30,7 @@ for analyzer in analyzer_folders:
     if not nlp.isAnalyzerFolder(os.path.join(nlp.analyzersDir, analyzer)):
         continue
 
-    if analyzer != "date-time":
+    if analyzer != "nlp":
         continue
     
     deleteHightlightFiles(analyzerPath)
