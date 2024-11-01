@@ -56,23 +56,27 @@ footer {
   }
 }
 
-.indent3 {
-  text-indent: 2em;
+.button {
+  background-color: #a0a0a0; /* Light blue background */
+  border: none;
+  color: rgb(0, 0, 0);
+  padding: 2px 2px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 6px; /* Rounded corners */
+  transition: background-color 0.3s ease; /* Smooth transition */
 }
-.indent6 {
-  text-indent: 4em;
+
+.button:hover {
+  background-color: #9de3ff; /* Slightly darker blue on hover */
 }
-.indent9 {
-  text-indent: 6em;
-}
-.indent12 {
-  text-indent: 8em;
-}
-.indent15 {
-  text-indent: 10em;
-}
-.indent18 {
-  text-indent: 12em;
+
+.sublist {
+  display: none;
 }
 
 p.path {
@@ -212,6 +216,16 @@ a.seq-item-highlight {
   top: 450px; /* Adjust as needed */
   left: 160px; /* Adjust as needed */
   width: 157px; /* Adjust as needed */
+  height: auto; /* Maintain aspect ratio */
+  z-index: 1000; /* Ensure it appears on top of other elements */
+  display: none;
+}
+
+#look-here-up {
+  position: fixed;
+  top: 138px; /* Adjust as needed */
+  left: 5px; /* Adjust as needed */
+  width: 200px; /* Adjust as needed */
   height: auto; /* Maintain aspect ratio */
   z-index: 1000; /* Ensure it appears on top of other elements */
   display: none;

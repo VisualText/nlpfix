@@ -20,7 +20,7 @@ def deleteFileExtensions(folder, fileExtension):
             if file.endswith(fileExtension):
                 os.remove(os.path.join(root, file))
 
-engineDir = os.path.join(os.getcwd(),"nlp-engine-linux")
+engineDir = os.path.join(os.getcwd(),"nlp-engine-windows")
 nlp = NLPEngine(engineDir,os.path.join(os.getcwd(),"nlpfix-analyzers"))
 nlp2 = NLPEngine(engineDir,os.path.join(os.getcwd(),"colorizers"))
 

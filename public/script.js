@@ -5,7 +5,6 @@ var clickType;
     clickType[clickType["HIGHLIGHT"] = 2] = "HIGHLIGHT";
     clickType[clickType["KB"] = 3] = "KB";
 })(clickType || (clickType = {}));
-var clickTypeFA = ['fas fa-code', 'fas fa-sitemap', 'fas fa-star', 'fas fa-file-alt'];
 var helpInfo = {
     analyzers: [
         {
@@ -116,6 +115,15 @@ function handleLoad() {
         var main = document.getElementById('file-content');
         var para = document.createElement('p');
         para.setAttribute('class', 'ana-instructions');
+        var pathdiv = document.getElementById('path');
+        pathdiv.innerHTML = 'Video intro by David de Hilster';
+        var youtubeIframe = document.createElement('iframe');
+        youtubeIframe.className = 'video-container';
+        youtubeIframe.height = '150';
+        youtubeIframe.src = 'https://www.youtube.com/embed/Mf8rP-8j9zU?si=3LMrrGardsACVCWT';
+        youtubeIframe.title = 'YouTube video player';
+        youtubeIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; allowfullscreen';
+        main.appendChild(youtubeIframe);
         var firstLine = "<instructions>Choose one of the following NLP++ text analyzers:</instructions><br>\n";
         para.innerHTML = firstLine;
         main.appendChild(para);
@@ -139,6 +147,7 @@ function handleLoad() {
             }
         });
         main.appendChild(ul);
+        displayArrow(true, 'look-here-up');
     });
 }
 function clearAllSelections() {
@@ -146,6 +155,7 @@ function clearAllSelections() {
     removePopup();
     displayArrow(false);
     displayArrow(false, 'look-here-left');
+    displayArrow(false, 'look-here-up');
     writeComment('');
 }
 function selectionLogic(id, index) {
@@ -166,36 +176,31 @@ function removePopup() {
     var popups = document.querySelectorAll('.popup');
     popups.forEach(function (popup) { return document.body.removeChild(popup); });
 }
-function setPathText(type, text, html) {
+function setPathText(text, html) {
     if (html === void 0) { html = false; }
     var comment = document.getElementById('comment');
     comment.style.display = 'none';
     var pathElement = document.getElementById('path');
     pathElement.style.display = 'block';
-    text = '  ' + text;
     if (html) {
         pathElement.innerHTML = text;
     }
     else {
         pathElement.textContent = text;
     }
-    var icon = document.createElement('i');
-    icon.className = clickTypeFA[type];
-    icon.style.color = '#add8e6';
-    icon.style.fontSize = '1.5em';
-    pathElement.insertBefore(icon, pathElement.firstChild);
 }
-function addPath(type, analyzer, list, file) {
+function addPath(analyzer, list, file) {
     var anaObj = helpInfo.analyzers.find(function (a) { return a.name === analyzer; });
     if (anaObj) {
         var fileObj = anaObj.files.find(function (f) { return f.name === file; });
         if (fileObj) {
             displayArrow(true);
-            setPathText(type, fileObj.description);
+            displayArrow(true, 'look-here-left');
+            setPathText(fileObj.description);
             return;
         }
     }
-    setPathText(type, "".concat(analyzer, " > ").concat(list, " > ").concat(file));
+    setPathText("".concat(analyzer, " > ").concat(list, " > ").concat(file));
 }
 function addTooltip(anchor, text) {
     // Set the text content of the anchor
@@ -258,13 +263,16 @@ function analyzerClick(li, analyzer) {
             fetch("/api/input/".concat(analyzer.folder, "/text.txt"))
                 .then(function (response) { return response.text(); })
                 .then(function (content) {
+                console.log(content);
                 var fileContent = document.getElementById('file-content');
                 fileContent.innerHTML = content;
-                setPathText(clickType.CODE, "".concat(analyzer.name, " > text"));
+                setPathText("".concat(analyzer.name, " > text"));
             });
             fetch("/api/kb/".concat(analyzer.folder))
                 .then(function (response) { return response.json(); })
                 .then(function (kbs) {
+                var kbDiv = document.getElementById('list-kb');
+                kbDiv.style.display = 'block';
                 var kbList = document.getElementById('kb-list');
                 kbList.innerHTML = '';
                 kbs.forEach(function (kb) {
@@ -281,7 +289,7 @@ function analyzerClick(li, analyzer) {
                             var fileContent = document.getElementById('file-content');
                             selectionLogic("kb-list", kb.index);
                             fileContent.innerHTML = content;
-                            addPath(clickType.KB, analyzer.name, 'kb', kb.name);
+                            addPath(analyzer.name, 'kb', kb.name);
                         });
                     });
                     kbLi.appendChild(anchor);
@@ -291,6 +299,8 @@ function analyzerClick(li, analyzer) {
             fetch("/api/output/".concat(analyzer.folder))
                 .then(function (response) { return response.json(); })
                 .then(function (outputs) {
+                var outDiv = document.getElementById('list-output');
+                outDiv.style.display = 'block';
                 var outputList = document.getElementById('output-list');
                 outputList.innerHTML = '';
                 outputs.forEach(function (output) {
@@ -308,16 +318,19 @@ function analyzerClick(li, analyzer) {
                             var fileContent = document.getElementById('file-content');
                             selectionLogic("output-list", output.index);
                             fileContent.innerHTML = content;
-                            addPath(clickType.HIGHLIGHT, analyzer.name, 'output', output.name);
+                            addPath(analyzer.name, 'output', output.name);
                         });
                     });
                     outLi.appendChild(anchor);
                     outputList.append(outLi);
                 });
             });
+            var seqDiv = document.getElementById('list-seq');
+            seqDiv.style.display = 'block';
             var seqList = document.getElementById('sequence-list');
             seqList.innerHTML = '';
             files.forEach(function (file) {
+                console.log(file);
                 var li = document.createElement('li');
                 li.classList.add('seq-item');
                 li.setAttribute('index', file.index.toString());
@@ -407,7 +420,6 @@ function rotateClick(anchor, analyzer, file, type) {
     var li = anchor.closest('li');
     var typeStr = type.toString();
     // This code handles the rotation of the anchor when clicked multiple times
-    var mark = 1;
     if (ul && li) {
         var index = ul.getAttribute('index');
         if (index) {
@@ -467,7 +479,7 @@ function fetchKB(analyzer, file) {
         var fileContent = document.getElementById('file-content');
         selectionLogic("kb-list", file.index);
         fileContent.innerHTML = content;
-        addPath(clickType.KB, analyzer.name, 'kb', file.name);
+        addPath(analyzer.name, 'kb', file.name);
     });
 }
 function fetchCode(analyzer, file) {
@@ -477,7 +489,7 @@ function fetchCode(analyzer, file) {
         var fileContent = document.getElementById('file-content');
         selectionLogic("sequence-list", file.index);
         fileContent.innerHTML = content;
-        addPath(clickType.CODE, analyzer.name, 'sequence', file.name);
+        addPath(analyzer.name, 'sequence', file.name);
     });
 }
 function fetchTree(analyzer, file) {
@@ -487,7 +499,7 @@ function fetchTree(analyzer, file) {
         var fileContent = document.getElementById('file-content');
         selectionLogic("sequence-list", file.index);
         fileContent.innerHTML = content;
-        addPath(clickType.TREE, analyzer.name, 'sequence', file.name);
+        addPath(analyzer.name, 'sequence', file.name);
     });
 }
 function fetchHighlight(analyzer, file) {
@@ -497,7 +509,7 @@ function fetchHighlight(analyzer, file) {
         var fileContent = document.getElementById('file-content');
         selectionLogic("sequence-list", file.index);
         fileContent.innerHTML = content;
-        addPath(clickType.CODE, analyzer.name, 'sequence', file.name);
+        addPath(analyzer.name, 'sequence', file.name);
     });
 }
 document.addEventListener('DOMContentLoaded', function () {
