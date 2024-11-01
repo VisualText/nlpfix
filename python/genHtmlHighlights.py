@@ -30,8 +30,8 @@ for analyzer in analyzer_folders:
     if not nlp.isAnalyzerFolder(os.path.join(nlp.analyzersDir, analyzer)):
         continue
 
-    if analyzer != "nlp":
-        continue
+    # if analyzer != "date-time":
+    #     continue
     
     deleteHightlightFiles(analyzerPath)
     print(f"Processing {analyzer}...")
