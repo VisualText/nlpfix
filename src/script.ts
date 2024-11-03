@@ -175,6 +175,13 @@ function handleLoad(): void {
 
     main.appendChild(ul);
 
+    // Add the click event to the look-here arrow so the user can hide it
+    let arrow = document.getElementById('look-here');
+    if (arrow) {
+      arrow.addEventListener('click', function() {
+        this.style.display = 'none';
+      });
+    }
     displayArrow(true, 'look-here-up');
   });
 }
@@ -227,7 +234,6 @@ function addPath(analyzer: string, list: string, file: string) {
     const fileObj = anaObj.files.find(f => f.name === file);
     if (fileObj) {
       displayArrow(true);
-      displayArrow(true,'look-here-left');
       setPathText(fileObj.description);
       return;
     }
