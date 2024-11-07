@@ -145,6 +145,18 @@ function handleLoad(): void {
     youtubeIframe.src = 'https://www.youtube.com/embed/Mf8rP-8j9zU?si=3LMrrGardsACVCWT';
     youtubeIframe.title = 'YouTube video player';
     youtubeIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; allowfullscreen';
+    const mainWidth = main.offsetWidth;
+
+    if (mainWidth < 600) {
+      youtubeIframe.width = '300';
+      youtubeIframe.height = '150';
+    } else if (mainWidth < 900) {
+      youtubeIframe.width = '450';
+      youtubeIframe.height = '225';
+    } else {
+      youtubeIframe.width = '600';
+      youtubeIframe.height = '300';
+    }
 
     main.appendChild(youtubeIframe);
 
@@ -180,6 +192,8 @@ function handleLoad(): void {
     if (arrow) {
       arrow.addEventListener('click', function() {
         this.style.display = 'none';
+        const comment = document.getElementById('comment') as HTMLParagraphElement;
+        comment.style.display = 'none';
       });
     }
     displayArrow(true, 'look-here-up');
@@ -217,8 +231,6 @@ function removePopup() {
 }
 
 function setPathText(text: string, html: boolean = false) {
-  const comment = document.getElementById('comment') as HTMLParagraphElement;
-  comment.style.display = 'none';
   const pathElement = document.getElementById('path') as HTMLParagraphElement;
   pathElement.style.display  = 'block';
   if (html) {
@@ -234,8 +246,7 @@ function addPath(analyzer: string, list: string, file: string) {
     const fileObj = anaObj.files.find(f => f.name === file);
     if (fileObj) {
       displayArrow(true);
-      setPathText(fileObj.description);
-      return;
+      setCommentText(fileObj.description);
     }
   }
   setPathText(`${analyzer} > ${list} > ${file}`);
@@ -455,10 +466,8 @@ function fileHasInfo(analyzer: string, file: string): boolean {
 }
 
 function setCommentText(text: string, html: boolean = false) {
-  const pathElement = document.getElementById('path') as HTMLParagraphElement;
-  pathElement.style.display = 'none';
   const comment = document.getElementById('comment') as HTMLParagraphElement;
-  comment.style.display  = 'block';
+  comment.style.display = 'block';
   if (html) {
     comment.innerHTML = text;
   } else {
