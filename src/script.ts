@@ -17,12 +17,17 @@ enum clickType { CODE, TREE, HIGHLIGHT, KB }
 const helpInfo = {
   analyzers: [
     {
-      name: "date-time",
+      name: "Dates and Times",
       files: [
         {
-          name: "output.json",
+          name: "timezones.dict",
           tooltip: "NLP++ jason package output",
-          description: "This file is the output of the NLP++ jason package. It contains the output of the NLP++ date and time analyzer in JSON format."
+          description: "Dictionaries are human readable files that match during the tokenizer phase of the analyzer sequence. NLP++ has a growing library of dictionary and knowledge base files. This is one of them."
+        },
+				{
+          name: "dicttokz",
+          tooltip: "NLP++ jason package output",
+          description: "The first pass in every NLP++ analyzer is the tokenizer which breaks text down into words and numbers. The tokenizer also loads the dictionary and knowledge based files. Here, you see the dictionary matches highlighted."
         }
       ]
     },
@@ -33,6 +38,11 @@ const helpInfo = {
           name: "lineAttrs",
           tooltip: "Categorize the line",
           description: "Categorizing lines with attributes that can help distinguish prose (regular text) from headers etc."
+        },
+				{
+          name: "document.kbb",
+          tooltip: "Categorize the line",
+          description: "This is the knowledge base representation of the reconstruction of the formatted document."
         },
         {
           name: "stragglers",
@@ -167,21 +177,20 @@ function handleLoad(): void {
     ul.setAttribute('class', 'analyzer-list');
 
     analyzers.forEach(analyzer => {
-      if (!analyzer.folder.startsWith('.')) {
+      if (!analyzer.folder.startsWith('.') && analyzer.name.length > 0) {
         const li = document.createElement('li');
         li.classList.add('analyzer-item');
         li.textContent = analyzer.name;
         li.setAttribute('index', analyzer.index.toString());
-
         analyzerClick(li, analyzer);
         analyzerList.appendChild(li);
-        if (analyzer.name.length > 0) {
-          let liana = document.createElement('li');
-          liana.setAttribute('class', 'analyzer-description');
-          analyzerClick(liana, analyzer);
-          liana.innerHTML = `<ananame>${analyzer.name}</ananame><br>\n${analyzer.description}`; 
-          ul.appendChild(liana);
-        }
+
+        // Add the description of the analyzer into the main window
+        let liana = document.createElement('li');
+        liana.setAttribute('class', 'analyzer-description');
+        analyzerClick(liana, analyzer);
+        liana.innerHTML = `<ananame>${analyzer.name}</ananame><br>\n${analyzer.description}`; 
+        ul.appendChild(liana);
       }
     });
 
@@ -197,6 +206,10 @@ function handleLoad(): void {
       });
     }
     displayArrow(true, 'look-here-up');
+
+    let seqTitle = document.getElementById('sequenceTitle');
+    if (seqTitle)
+      seqTitle.style.display = 'none';
   });
 }
 
@@ -289,6 +302,7 @@ function starAddition(anchor: HTMLAnchorElement, analyzer: string, file: string)
     let icon = document.createElement('i');
     icon.className = 'fas fa-star';
     icon.style.color = 'yellow';
+    icon.style.marginRight = '2px';
     anchor.appendChild(icon);
   }
 }
@@ -313,12 +327,9 @@ function analyzerClick(li: HTMLLIElement, analyzer: AnaFile) {
         clearSelections("analyzer-list");
         selectionLogic("analyzer-list",analyzer.index);   
 
-        // fetch(`/api/readme/firstline/${analyzer.folder}`)
-        //   .then(response => response.json())
-        //   .then((firstLine: string) => {
-        //     const tit = document.getElementById('sequenceTitle') as HTMLParagraphElement;
-        //     tit.innerHTML = firstLine;
-        // });
+        const seqTitle = document.getElementById('sequenceTitle') as HTMLUListElement;
+        if (seqTitle)
+          seqTitle.style.display = 'block';
 
         centerPopup(analyzer.folder);
 
@@ -335,7 +346,6 @@ function analyzerClick(li: HTMLLIElement, analyzer: AnaFile) {
           .then(response => response.json())
           .then((kbs: {'name': string, 'type': string, 'index': number}[]) => {
 						const kbDiv = document.getElementById('list-kb') as HTMLDivElement;
-        		kbDiv.style.display = 'block';
             const kbList = document.getElementById('kb-list') as HTMLUListElement;
             kbList.innerHTML = '';
             kbs.forEach(kb => {
@@ -359,13 +369,17 @@ function analyzerClick(li: HTMLLIElement, analyzer: AnaFile) {
               kbLi.appendChild(anchor);
               kbList.append(kbLi);
             });
+            if (kbList.innerHTML == '') {
+              kbDiv.style.display = 'none';
+            } else {
+              kbDiv.style.display = 'block';
+            }
         });
 
         fetch(`/api/output/${analyzer.folder}`)
         .then(response => response.json())
         .then((outputs: {'name': string, 'type': string, 'index': number}[]) => {
 					const outDiv = document.getElementById('list-output') as HTMLDivElement;
-          outDiv.style.display = 'block';
           const outputList = document.getElementById('output-list') as HTMLUListElement;
           outputList.innerHTML = '';
           outputs.forEach(output => {
@@ -390,6 +404,11 @@ function analyzerClick(li: HTMLLIElement, analyzer: AnaFile) {
             outLi.appendChild(anchor);
             outputList.append(outLi);
           });
+          if (outputList.innerHTML == '') {
+            outDiv.style.display = 'none';
+          } else {
+            outDiv.style.display = 'block';
+          }
         });
 
         const seqDiv = document.getElementById('list-seq') as HTMLDivElement;

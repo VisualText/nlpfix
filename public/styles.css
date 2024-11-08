@@ -6,12 +6,13 @@ body, html {
 }
 .container {
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
+  grid-template-rows: auto auto auto 1fr auto;
   grid-template-columns: 200px 1fr;
   grid-template-areas: 
       "header header"
       "sidebar info"
       "sidebar main"
+      "sequence main"
       "footer footer";
   height: 100%;
 }
@@ -25,6 +26,11 @@ header {
 .sidebar {
   grid-area: sidebar;
   color: white;
+  background: #414141;
+  padding: 10px;
+}
+.sequence {
+  grid-area: sequence;
   background: #414141;
   padding: 10px;
   overflow-y: auto;
@@ -49,17 +55,6 @@ footer {
   color: white;
   text-align: center;
   padding: 10px;
-}
-@media (max-width: 200px) {
-  .container {
-      grid-template-rows: auto auto 1fr auto;
-      grid-template-columns: 1fr;
-      grid-template-areas: 
-          "header"
-          "sidebar"
-          "main"
-          "footer";
-  }
 }
 
 .button {
@@ -146,21 +141,23 @@ div.sidebar p {
 }
 
 ul.choose-list {
-  list-style-type: none;
+  margin: -3px 0 10px -20px;
+  font-size: 0.9em;
+}
+
+div.list-seq {
+  background: #414141;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+ul.seq-list {
   margin: 0;
   padding: 0;
 }
 
 li.seq-item {
   list-style-type: none;
-}
-
-li.kb-item {
-  list-style-type: none;
-  display: block; /* Ensures the anchor behaves like a block element */
-  overflow-wrap: break-word; /* Allows the text to wrap if it's too long */
-  text-indent: -20px; /* Indents the second line */
-  padding-left: 20px; /* Adds padding to the left to align the first line */
 }
 
 .list-ana {
@@ -182,6 +179,11 @@ li.analyzer-item:hover {
 .title {
   color: rgb(151, 151, 255);
   font-weight: bold;
+}
+
+#sequenceTitle {
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 a.seq-item {
