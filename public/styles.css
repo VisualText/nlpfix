@@ -194,6 +194,20 @@ a.seq-item-highlight {
   color: rgb(22, 226, 90);
 }
 
+@keyframes flash {
+   0% { color: rgb(82, 83, 60); }
+   50% { color: rgb(158, 165, 53);; }
+   100% { color: rgb(238, 255, 0);; }
+}
+
+a.speclink {
+  animation: flash 1s infinite;
+  text-decoration: none;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: rgb(238, 255, 0);
+}
+
 /* Tooltip styles */
 
 .tooltip {

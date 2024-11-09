@@ -24,10 +24,15 @@ const helpInfo = {
           tooltip: "NLP++ jason package output",
           description: "Dictionaries are human readable files that match during the tokenizer phase of the analyzer sequence. NLP++ has a growing library of dictionary and knowledge base files. This is one of them."
         },
-				{
+        {
           name: "dicttokz",
           tooltip: "NLP++ jason package output",
           description: "The first pass in every NLP++ analyzer is the tokenizer which breaks text down into words and numbers. The tokenizer also loads the dictionary and knowledge based files. Here, you see the dictionary matches highlighted."
+        },
+        {
+          name: "numbers",
+          tooltip: "NLP++ jason package output",
+          description: "A very common technique used in NLP++ is to classify all the numbers in a text. The reason this is no a library function is because the possible meanings of numbers favy depending on the topic."
         }
       ]
     },
@@ -39,7 +44,7 @@ const helpInfo = {
           tooltip: "Categorize the line",
           description: "Categorizing lines with attributes that can help distinguish prose (regular text) from headers etc."
         },
-				{
+        {
           name: "document.kbb",
           tooltip: "Categorize the line",
           description: "This is the knowledge base representation of the reconstruction of the formatted document."
@@ -74,6 +79,16 @@ const helpInfo = {
   ]
 };
 
+function loadSpec(analyzer: string, spec: string) {
+  fetch(`/api/seqfile/${analyzer}/${spec}`)
+  .then(response => response.text())
+  .then(content => {
+    const fileContent = document.getElementById('file-content');
+    if (fileContent)
+      fileContent.innerHTML = content;
+  });
+}
+
 function writeComment(text: string) {
   const comment = document.getElementById('comment') as HTMLParagraphElement;
   // if (comment)
@@ -82,10 +97,6 @@ function writeComment(text: string) {
 
 function centerPopup(htmlFile: string) {
   var html: string = '';
-  //if (localStorage.getItem(htmlFile)) {
-   // return;
-	//}
-  // localStorage.setItem(htmlFile, 'true');
 
   fetch(`/api/popup/${htmlFile}`)
     .then(response => response.text())
