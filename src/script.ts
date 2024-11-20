@@ -24,12 +24,12 @@ const helpInfo = {
           tooltip: "NLP++ jason package output",
           description: "Dictionaries are human readable files that match during the tokenizer phase of the analyzer sequence. NLP++ has a growing library of dictionary and knowledge base files. This is one of them."
         },
-        {
+				{
           name: "dicttokz",
           tooltip: "NLP++ jason package output",
           description: "The first pass in every NLP++ analyzer is the tokenizer which breaks text down into words and numbers. The tokenizer also loads the dictionary and knowledge based files. Here, you see the dictionary matches highlighted."
         },
-        {
+				{
           name: "numbers",
           tooltip: "NLP++ jason package output",
           description: "A very common technique used in NLP++ is to classify all the numbers in a text. The reason this is no a library function is because the possible meanings of numbers favy depending on the topic."
@@ -44,7 +44,7 @@ const helpInfo = {
           tooltip: "Categorize the line",
           description: "Categorizing lines with attributes that can help distinguish prose (regular text) from headers etc."
         },
-        {
+				{
           name: "document.kbb",
           tooltip: "Categorize the line",
           description: "This is the knowledge base representation of the reconstruction of the formatted document."
@@ -117,7 +117,7 @@ function centerPopup(htmlFile: string) {
       closeButton.textContent = 'Close';
       closeButton.addEventListener('click', () => {
         document.body.removeChild(popup);
-        displayArrow(true,'look-here-left');
+        displayImage(true,'look-here-left');
       });
       buttonPanel.appendChild(closeButton);
 
@@ -136,7 +136,7 @@ function centerPopup(htmlFile: string) {
   });
 }
 
-function displayArrow(display: boolean, id: string = 'look-here') {
+function displayImage(display: boolean, id: string = 'look-here') {
   const arrow = document.getElementById(id);
   if (arrow) {
     arrow.style.display = display ? 'inline' : 'none';
@@ -148,8 +148,9 @@ function handleLoad(): void {
   fetch('/api/analyzers')
   .then(response => response.json())
   .then((analyzers: AnaFile[] ) => {
-    displayArrow(false);
-    displayArrow(false), 'look-here-left';
+    displayImage(false);
+    displayImage(false, 'look-here-left');
+    displayImage(false, 'logo-start');
     const analyzerList = document.getElementById('analyzer-list') as HTMLUListElement;
     analyzerList.innerHTML = '';
 
@@ -163,29 +164,37 @@ function handleLoad(): void {
     const youtubeIframe = document.createElement('iframe');
     youtubeIframe.className = 'video-container';
     youtubeIframe.height = '150';
-    youtubeIframe.src = 'https://www.youtube.com/embed/Mf8rP-8j9zU?si=3LMrrGardsACVCWT';
+    youtubeIframe.src = 'https://www.youtube.com/embed/zKMALEiu2qI?si=YsieHpmKGY_c3VbP';
     youtubeIframe.title = 'YouTube video player';
     youtubeIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; allowfullscreen';
     const mainWidth = main.offsetWidth;
 
+    let fontsize = '1em';
+
     if (mainWidth < 600) {
       youtubeIframe.width = '300';
-      youtubeIframe.height = '150';
+      youtubeIframe.height = '187';
     } else if (mainWidth < 900) {
       youtubeIframe.width = '450';
-      youtubeIframe.height = '225';
+      youtubeIframe.height = '281';
+      fontsize = '1.5em';
     } else {
       youtubeIframe.width = '600';
-      youtubeIframe.height = '300';
+      youtubeIframe.height = '375';
+      fontsize = '1.25em';
     }
 
     main.appendChild(youtubeIframe);
 
+    displayImage(true, 'logo-start');
+
     const firstLine = "<instructions>Choose one of the following NLP++ text analyzers:</instructions><br>\n";
     para.innerHTML = firstLine;
+    para.setAttribute('style', `font-size: ${fontsize} !important;`);
     main.appendChild(para);
     let ul = document.createElement('ul');
     ul.setAttribute('class', 'analyzer-list');
+    ul.setAttribute('style', `font-size: ${fontsize} !important;`);
 
     analyzers.forEach(analyzer => {
       if (!analyzer.folder.startsWith('.') && analyzer.name.length > 0) {
@@ -216,7 +225,7 @@ function handleLoad(): void {
         comment.style.display = 'none';
       });
     }
-    displayArrow(true, 'look-here-up');
+    displayImage(true, 'look-here-up');
 
     let seqTitle = document.getElementById('sequenceTitle');
     if (seqTitle)
@@ -227,9 +236,10 @@ function handleLoad(): void {
 function clearAllSelections() {
   ['sequence-list', 'kb-list', 'output-list'].forEach(clearSelections);
   removePopup();
-  displayArrow(false);
-  displayArrow(false, 'look-here-left');
-  displayArrow(false, 'look-here-up');
+  displayImage(false);
+  displayImage(false, 'look-here-left');
+  displayImage(false, 'look-here-up');
+  displayImage(false, 'logo-start');
   writeComment('');
 } 
 
@@ -269,7 +279,7 @@ function addPath(analyzer: string, list: string, file: string) {
   if (anaObj) {
     const fileObj = anaObj.files.find(f => f.name === file);
     if (fileObj) {
-      displayArrow(true);
+      displayImage(true);
       setCommentText(fileObj.description);
     }
   }
