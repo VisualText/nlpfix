@@ -20,8 +20,9 @@ header {
   grid-area: header;
   background: #333;
   color: white;
-  padding: 10px;
-  text-align: center;
+  padding: 8px;
+  display: flex;
+  align-items: center;
 }
 .sidebar {
   grid-area: sidebar;
@@ -129,6 +130,10 @@ li.analyzer-description instructions {
   font-weight: bold;
   color:rgb(253, 255, 147)
 }
+.top-text {
+  flex: 1; 
+  text-align: center;
+}
 
 .header-descr {
   color:rgb(156, 156, 156)
@@ -228,6 +233,24 @@ a.speclink {
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
+}
+
+#logo-top {
+  width: 22px;
+  margin-left: 0;
+  text-align: left;
+  opacity: 0.5;
+  display: inline;
+}
+
+#logo-start {
+  position: fixed;
+  top: 225px; /* Adjust as needed */
+  left: 22px; /* Adjust as needed */
+  width: 157px; /* Adjust as needed */
+  height: auto; /* Maintain aspect ratio */
+  opacity: 0.5;
+  display: none;
 }
 
 #look-here {

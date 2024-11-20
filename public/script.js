@@ -8,12 +8,22 @@ var clickType;
 var helpInfo = {
     analyzers: [
         {
-            name: "date-time",
+            name: "Dates and Times",
             files: [
                 {
-                    name: "output.json",
+                    name: "timezones.dict",
                     tooltip: "NLP++ jason package output",
-                    description: "This file is the output of the NLP++ jason package. It contains the output of the NLP++ date and time analyzer in JSON format."
+                    description: "Dictionaries are human readable files that match during the tokenizer phase of the analyzer sequence. NLP++ has a growing library of dictionary and knowledge base files. This is one of them."
+                },
+                {
+                    name: "dicttokz",
+                    tooltip: "NLP++ jason package output",
+                    description: "The first pass in every NLP++ analyzer is the tokenizer which breaks text down into words and numbers. The tokenizer also loads the dictionary and knowledge based files. Here, you see the dictionary matches highlighted."
+                },
+                {
+                    name: "numbers",
+                    tooltip: "NLP++ jason package output",
+                    description: "A very common technique used in NLP++ is to classify all the numbers in a text. The reason this is no a library function is because the possible meanings of numbers favy depending on the topic."
                 }
             ]
         },
@@ -24,6 +34,11 @@ var helpInfo = {
                     name: "lineAttrs",
                     tooltip: "Categorize the line",
                     description: "Categorizing lines with attributes that can help distinguish prose (regular text) from headers etc."
+                },
+                {
+                    name: "document.kbb",
+                    tooltip: "Categorize the line",
+                    description: "This is the knowledge base representation of the reconstruction of the formatted document."
                 },
                 {
                     name: "stragglers",
@@ -54,6 +69,15 @@ var helpInfo = {
         }
     ]
 };
+function loadSpec(analyzer, spec) {
+    fetch("/api/seqfile/".concat(analyzer, "/").concat(spec))
+        .then(function (response) { return response.text(); })
+        .then(function (content) {
+        var fileContent = document.getElementById('file-content');
+        if (fileContent)
+            fileContent.innerHTML = content;
+    });
+}
 function writeComment(text) {
     var comment = document.getElementById('comment');
     // if (comment)
@@ -61,10 +85,6 @@ function writeComment(text) {
 }
 function centerPopup(htmlFile) {
     var html = '';
-    //if (localStorage.getItem(htmlFile)) {
-    // return;
-    //}
-    // localStorage.setItem(htmlFile, 'true');
     fetch("/api/popup/".concat(htmlFile))
         .then(function (response) { return response.text(); })
         .then(function (content) {
@@ -82,7 +102,7 @@ function centerPopup(htmlFile) {
         closeButton.textContent = 'Close';
         closeButton.addEventListener('click', function () {
             document.body.removeChild(popup);
-            displayArrow(true, 'look-here-left');
+            displayImage(true, 'look-here-left');
         });
         buttonPanel.appendChild(closeButton);
         text.innerHTML = content;
@@ -97,7 +117,7 @@ function centerPopup(htmlFile) {
         document.body.appendChild(popup);
     });
 }
-function displayArrow(display, id) {
+function displayImage(display, id) {
     if (id === void 0) { id = 'look-here'; }
     var arrow = document.getElementById(id);
     if (arrow) {
@@ -108,8 +128,9 @@ function handleLoad() {
     fetch('/api/analyzers')
         .then(function (response) { return response.json(); })
         .then(function (analyzers) {
-        displayArrow(false);
-        displayArrow(false), 'look-here-left';
+        displayImage(false);
+        displayImage(false, 'look-here-left');
+        displayImage(false, 'logo-start');
         var analyzerList = document.getElementById('analyzer-list');
         analyzerList.innerHTML = '';
         var main = document.getElementById('file-content');
@@ -120,42 +141,73 @@ function handleLoad() {
         var youtubeIframe = document.createElement('iframe');
         youtubeIframe.className = 'video-container';
         youtubeIframe.height = '150';
-        youtubeIframe.src = 'https://www.youtube.com/embed/Mf8rP-8j9zU?si=3LMrrGardsACVCWT';
+        youtubeIframe.src = 'https://www.youtube.com/embed/zKMALEiu2qI?si=YsieHpmKGY_c3VbP';
         youtubeIframe.title = 'YouTube video player';
         youtubeIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; allowfullscreen';
+        var mainWidth = main.offsetWidth;
+        var fontsize = '1em';
+        if (mainWidth < 600) {
+            youtubeIframe.width = '300';
+            youtubeIframe.height = '187';
+        }
+        else if (mainWidth < 900) {
+            youtubeIframe.width = '450';
+            youtubeIframe.height = '281';
+            fontsize = '1.5em';
+        }
+        else {
+            youtubeIframe.width = '600';
+            youtubeIframe.height = '375';
+            fontsize = '1.25em';
+        }
         main.appendChild(youtubeIframe);
+        displayImage(true, 'logo-start');
         var firstLine = "<instructions>Choose one of the following NLP++ text analyzers:</instructions><br>\n";
         para.innerHTML = firstLine;
+        para.setAttribute('style', "font-size: ".concat(fontsize, " !important;"));
         main.appendChild(para);
         var ul = document.createElement('ul');
         ul.setAttribute('class', 'analyzer-list');
+        ul.setAttribute('style', "font-size: ".concat(fontsize, " !important;"));
         analyzers.forEach(function (analyzer) {
-            if (!analyzer.folder.startsWith('.')) {
+            if (!analyzer.folder.startsWith('.') && analyzer.name.length > 0) {
                 var li = document.createElement('li');
                 li.classList.add('analyzer-item');
                 li.textContent = analyzer.name;
                 li.setAttribute('index', analyzer.index.toString());
                 analyzerClick(li, analyzer);
                 analyzerList.appendChild(li);
-                if (analyzer.name.length > 0) {
-                    var liana = document.createElement('li');
-                    liana.setAttribute('class', 'analyzer-description');
-                    analyzerClick(liana, analyzer);
-                    liana.innerHTML = "<ananame>".concat(analyzer.name, "</ananame><br>\n").concat(analyzer.description);
-                    ul.appendChild(liana);
-                }
+                // Add the description of the analyzer into the main window
+                var liana = document.createElement('li');
+                liana.setAttribute('class', 'analyzer-description');
+                analyzerClick(liana, analyzer);
+                liana.innerHTML = "<ananame>".concat(analyzer.name, "</ananame><br>\n").concat(analyzer.description);
+                ul.appendChild(liana);
             }
         });
         main.appendChild(ul);
-        displayArrow(true, 'look-here-up');
+        // Add the click event to the look-here arrow so the user can hide it
+        var arrow = document.getElementById('look-here');
+        if (arrow) {
+            arrow.addEventListener('click', function () {
+                this.style.display = 'none';
+                var comment = document.getElementById('comment');
+                comment.style.display = 'none';
+            });
+        }
+        displayImage(true, 'look-here-up');
+        var seqTitle = document.getElementById('sequenceTitle');
+        if (seqTitle)
+            seqTitle.style.display = 'none';
     });
 }
 function clearAllSelections() {
     ['sequence-list', 'kb-list', 'output-list'].forEach(clearSelections);
     removePopup();
-    displayArrow(false);
-    displayArrow(false, 'look-here-left');
-    displayArrow(false, 'look-here-up');
+    displayImage(false);
+    displayImage(false, 'look-here-left');
+    displayImage(false, 'look-here-up');
+    displayImage(false, 'logo-start');
     writeComment('');
 }
 function selectionLogic(id, index) {
@@ -178,8 +230,6 @@ function removePopup() {
 }
 function setPathText(text, html) {
     if (html === void 0) { html = false; }
-    var comment = document.getElementById('comment');
-    comment.style.display = 'none';
     var pathElement = document.getElementById('path');
     pathElement.style.display = 'block';
     if (html) {
@@ -194,10 +244,8 @@ function addPath(analyzer, list, file) {
     if (anaObj) {
         var fileObj = anaObj.files.find(function (f) { return f.name === file; });
         if (fileObj) {
-            displayArrow(true);
-            displayArrow(true, 'look-here-left');
-            setPathText(fileObj.description);
-            return;
+            displayImage(true);
+            setCommentText(fileObj.description);
         }
     }
     setPathText("".concat(analyzer, " > ").concat(list, " > ").concat(file));
@@ -233,6 +281,7 @@ function starAddition(anchor, analyzer, file) {
         var icon = document.createElement('i');
         icon.className = 'fas fa-star';
         icon.style.color = 'yellow';
+        icon.style.marginRight = '2px';
         anchor.appendChild(icon);
     }
 }
@@ -253,12 +302,9 @@ function analyzerClick(li, analyzer) {
             .then(function (files) {
             clearSelections("analyzer-list");
             selectionLogic("analyzer-list", analyzer.index);
-            // fetch(`/api/readme/firstline/${analyzer.folder}`)
-            //   .then(response => response.json())
-            //   .then((firstLine: string) => {
-            //     const tit = document.getElementById('sequenceTitle') as HTMLParagraphElement;
-            //     tit.innerHTML = firstLine;
-            // });
+            var seqTitle = document.getElementById('sequenceTitle');
+            if (seqTitle)
+                seqTitle.style.display = 'block';
             centerPopup(analyzer.folder);
             fetch("/api/input/".concat(analyzer.folder, "/text.txt"))
                 .then(function (response) { return response.text(); })
@@ -272,7 +318,6 @@ function analyzerClick(li, analyzer) {
                 .then(function (response) { return response.json(); })
                 .then(function (kbs) {
                 var kbDiv = document.getElementById('list-kb');
-                kbDiv.style.display = 'block';
                 var kbList = document.getElementById('kb-list');
                 kbList.innerHTML = '';
                 kbs.forEach(function (kb) {
@@ -295,12 +340,17 @@ function analyzerClick(li, analyzer) {
                     kbLi.appendChild(anchor);
                     kbList.append(kbLi);
                 });
+                if (kbList.innerHTML == '') {
+                    kbDiv.style.display = 'none';
+                }
+                else {
+                    kbDiv.style.display = 'block';
+                }
             });
             fetch("/api/output/".concat(analyzer.folder))
                 .then(function (response) { return response.json(); })
                 .then(function (outputs) {
                 var outDiv = document.getElementById('list-output');
-                outDiv.style.display = 'block';
                 var outputList = document.getElementById('output-list');
                 outputList.innerHTML = '';
                 outputs.forEach(function (output) {
@@ -324,6 +374,12 @@ function analyzerClick(li, analyzer) {
                     outLi.appendChild(anchor);
                     outputList.append(outLi);
                 });
+                if (outputList.innerHTML == '') {
+                    outDiv.style.display = 'none';
+                }
+                else {
+                    outDiv.style.display = 'block';
+                }
             });
             var seqDiv = document.getElementById('list-seq');
             seqDiv.style.display = 'block';
@@ -399,8 +455,6 @@ function fileHasInfo(analyzer, file) {
 }
 function setCommentText(text, html) {
     if (html === void 0) { html = false; }
-    var pathElement = document.getElementById('path');
-    pathElement.style.display = 'none';
     var comment = document.getElementById('comment');
     comment.style.display = 'block';
     if (html) {

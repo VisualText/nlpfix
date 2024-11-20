@@ -11,7 +11,7 @@
 </head>
 <body>
   <div class="container">
-    <header><span class="header-title">NLP Fix</span> - <span class="header-descr">Fixing NLP with Rules - Regex for NLP</span></header>
+    <header><img src="resources/NLPFixLogo_white.png" id="logo-top"><div class="top-text"><span class="header-title">NLP Fix</span> - <span class="header-descr">Fixing NLP with Rules - Regex for NLP</span></div></header>
     <div class="sidebar">
       <div class="list-ana">
         <p class="title" id="analyzerTitle">Analyzers
@@ -22,22 +22,22 @@
       </div>
       <div class="list-kb sublist" id="list-kb">
         <p class="title" id="kbTitle">Dictionaries</p>
-        <ul class="choose-list" id="kb-list"></ul>
+        <ul class="choose-list subchoose" id="kb-list"></ul>
       </div>
       <div class="list-output sublist" id="list-output"">
         <p class="title" id="outputTitle">Output Files</p>
-        <ul class="choose-list" id="output-list"></ul>
+        <ul class="choose-list subchoose" id="output-list"></ul>
       </div>
-      <div class="list-seq sublist" id="list-seq">
-        <p class="title" id="sequenceTitle">Analyzer Sequence</p>
-        <div class="list-seq-scroll">
-          <ul class="choose-list" id="sequence-list"></ul>
-        </div>
-      </div>
+      <p class="title" id="sequenceTitle">Analyzer Sequence</p>
+    </div>
+    <div class="sequence list-seq" id="list-seq">
+      <ul class="seq-list" id="sequence-list"></ul>
+    </div>
+    <div class="info">
+      <p class="path" id="path"></p>
+      <p class="comment" id="comment" style="display: none;"></p>
     </div>
     <div class="main">
-      <p class="path" id="path"></p>
-      <p class="comment" id="comment"></p>
       <div id="file-content"></div>
     </div>
     <footer>Footer Bar</footer>
@@ -45,6 +45,8 @@
     <img src="resources/NLPppArrow.png" id="look-here" alt="Floating Image">
     <img src="resources/NLPppArrowLeft.png" id="look-here-left" alt="Floating Image">
     <img src="resources/NLPppArrowUp.png" id="look-here-up" alt="Floating Image">
+    <img src="resources/NLPFixLogo_gray.png" id="logo-start" alt="Floating Image">
+    
   </div> 
   <script src="script.js"></script>
 </body>
